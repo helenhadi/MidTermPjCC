@@ -40,6 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // echo print_r($entities)."<br>";
             // echo print_r($fields)."<br>";
 
+            $mysqli->select_db($newSchema);
+            for ($i=0; $i <= count($entities)-1 ; $i++) { 
+                $sql = "ALTER TABLE ".$entities[$i]." ADD COLUMN ".$fields[$i]." VARCHAR(45)";
+                $result = $mysqli->query($sql);
+            }
+            
             $mysqli->select_db('presensi_cloud');
             $sql = "Insert Into metadatas (entity, custom_field, universitass_id) Values (?, ?,?)";
             for ($i=0; $i <= count($entities)-1 ; $i++) { 
