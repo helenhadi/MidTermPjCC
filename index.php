@@ -20,7 +20,7 @@
 			font-family: 'Nunito', sans-serif;
 		}
 		body{
-			background: grey;
+			background: #f0f0f0;
 		}
 		#customs{
 			margin : 2% 0%;
