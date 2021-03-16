@@ -32,7 +32,7 @@
 			margin : 0% 1%;
 		}
 		.card{
-			margin :1% 4%;
+			margin :1% 2%;
 			padding: 2%;
 			border-radius: 1%;
 			background: white;
