@@ -77,7 +77,7 @@
 					<option value="double">Double / Decimal Number</option>
 				</select>
 			</div>
-			<div style="margin: -63px 0 0 67%;">
+			<div style="margin: -63px 0 0 70%;">
 				<input class="btn btn-sm btn-outline-default btn-round" type="button" value="Add More Custom Field" id="addcustom"/>
 				<input class="btn btn-sm btn-primary" type="submit" value="Daftar"/>
 			</div>
@@ -102,7 +102,7 @@
 					"<option value='int'>Integer / Number</option>"+
 					"<option value='datetime'>Datetime</option>"+
 					"<option value='double'>Double / Decimal Number</option>"+
-				"</select> &nbsp;<input class='btn btn-sm btn-danger' type='button' value='Hapus' id='deletecustom'/></div>");
+				"</select> &nbsp;<input class='btn btn-sm btn-danger' style='margin-top:-5px;' type='button' value='Hapus' id='deletecustom'/></div>");
 			});
 			$('body').on('click', '#deletecustom', function(){
 				$(this).parent().remove();
