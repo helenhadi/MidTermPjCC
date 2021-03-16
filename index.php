@@ -65,7 +65,7 @@
 					<option value="kehadirans">Kehadiran</option>
 					<option value="mahasiswas">Mahasiswa</option>
 					<option value="matakuliahs">Mata Kuliah</option>
-					<option value="matakuliahs_buka">Mata Kuliah Yang Buka</option>
+					<option value="matakuliahs_buka">Mata Kuliah yang Buka</option>
 					<option value="matakuliahs_kp">Kelas Pararel Mata Kuliah</option>
 				</select>
 				<label> &nbsp; Field : </label><input class="form-control" required type="text" name="field[]"/>
@@ -92,7 +92,7 @@
 					"<option value='kehadirans'>Kehadiran</option>"+
 					"<option value='mahasiswas'>Mahasiswa</option>"+
 					"<option value='matakuliahs'>Mata Kuliah</option>"+
-					"<option value='matakuliahs_buka'>Mata Kuliah Yang Buka</option>"+
+					"<option value='matakuliahs_buka'>Mata Kuliah yang Buka</option>"+
 					"<option value='matakuliahs_kp'>Kelas Pararel Mata Kuliah</option>"+
 				"</select>"+
 				"<label> &nbsp; &nbsp;Field :&nbsp; </label><input class='form-control' required type='text' name='field[]'/>"+
