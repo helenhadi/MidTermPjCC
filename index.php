@@ -1,11 +1,18 @@
 <html>
 <head>
 	<title>Presensi Cloud</title>
-	<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+<style>
+		p,b,u,a,i,h1,h2,h3,h4,h5,h6{
+			font-family: 'Roboto', sans-serif;
+		}
+</style>
 <body>
 	<h2>Multi Schema Cloud</h2>
-	<h3 style="color: red; font-weight: bold">
+	<h3 style="color: green; font-weight: bold">
 		<?php 
 		include('connectdb.php');
 		$mysqli = konek('localhost', 'root', '');
@@ -13,9 +20,9 @@
 		?>
 	</h3>
 	<form method="POST" enctype="multipart/form-data" action="simpan.php">
-		<label>Nama Universitas </label><input type="text" name="nama"/><br><br>
+		<label>Nama Universitas </label><input required type="text" name="nama"/><br><br>
 		<div id="customs">
-			<label>Custom Field </label><label>Entity: </label>
+			<label>Custom Field </label><label>Entity : </label>
 			<select  name="entity[]">
 				<option value="fakultass">Fakultas</option>
 				<option value="jadwals">Jadwal</option>
@@ -26,8 +33,7 @@
 				<option value="matakuliahs_buka">Mata Kuliah Yang Buka</option>
 				<option value="matakuliahs_kp">Kelas Pararel Mata Kuliah</option>
 			</select>
-			<label> Field: </label><input type="text" name="field[]"/>
-
+			<label> &nbsp; Field : </label><input required type="text" name="field[]"/>
 		</div>
 		<div style="margin-left: 25%;">
 			<input type="button" value="Add More Custom Field" id="addcustom"/><br>
@@ -38,7 +44,7 @@
 	</form>
 	<script type="text/javascript">
 		$("#addcustom").click(function(){
-			$("#customs").append("<div style='margin-left: 6%;''><label>Entity: </label><select  name='entity[]'><option value='fakultass'>Fakultas</option><option value='jurusanss'>Jurusan</option><option value='kehadirans'>Kehadiran</option><option value='mahasiswas'>Mahasiswa</option><option value='matakuliahs'>Mata Kuliah</option><option value='matakuliahs_buka'>Mata Kuliah Yang Buka</option><option value='matakuliahs_kp'>Kelas Pararel Mata Kuliah</option></select><label> Field: </label><input type='text' name='field[]'/>&nbsp;<input type='button' value='Hapus' id='deletecustom'/></div>");
+			$("#customs").append("<div style='margin-left: 6%;''><label>Entity : </label><select  name='entity[]'><option value='fakultass'>Fakultas</option><option value='jurusanss'>Jurusan</option><option value='kehadirans'>Kehadiran</option><option value='mahasiswas'>Mahasiswa</option><option value='matakuliahs'>Mata Kuliah</option><option value='matakuliahs_buka'>Mata Kuliah Yang Buka</option><option value='matakuliahs_kp'>Kelas Pararel Mata Kuliah</option></select><label> Field: </label><input required type='text' name='field[]'/>&nbsp;<input type='button' value='Hapus' id='deletecustom'/></div>");
 		});
 		$('body').on('click', '#deletecustom', function(){
 			$(this).parent().remove();
