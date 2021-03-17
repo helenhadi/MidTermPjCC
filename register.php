@@ -18,11 +18,6 @@
   <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="./assets/css/argon-design-system.css?v=1.2.2" rel="stylesheet" />
-  <style>
-      body{
-          height:100%;
-      }
-  </style>
 </head>
 
 <body class="login-page">
@@ -50,7 +45,7 @@
           <div class="card bg-secondary shadow border-0">
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
-                <h5>Login ke E-Presensi</h5>
+                <h5>Daftar akun baru</h5>
               </div>
               <form method="POST" enctype="multipart/form-data" action="login_process.php">
                 <div class="form-group mb-3">
@@ -69,15 +64,23 @@
                     <input required class="form-control" placeholder="password" name="password" type="password">
                   </div>
                 </div>
+                <div class="form-group focused">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input required class="form-control" placeholder="ulangi password" name="rpassword" type="password">
+                  </div>
+                </div>
                 <div class="text-center">
-                  <input id="signin" type="submit" class="btn btn-primary my-4" value="Masuk"></input>
+                  <input id="signin" type="submit" class="btn btn-primary my-4" value="Daftar"></input>
                 </div>
               </form>
             </div>
           </div>
           <div class="row mt-3">
             <div class="col-6">
-                <a href="register.php" class="text-light"><small>Buat akun baru</small></a>
+                <a href="login.php" class="text-light"><small>Sudah punya akun? Sign In</small></a>
             </div>
           </div>
         </div>
