@@ -47,15 +47,9 @@
 		<?php 
 			include('connectdb.php');
 			$mysqli = konek('localhost', 'root', '');
-			if($mysqli->connect_errno) {
-				echo "<h3 style='color: red; font-weight: bold'>Error Connect... ".$mysqli->connect_errno."\n</h3>";
-				die();
-			}else{
-				echo "<h3 style='color: green; font-weight: bold'>Success... ".$mysqli->host_info."\n</h3>";
-			}
 			?>
 		<form method="POST" enctype="multipart/form-data" action="simpan.php">
-			<label>Nama Universitas : </label><input class="form-control" required type="text" name="nama"/><br><br>
+			<label>Nama Universitas : </label><input class="form-control" required type="text" name="nama"/>
 			<div id="customs">
 				<label>Custom Field </label><br><label>Nama : </label>
 				<select name="entity[]" selected="Fakultas">
