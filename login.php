@@ -44,7 +44,7 @@
       <span></span>
       <span></span>
     </div>
-    <div class="container pt-lg-7">
+    <div class="container pt-lg-7" style="margin-bottom:2.4%;">
       <div class="row justify-content-center">
         <div class="col-lg-5">
           <div class="card bg-secondary shadow border-0">

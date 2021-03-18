@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2021 at 08:34 AM
+-- Generation Time: Mar 18, 2021 at 11:41 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -37,14 +37,14 @@ CREATE TABLE `fakultass` (
 --
 
 INSERT INTO `fakultass` (`id`, `nama`) VALUES
-(1, 'Kedokteran'),
-(2, 'Industri Kreatif'),
-(3, 'Hukum'),
-(4, 'Psikologi'),
-(5, 'Bisnis dan Ekonomika'),
-(6, 'Teknik'),
-(7, 'Farmasi'),
-(8, 'Teknobio');
+(2, 'Kedokteran'),
+(3, 'Industri Kreatif'),
+(4, 'Hukum'),
+(5, 'Psikologi'),
+(6, 'Bisnis dan Ekonomika'),
+(7, 'Teknik'),
+(8, 'Teknobio'),
+(9, 'Farmasi');
 
 -- --------------------------------------------------------
 
@@ -84,7 +84,7 @@ ALTER TABLE `metadatas`
 -- AUTO_INCREMENT for table `fakultass`
 --
 ALTER TABLE `fakultass`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `metadatas`
