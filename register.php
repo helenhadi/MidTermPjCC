@@ -29,7 +29,7 @@
   </nav>
   <!-- End Navbar -->
   <section class="section section-shaped section-lg">
-    <div class="shape shape-style-1 bg-gradient-default">
+    <div class="shape shape-style-1 bg-gradient-primary py-7 py-lg-8 pt-lg-9">
       <span></span>
       <span></span>
       <span></span>

@@ -1,3 +1,9 @@
+<?php
+  session_start();
+  if (isset($_SESSION['username']) && isset($_SESSION['nama']) && isset($_SESSION['jurusan'])) {
+    header("location: dashboard.php");
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +40,7 @@
   </nav>
   <!-- End Navbar -->
   <section class="section section-shaped section-lg">
-    <div class="shape shape-style-1 bg-gradient-default">
+    <div class="shape shape-style-1 bg-gradient-primary py-7 py-lg-8 pt-lg-9">
       <span></span>
       <span></span>
       <span></span>
@@ -69,8 +75,16 @@
                     <input required class="form-control" placeholder="password" name="password" type="password">
                   </div>
                 </div>
+                <p class='text-danger'>
+                <?php
+                  if (isset($_SESSION['err'])) {
+                    echo $_SESSION['err'];
+                    unset($_SESSION['err']);
+                  }
+                ?>
+                </p>
                 <div class="text-center">
-                  <input id="signin" type="submit" class="btn btn-primary my-4" value="Masuk"></input>
+                  <input id="signin" type="submit" class="btn btn-primary my-4" name="btnsignin" value="Masuk"></input>
                 </div>
               </form>
             </div>
