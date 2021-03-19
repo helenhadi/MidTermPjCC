@@ -49,13 +49,12 @@
 			$mysqli = konek('localhost', 'root', '');
 			?>
 		<form method="POST" enctype="multipart/form-data" action="simpan.php">
-			<label>Nama Universitas : </label><input class="form-control" required type="text" name="nama"/>
+			<label>Nama Jurusan : </label><input class="form-control" required type="text" name="nama"/>
 			<div id="customs">
 				<label>Custom Field </label><br><label>Nama : </label>
-				<select name="entity[]" selected="Fakultas">
-					<option value="fakultass">Fakultas</option>
-					<option value="jadwals">Jadwal</option>
+				<select name="entity[]" selected="Jurusan">
 					<option value="jurusanss">Jurusan</option>
+					<option value="jadwals">Jadwal</option>
 					<option value="kehadirans">Kehadiran</option>
 					<option value="mahasiswas">Mahasiswa</option>
 					<option value="matakuliahs">Mata Kuliah</option>
@@ -79,10 +78,9 @@
 		<script type="text/javascript">
 			$("#addcustom").click(function(){
 				$("#customs").append("<div><label>Nama :&nbsp;</label>"+
-				"<select  name='entity[]' selected='Fakultas'>"+
-					"<option value='fakultass'>Fakultas</option>"+
-					"<option value='jadwals'>Jadwal</option>"+
+				"<select  name='entity[]' selected='Jurusan'>"+
 					"<option value='jurusanss'>Jurusan</option>"+
+					"<option value='jadwals'>Jadwal</option>"+
 					"<option value='kehadirans'>Kehadiran</option>"+
 					"<option value='mahasiswas'>Mahasiswa</option>"+
 					"<option value='matakuliahs'>Mata Kuliah</option>"+
