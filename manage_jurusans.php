@@ -179,7 +179,7 @@
                 <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                <form>
+                <form method="POST" enctype="multipart/form-data" action="tambah_jurusan_proses.php">
                   <!-- Input groups with icon -->
                   <div class="row" id="fieldss">
                     <div class="col-md-6">
@@ -189,7 +189,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-laptop"></i></span>
                             </div>
-                            <input class="form-control" name="jurusan_nama" placeholder="nama jurusan" type="text">
+                            <input class="form-control" name="nama" placeholder="nama jurusan" type="text">
                             </div>
                         </div>
                         

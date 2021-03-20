@@ -3,6 +3,11 @@
   if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jurusan'])) {
     header("location: login.php");
   }
+  if(isset($_SESSION['username'])){
+    echo "
+    
+    ";
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -255,6 +260,8 @@
   <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
   <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+  
+  <script src="./assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
   <!-- Argon JS -->
   <script src="./assets/js/argon.js?v=1.1.0"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
