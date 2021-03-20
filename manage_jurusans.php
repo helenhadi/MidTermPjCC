@@ -3,6 +3,11 @@
   if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jurusan'])) {
     header("location: login.php");
   }
+  if($_SESSION['jabatan']!='admin' && $_SESSION['nama']!='Admin'){
+    header("location: dashboard.php");
+  }
+  include ('connectdb.php');
+    $mysqli = konek('localhost', 'root', '');
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +29,7 @@
     <div class="scrollbar-inner">
       <!-- Brand -->
       <div class="sidenav-header d-flex align-items-center">
-        <a class="navbar-brand" href="/dashboard.php">
+        <a class="navbar-brand" href="dashboard.php">
           <img src="./assets/img/brand/blue.jpg" class="navbar-brand-img" alt="...">
         </a>
         <div class="ml-auto">
@@ -44,7 +49,7 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" href="dashboard.php" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+              <a class="nav-link" href="dashboard.php" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
                 <i class="ni ni-shop text-primary"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
@@ -53,7 +58,7 @@
               if($_SESSION['jabatan']=='admin' && $_SESSION['nama']=='Admin'){
                 echo "
                   <li class='nav-item'>
-                    <a class='nav-link' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                    <a class='nav-link active' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                       <i class='ni ni-badge text-primary'></i>
                       <span class='nav-link-text'>Tambah Jurusan</span>
                     </a>
@@ -151,11 +156,11 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 d-inline-block mb-0">Dashboard</h6>
+              <h6 class="h2 d-inline-block mb-0">Tambah Jurusan</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links">
                   <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                  <li class="breadcrumb-item active" aria-current="page">Tambah Jurusan</li>
                 </ol>
               </nav>
             </div>
@@ -167,68 +172,103 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-12">
-          <div class="card bg-gradient-default border-0">
-            <!-- Card body -->
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <h5 class="card-title text-muted mb-0 text-white">Hi, 
-                  <?php 
-                        echo $_SESSION['nama'];
-                  ?></h5>
-                  <span class="h2 font-weight-bold mb-0 text-white">
-                    <?php 
-                      if($_SESSION['jabatan']=='admin'){
-                        echo "Administrator";
-                      }
-                    ?>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-4">
-            <a href='manage_jurusans.php'>
-                <div class="card bg-gradient-info border-0 btn text-left">
-                    <!-- Card body -->
-                    <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                        <h5 class="card-title text-uppercase text-muted mb-0 text-white">Tambah </h5>
-                        <span class="h2 font-weight-bold mb-0 text-white">Jurusan</span>
+            <div class="card bg-bg-white border-0">
+                <!-- Card body -->
+                <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                <form>
+                  <!-- Input groups with icon -->
+                  <div class="row" id="fieldss">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label class="form-control-label">Nama Jurusan</label>
+                            <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-laptop"></i></span>
+                            </div>
+                            <input class="form-control" name="jurusan_nama" placeholder="nama jurusan" type="text">
+                            </div>
+                        </div>
+                        
+                        <h5 class="card-title text-uppercase text-muted mb-0 text-black">Field Kustom </h5><br>
+                        </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label class="form-control-label">Fakultas</label>
+                            <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                            </div>
+                            <select class="form-control" name="fakultas_id" data-toggle="select">
+                                <?php 
+                                    $sql = "SELECT * FROM fakultass";
+                                    $stmt = $mysqli->prepare($sql);
+                                    $stmt->execute();
+                                    $res = $stmt->get_result();
+                                    while($row = $res->fetch_assoc()){
+                                        echo "<option value='".$row['id']."'>".$row['nama']."</option>";
+                                    }
+                                ?>
+                            </select>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label class="form-control-label">Field</label>
+                            <div class="input-group input-group-merge">
+                            <select class='form-control' name="entity[]" selected="Varchar / String Text">
+                            <option value="jurusanss">Jurusan</option>
+                                <option value="jadwals">Jadwal</option>
+                                <option value="kehadirans">Kehadiran</option>
+                                <option value="mahasiswas">Mahasiswa</option>
+                                <option value="matakuliahs">Mata Kuliah</option>
+                                <option value="matakuliahs_buka">Mata Kuliah yang Buka</option>
+                                <option value="matakuliahs_kp">Kelas Pararel Mata Kuliah</option>
+                            </select>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group">
+                        <label class="form-control-label">Nama Field</label>
+                            <div class="input-group input-group-merge">
+                            <input class="form-control" name="field_name" placeholder="nama field" type="text">
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group">
+                        <label class="form-control-label">Tipe Field</label>
+                            <div class="input-group input-group-merge">
+                            <select class='form-control' name="typee[]" selected="Varchar / String Text">
+                                <option value="varchar(45)">Text</option>
+                                <option value="int">Angka</option>
+                                <option value="datetime">Tanggal</option>
+                                <option value="double">Angka Desimal</option>
+                            </select>
+                            </div>
+                        </div>
+                        </div>
+                  </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label class="form-control-label" style='opacity:0%;'>Add</label>
+                            <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                            </div>
+                                <input class="btn btn-outline-default btn-round" type="button" value="Tambah Field" id="addcustom"/> &nbsp;
+                                <input class="btn btn-primary" type="submit" value="Tambah Jurusan"/>
+                            </div>
+                        </div>
+                      </div>
+                </form>
                     </div>
                 </div>
-            </a>
-        </div>
-        <div class="col-4">
-          <div class="card bg-gradient-success border-0 btn text-left">
-            <!-- Card body -->
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <h5 class="card-title text-uppercase text-muted mb-0 text-white">Tambah </h5>
-                  <span class="h2 font-weight-bold mb-0 text-white">User</span>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="card bg-gradient-danger border-0 btn text-left">
-            <!-- Card body -->
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <h5 class="card-title text-uppercase text-muted mb-0 text-white">Manage </h5>
-                  <span class="h2 font-weight-bold mb-0 text-white">DAC Rules</span>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
       </div>
         </li>
     </ul>
