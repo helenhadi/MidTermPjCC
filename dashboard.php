@@ -66,7 +66,7 @@
                     </a>
                   </li>
                   <li class='nav-item'>
-                    <a class='nav-link' href='#navbar-dashboards' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                    <a class='nav-link' href='tambah_user.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                       <i class='ni ni-single-02 text-primary'></i>
                       <span class='nav-link-text'>Tambah User</span>
                     </a>
@@ -215,6 +215,7 @@
                     </a>
                 </div>
                 <div class='col-4'>
+                <a href='tambah_user.php'>
                   <div class='card bg-gradient-success border-0 btn text-left'>
                     <!-- Card body -->
                     <div class='card-body'>
@@ -226,6 +227,7 @@
                       </div>
                     </div>
                   </div>
+                </a>  
                 </div>
                 <div class='col-4'>
                   <div class='card bg-gradient-danger border-0 btn text-left'>

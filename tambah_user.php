@@ -60,12 +60,12 @@
               if($_SESSION['jabatan']=='admin' && $_SESSION['nama']=='Admin'){
                 echo "
                   <li class='nav-item'>
-                    <a class='nav-link active' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                    <a class='nav-link' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                       <i class='ni ni-badge text-primary'></i>
                       <span class='nav-link-text'>Tambah Jurusan</span>
                     </a>
                   </li>
-                  <li class='nav-item'>
+                  <li class='nav-item active'>
                     <a class='nav-link' href='tambah_user.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                       <i class='ni ni-single-02 text-primary'></i>
                       <span class='nav-link-text'>Tambah User</span>
@@ -158,11 +158,11 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 d-inline-block mb-0">Tambah Jurusan</h6>
+              <h6 class="h2 d-inline-block mb-0">Tambah User</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links">
                   <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Tambah Jurusan</li>
+                  <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
                 </ol>
               </nav>
             </div>
@@ -179,97 +179,78 @@
                 <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                <form method="POST" enctype="multipart/form-data" action="tambah_jurusan_proses.php">
+                <form method="POST" enctype="multipart/form-data" action="#">
                   <!-- Input groups with icon -->
                   <div class="row" id="fieldss">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
-                        <label class="form-control-label">Nama Jurusan</label>
+                        <label class="form-control-label">Nama</label>
                             <div class="input-group input-group-merge">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-laptop"></i></span>
+                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                             </div>
-                            <input required class="form-control" name="nama" placeholder="nama jurusan" type="text">
+                            <input required class="form-control" name="nama" placeholder="nama" type="text">
                             </div>
                         </div>
-                        
-                        <h5 class="card-title text-uppercase text-muted mb-0 text-black">Field Kustom </h5><br>
-                        </div>
-                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-12">
                         <div class="form-group">
-                        <label class="form-control-label">Fakultas</label>
+                        <label class="form-control-label">Username</label>
                             <div class="input-group input-group-merge">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                             </div>
-                            <select class="form-control" name="fakultas_id" data-toggle="select">
-                                <?php 
-                                    $sql = "SELECT * FROM fakultass";
-                                    $stmt = $mysqli->prepare($sql);
-                                    $stmt->execute();
-                                    $res = $stmt->get_result();
-                                    while($row = $res->fetch_assoc()){
-                                        echo "<option value='".$row['id']."'>".$row['nama']."</option>";
-                                    }
-                                ?>
+                            <input required class="form-control" name="username" placeholder="username" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label class="form-control-label">Password</label>
+                            <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-key-25"></i></span>
+                            </div>
+                            <input required class="form-control" name="password" placeholder="password" type="password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label class="form-control-label">Repeat Password</label>
+                            <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-key-25"></i></span>
+                            </div>
+                            <input required class="form-control" name="r_password" placeholder="repeat password" type="password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label class="form-control-label">Jabatan</label>
+                            <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
+                            </div>
+                            <select class="form-control" name="jabatan" data-toggle="select">
+                                <option value='dekan'>Dekan</option>
+                                <option value='wadek'>Wakil Dekan</option>
+                                <option value='kajur'>Kepala Jurusan</option>
+                                <option value='kalab'>Kepala Lab</option>
+                                <option value='dosen'>Dosen</option>
                             </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                        <label class="form-control-label">Field</label>
-                            <div class="input-group input-group-merge">
-                            <select class='form-control' name="entity[]" selected="Varchar / String Text">
-                            <option value="jurusanss">Jurusan</option>
-                                <option value="jadwals">Jadwal</option>
-                                <option value="kehadirans">Kehadiran</option>
-                                <option value="mahasiswas">Mahasiswa</option>
-                                <option value="matakuliahs">Mata Kuliah</option>
-                                <option value="matakuliahs_buka">Mata Kuliah yang Buka</option>
-                                <option value="matakuliahs_kp">Kelas Pararel Mata Kuliah</option>
-                            </select>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-md-3">
-                        <div class="form-group">
-                        <label class="form-control-label">Nama Field</label>
-                            <div class="input-group input-group-merge">
-                            <input required class="form-control" name="field_name[]" placeholder="nama field" type="text">
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-md-3">
-                        <div class="form-group">
-                        <label class="form-control-label">Tipe Field</label>
-                            <div class="input-group input-group-merge">
-                            <select class='form-control' name="typee[]" selected="Varchar / String Text">
-                                <option value="varchar(45)">Text</option>
-                                <option value="int">Angka</option>
-                                <option value="datetime">Tanggal</option>
-                                <option value="double">Angka Desimal</option>
-                            </select>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-md-3">
-                        <div class="form-group">
-                        <label class="form-control-label" style="opacity:0%">Tipe Field</label>
-                            <div class="input-group input-group-merge" style="opacity:0%">
-                                aaaaaa
-                            </div>
-                        </div>
-                        </div>
                   </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label class="form-control-label" style='opacity:0%;'>Add</label>
                             <div class="input-group input-group-merge">
                             <div class="input-group-prepend">
-                            </div>
-                                <input onclick="swalgood('Sukses','Field Tambahan Berhasil Ditambahkan.')" class="btn btn-outline-default btn-round" type="button" value="Tambah Field" id="addcustom"/> &nbsp; &nbsp; 
-                                <input class="btn btn-primary" type="submit" value="Tambah Jurusan"/>
+                            </div> 
+                                <input class="btn btn-primary" type="submit" value="Tambah User"/>
                             </div>
                         </div>
                       </div>
@@ -300,56 +281,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="./assets/js/demo.min.js"></script>
-  <script type="text/javascript">
-			$("#addcustom").click(function(){
-				$("#fieldss").append("<div class='col-md-3 cf'>"+
-                        "<div class='form-group'>"+
-                        "<label class='form-control-label'>Field</label>"+
-                            "<div class='input-group input-group-merge'>"+
-                            "<select class='form-control' name='entity[]' selected='Varchar / String Text'>"+
-                            "<option value='jurusanss'>Jurusan</option>"+
-                                "<option value='jadwals'>Jadwal</option>"+
-                                "<option value='kehadirans'>Kehadiran</option>"+
-                                "<option value='mahasiswas'>Mahasiswa</option>"+
-                                "<option value='matakuliahs'>Mata Kuliah</option>"+
-                                "<option value='matakuliahs_buka'>Mata Kuliah yang Buka</option>"+
-                                "<option value='matakuliahs_kp'>Kelas Pararel Mata Kuliah</option>"+
-                            "</select>"+
-                            "</div>"+
-                        "</div>"+
-                        "</div>"+
-                        "<div class='col-md-3 cf'>"+
-                        "<div class='form-group'>"+
-                        "<label class='form-control-label'>Nama Field</label>"+
-                            "<div class='input-group input-group-merge'>"+
-                            "<input required class='form-control' name='field_name[]' placeholder='nama field' type='text'>"+
-                            "</div>"+
-                        "</div>"+
-                        "</div>"+
-                        "<div class='col-md-3 cf'>"+
-                        "<div class='form-group'>"+
-                        "<label class='form-control-label'>Tipe Field</label>"+
-                            "<div class='input-group input-group-merge'>"+
-                            "<select class='form-control' name='typee[]' selected='Varchar / String Text'>"+
-                                "<option value='varchar(45)'>Text</option>"+
-                                "<option value='int'>Angka</option>"+
-                                "<option value='datetime'>Tanggal</option>"+
-                                "<option value='double'>Angka Desimal</option>"+
-                            "</select>"+
-                            "</div>"+
-                        "</div></div>"+
-                        "<div class='col-md-3 cf'>"+
-                        "<div class='form-group'>"+
-                        "<label class='form-control-label' style='opacity:0%;'>Tipe Field</label>"+
-                            "<div class='input-group input-group-merge'>"+
-                                "<input onclick='swalgood(`Sukses`,`Field Dihapus.`)' class='btn btn-danger' type='button' value='Hapus' id='deletecustom'/>"+
-                            "</div>"+
-                        "</div></div>");
-			});
-			$('body').on('click', '#deletecustom', function(){
-				$('.cf').remove();
-			});
-		</script>
         <script>
             function swalgood(msg1,msg2){
                 Swal.fire(
