@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="./assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <link rel="stylesheet" href="./assets/css/argon.css?v=1.1.0" type="text/css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
   <!-- Sidenav -->
@@ -214,7 +215,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                         <label class="form-control-label">Field</label>
                             <div class="input-group input-group-merge">
@@ -230,15 +231,15 @@
                             </div>
                         </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                         <div class="form-group">
                         <label class="form-control-label">Nama Field</label>
                             <div class="input-group input-group-merge">
-                            <input class="form-control" name="field_name" placeholder="nama field" type="text">
+                            <input class="form-control" name="field_name[]" placeholder="nama field" type="text">
                             </div>
                         </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                         <div class="form-group">
                         <label class="form-control-label">Tipe Field</label>
                             <div class="input-group input-group-merge">
@@ -248,6 +249,14 @@
                                 <option value="datetime">Tanggal</option>
                                 <option value="double">Angka Desimal</option>
                             </select>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-3">
+                        <div class="form-group">
+                        <label class="form-control-label" style="opacity:0%">Tipe Field</label>
+                            <div class="input-group input-group-merge" style="opacity:0%">
+                                aaaaaa
                             </div>
                         </div>
                         </div>
@@ -289,5 +298,55 @@
   <script src="./assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="./assets/js/demo.min.js"></script>
+  <script type="text/javascript">
+			$("#addcustom").click(function(){
+				$("#fieldss").append("<div class='col-md-3 cf'>"+
+                        "<div class='form-group'>"+
+                        "<label class='form-control-label'>Field</label>"+
+                            "<div class='input-group input-group-merge'>"+
+                            "<select class='form-control' name='entity[]' selected='Varchar / String Text'>"+
+                            "<option value='jurusanss'>Jurusan</option>"+
+                                "<option value='jadwals'>Jadwal</option>"+
+                                "<option value='kehadirans'>Kehadiran</option>"+
+                                "<option value='mahasiswas'>Mahasiswa</option>"+
+                                "<option value='matakuliahs'>Mata Kuliah</option>"+
+                                "<option value='matakuliahs_buka'>Mata Kuliah yang Buka</option>"+
+                                "<option value='matakuliahs_kp'>Kelas Pararel Mata Kuliah</option>"+
+                            "</select>"+
+                            "</div>"+
+                        "</div>"+
+                        "</div>"+
+                        "<div class='col-md-3 cf'>"+
+                        "<div class='form-group'>"+
+                        "<label class='form-control-label'>Nama Field</label>"+
+                            "<div class='input-group input-group-merge'>"+
+                            "<input class='form-control' name='field_name[]' placeholder='nama field' type='text'>"+
+                            "</div>"+
+                        "</div>"+
+                        "</div>"+
+                        "<div class='col-md-3 cf'>"+
+                        "<div class='form-group'>"+
+                        "<label class='form-control-label'>Tipe Field</label>"+
+                            "<div class='input-group input-group-merge'>"+
+                            "<select class='form-control' name='typee[]' selected='Varchar / String Text'>"+
+                                "<option value='varchar(45)'>Text</option>"+
+                                "<option value='int'>Angka</option>"+
+                                "<option value='datetime'>Tanggal</option>"+
+                                "<option value='double'>Angka Desimal</option>"+
+                            "</select>"+
+                            "</div>"+
+                        "</div></div>"+
+                        "<div class='col-md-3 cf'>"+
+                        "<div class='form-group'>"+
+                        "<label class='form-control-label' style='opacity:0%;'>Tipe Field</label>"+
+                            "<div class='input-group input-group-merge'>"+
+                                "<input class='btn btn-danger' type='button' value='Hapus' id='deletecustom'/>"+
+                            "</div>"+
+                        "</div></div>");
+			});
+			$('body').on('click', '#deletecustom', function(){
+				$('.cf').remove();
+			});
+		</script>
 </body>
 </html>
