@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="./assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <link rel="stylesheet" href="./assets/css/argon.css?v=1.1.0" type="text/css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" rel="stylesheet"></link>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
@@ -267,7 +268,7 @@
                             <div class="input-group input-group-merge">
                             <div class="input-group-prepend">
                             </div>
-                                <input class="btn btn-outline-default btn-round" type="button" value="Tambah Field" id="addcustom"/> &nbsp;
+                                <input onclick="swalgood('Sukses','Field Tambahan Berhasil Ditambahkan.')" class="btn btn-outline-default btn-round" type="button" value="Tambah Field" id="addcustom"/> &nbsp; &nbsp; 
                                 <input class="btn btn-primary" type="submit" value="Tambah Jurusan"/>
                             </div>
                         </div>
@@ -296,6 +297,7 @@
   <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
   <!-- Argon JS -->
   <script src="./assets/js/argon.js?v=1.1.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="./assets/js/demo.min.js"></script>
   <script type="text/javascript">
@@ -340,7 +342,7 @@
                         "<div class='form-group'>"+
                         "<label class='form-control-label' style='opacity:0%;'>Tipe Field</label>"+
                             "<div class='input-group input-group-merge'>"+
-                                "<input class='btn btn-danger' type='button' value='Hapus' id='deletecustom'/>"+
+                                "<input onclick='swalgood(`Sukses`,`Field Dihapus.`)' class='btn btn-danger' type='button' value='Hapus' id='deletecustom'/>"+
                             "</div>"+
                         "</div></div>");
 			});
@@ -348,5 +350,14 @@
 				$('.cf').remove();
 			});
 		</script>
+        <script>
+            function swalgood(msg1,msg2){
+                Swal.fire(
+                    msg1,
+                    msg2,
+                    'success'
+                );
+            }
+        </script>
 </body>
 </html>

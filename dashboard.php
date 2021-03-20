@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="./assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <link rel="stylesheet" href="./assets/css/argon.css?v=1.1.0" type="text/css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" rel="stylesheet"></link>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
@@ -189,47 +190,55 @@
             </div>
           </div>
         </div>
-        <div class="col-4">
-            <a href='manage_jurusans.php'>
-                <div class="card bg-gradient-info border-0 btn text-left">
-                    <!-- Card body -->
-                    <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                        <h5 class="card-title text-uppercase text-muted mb-0 text-white">Tambah </h5>
-                        <span class="h2 font-weight-bold mb-0 text-white">Jurusan</span>
+        <!-- Field Admin -->
+        <?php 
+              if($_SESSION['jabatan']=='admin' && $_SESSION['nama']=='Admin'){
+                echo "
+                    <div class='col-4'>
+                    <a href='manage_jurusans.php'>
+                        <div class='card bg-gradient-info border-0 btn text-left'>
+                            <!-- Card body -->
+                            <div class='card-body'>
+                            <div class='row'>
+                                <div class='col-12'>
+                                <h5 class='card-title text-uppercase text-muted mb-0 text-white'>Tambah </h5>
+                                <span class='h2 font-weight-bold mb-0 text-white'>Jurusan</span>
+                                </div>
+                            </div>
+                            </div>
                         </div>
+                    </a>
+                </div>
+                <div class='col-4'>
+                  <div class='card bg-gradient-success border-0 btn text-left'>
+                    <!-- Card body -->
+                    <div class='card-body'>
+                      <div class='row'>
+                        <div class='col-12'>
+                          <h5 class='card-title text-uppercase text-muted mb-0 text-white'>Tambah </h5>
+                          <span class='h2 font-weight-bold mb-0 text-white'>User</span>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                </div>
+                <div class='col-4'>
+                  <div class='card bg-gradient-danger border-0 btn text-left'>
+                    <!-- Card body -->
+                    <div class='card-body'>
+                      <div class='row'>
+                        <div class='col-12'>
+                          <h5 class='card-title text-uppercase text-muted mb-0 text-white'>Manage </h5>
+                          <span class='h2 font-weight-bold mb-0 text-white'>DAC Rules</span>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </a>
-        </div>
-        <div class="col-4">
-          <div class="card bg-gradient-success border-0 btn text-left">
-            <!-- Card body -->
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <h5 class="card-title text-uppercase text-muted mb-0 text-white">Tambah </h5>
-                  <span class="h2 font-weight-bold mb-0 text-white">User</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="card bg-gradient-danger border-0 btn text-left">
-            <!-- Card body -->
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <h5 class="card-title text-uppercase text-muted mb-0 text-white">Manage </h5>
-                  <span class="h2 font-weight-bold mb-0 text-white">DAC Rules</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                ";
+              }
+            ?>
+        <!-- Field Admin -->
       </div>
         </li>
     </ul>
@@ -248,6 +257,7 @@
   <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
   <!-- Argon JS -->
   <script src="./assets/js/argon.js?v=1.1.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="./assets/js/demo.min.js"></script>
 </body>
