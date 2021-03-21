@@ -289,7 +289,8 @@ $mysqli = konek('localhost', 'root', '');
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
                             </div>
-                            <select class="form-control" id="fakultas" name="fakultas" data-toggle="select">
+                            <select class="form-control" id="fakultas" name="fakultas" data-toggle="select" onchange="changeJurusan(this.value)">
+                              <option value='0'>Pilih Fakultas</option>
                               <?php
                               $sql = "SELECT * FROM fakultass order by nama ASC";
                               $stmt = $mysqli->prepare($sql);
@@ -311,20 +312,8 @@ $mysqli = konek('localhost', 'root', '');
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
                             </div>
-                            <select class="form-control" name="jurusan" data-toggle="select">
-                              <option value='0'>No Jurusan</option>
-                              <?php
-                              $sql = "SELECT * FROM jurusans order by nama ASC";
-                              // $sql = "SELECT * FROM jurusans where fakultass_id=? order by nama ASC";
-                              $stmt = $mysqli->prepare($sql);
-                              // $stmt->bind_param("i", $fakultass_id);
-                              $stmt->execute();
-                              $res = $stmt->get_result();
-
-                              while ($row = $res->fetch_assoc()) {
-                                echo "<option value='" . $row['id'] . "'>" . $row['nama'] . "</option>";
-                              }
-                              ?>
+                            <select id="jurusanlist" class="form-control" name="jurusan" data-toggle="select">
+                              <option value='0'>Pilih Jurusan</option>
                             </select>
                           </div>
                         </div>
@@ -367,7 +356,7 @@ $mysqli = konek('localhost', 'root', '');
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
     <!-- Demo JS - remove this in your project -->
     <script src="./assets/js/demo.min.js"></script>
-    <script>
+    <script type="text/javascript">
       function swalgood(msg1, msg2) {
         Swal.fire(
           msg1,
@@ -375,7 +364,27 @@ $mysqli = konek('localhost', 'root', '');
           'success'
         );
       }
+      function changeJurusan(idFakultas) {
+        var idFakultas = idFakultas;
+        $.ajax({
+          type: "POST",
+          url: "loadjurusanperfakultas.php",
+          data: {
+            idFakultas: idFakultas
+          },
+          success: function(data) {
+            var obj = JSON.parse(data);
+            $("#jurusanlist").html("");
+            if (obj['status']) {
+              var dataa = obj['data'];
+              $("#jurusanlist").append("<option value='0'>Pilih Jurusan</option>");
+              for (var i = 0; i < dataa.length; i++) {
+                $("#jurusanlist").append("<option value='" + dataa[i]['id'] + "'>" + dataa[i]['nama'] + "</option>");
+              }
+            }
+          }
+        });
+      }
     </script>
 </body>
-
 </html>
