@@ -184,7 +184,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                 <div class="col-12">
                   <?php
                   if (isset($_SESSION['success'])) {
-                    ?>
+                  ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                       <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                       <span class="alert-text"><strong>Success!</strong> <?php echo $_SESSION['success']; ?></span>
@@ -192,11 +192,10 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <?php
+                  <?php
                     unset($_SESSION['success']);
-                  }
-                  elseif(isset($_SESSION['error'])) {
-                    ?>
+                  } elseif (isset($_SESSION['error'])) {
+                  ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                       <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                       <span class="alert-text"><strong>Error!</strong> <?php echo $_SESSION['error']; ?></span>
@@ -204,7 +203,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <?php
+                  <?php
                     unset($_SESSION['error']);
                   }
                   ?>
@@ -296,6 +295,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
                           </div>
+                          <input onclick='swalgood(`Sukses`,`Field Dihapus.`)' class='btn btn-danger' type='button' value='Kurangi Custom Field' id='deletecustom' /> &nbsp; &nbsp;
                           <input onclick="swalgood('Sukses','Field Tambahan Berhasil Ditambahkan.')" class="btn btn-outline-default btn-round" type="button" value="Tambah Field" id="addcustom" /> &nbsp; &nbsp;
                           <input class="btn btn-primary" type="submit" value="Tambah Jurusan" />
                         </div>
@@ -332,6 +332,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
       var count = 0;
       $("#addcustom").click(function() {
         count++;
+        document.getElementById("deletecustom").style.display = "block";
         $("#fieldss").append("<div class='col-md-3 cf_" + count + "'>" +
           "<div class='form-group'>" +
           "<label class='form-control-label'>Field</label>" +
@@ -371,14 +372,22 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
           "<div class='form-group'>" +
           "<label class='form-control-label' style='opacity:0%;'>Tipe Field</label>" +
           "<div class='input-group input-group-merge'>" +
-          "<input onclick='swalgood(`Sukses`,`Field Dihapus.`)' class='btn btn-danger' type='button' value='Hapus' id='deletecustom'/>" +
+          "" +
           "</div>" +
           "</div></div>");
       });
       $('body').on('click', '#deletecustom', function() {
         $('.cf_' + count).remove();
         count--;
+        if (count == 0) {
+          document.getElementById("deletecustom").style.display = "none";
+        }
       });
+      if (count > 0) {
+        document.getElementById("deletecustom").style.display = "block";
+      } else {
+        document.getElementById("deletecustom").style.display = "none";
+      }
     </script>
     <script>
       function swalgood(msg1, msg2) {
@@ -390,4 +399,5 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
       }
     </script>
 </body>
+
 </html>
