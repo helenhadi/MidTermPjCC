@@ -182,6 +182,32 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
             <div class="card-body">
               <div class="row">
                 <div class="col-12">
+                  <?php
+                  if (isset($_SESSION['success'])) {
+                    ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                      <span class="alert-text"><strong>Success!</strong> <?php echo $_SESSION['success']; ?></span>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <?php
+                    unset($_SESSION['success']);
+                  }
+                  elseif(isset($_SESSION['error'])) {
+                    ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                      <span class="alert-text"><strong>Error!</strong> <?php echo $_SESSION['error']; ?></span>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <?php
+                    unset($_SESSION['error']);
+                  }
+                  ?>
                   <form method="POST" enctype="multipart/form-data" action="tambah_jurusan_proses.php">
                     <!-- Input groups with icon -->
                     <div class="row" id="fieldss">

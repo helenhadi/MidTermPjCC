@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include ('connectdb.php');
 $mysqli = konek('localhost', 'root', '');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -48,12 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt->execute();
                 }
             }
-            $_SESSION['msg'] = "Jurusan berhasil ditambahkan.";
-            header("Location:tambah_user.php");
+            $_SESSION['success'] = "Jurusan berhasil ditambahkan.";
+            header("Location:manage_jurusans.php");
             exit;
         }
         else {
-            echo $mysqli->error;
+            $_SESSION['error'] = $mysqli->error;
         }
     }
 }
