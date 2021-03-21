@@ -182,7 +182,7 @@ $mysqli = konek('localhost', 'root', '');
             <div class="card-body">
               <div class="row">
                 <div class="col-12">
-                  <form method="POST" enctype="multipart/form-data" action="#">
+                  <form method="POST" enctype="multipart/form-data" action="tambah_user_process.php">
                     <!-- Input groups with icon -->
                     <div class="row" id="fieldss">
                       <div class="col-md-12">
@@ -257,7 +257,7 @@ $mysqli = konek('localhost', 'root', '');
                               <option value='dekan'>Dekan</option>
                               <option value='wadek'>Wakil Dekan</option>
                               <option value='kajur'>Kepala Jurusan</option>
-                              <option value='kalab'>Kepala Lab</option>
+                              <option value='kalab'>Kepala Laboratorium</option>
                               <option value='dosen'>Dosen</option>
                               <option value='mhs'>Mahasiswa</option>
                             </select>
@@ -271,7 +271,7 @@ $mysqli = konek('localhost', 'root', '');
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
                           </div>
-                          <input class="btn btn-primary" type="submit" value="Tambah User" />
+                          <input class="btn btn-primary" type="submit" name="adduser" value="Tambah User" />
                         </div>
                       </div>
                     </div>
