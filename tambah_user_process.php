@@ -8,28 +8,33 @@ if (isset($_POST['adduser'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
         $saltedPwd = sha1(md5($password));
-        $password = $_POST['jurusan'];
-        $password = $_POST['password'];
-        $sql = "SELECT * FROM users WHERE username=? AND password=?";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param("ss", $uid, $saltedPwd);
+        $jabatan = $_POST['jabatan'];
+        $fakultas = $_POST['fakultas'];
+        $jurusan = $_POST['jurusan'];
+        if ($jurusan == 0) {
+            $sql = "insert into users(nama, username, password, jabatan, fakultass_id) values (?, ?, ?, ?, ?)";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("ssssi", $nama, $username, $saltedPwd, $jabatan, $fakultas);
+        }
+        else {
+            $sql = "insert into users(nama, username, password, jabatan, fakultass_id, jurusans_id) values (?, ?, ?, ?, ?, ?)";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("ssssii", $nama, $username, $saltedPwd, $jabatan, $fakultas, $jurusan);
+        }
+        
         $stmt->execute();
-        $res = $stmt->get_result();
-        $row = $res->fetch_assoc();
-        if(!$row) {
-            $_SESSION['err'] = "Wrong credentials";
-            header("Location: login.php");
-        } else {
-            $_SESSION['err'] = "";
-            $_SESSION['username'] = $uid;
-            $_SESSION['nama'] = $row['nama'];
-            $_SESSION['jabatan'] = $row['jabatan'];
-            header("Location: dashboard.php");
+        if ($stmt->affected_rows > 0) {
+            $_SESSION['msg'] = "Insert user succeed!";
+        }
+        else {
+            $_SESSION['msg'] = "Failed to insert user, please try again...";
         }
     }
     else {
-        $_SESSION['err'] = "Passwords does not match!";
+        $_SESSION['msg'] = "Passwords does not match!";
     }
+
+    header("Location: tambah_user.php");
 }
 else
     header("Location: dashboard.php");
