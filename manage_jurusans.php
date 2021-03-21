@@ -3,11 +3,11 @@
   if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jurusan'])) {
     header("location: login.php");
   }
-  if($_SESSION['jabatan']!='admin' && $_SESSION['nama']!='Admin'){
+  if($_SESSION['jabatan']!='admin' && $_SESSION['nama']!= 'Administrator'){
     header("location: dashboard.php");
   }
   include ('connectdb.php');
-    $mysqli = konek('localhost', 'root', '');
+    $mysqli = konek('localhost', 'root', '','presensi_cloud');
 ?>
 <!DOCTYPE html>
 <html>
@@ -57,7 +57,7 @@
               </a>
             </li>
             <?php 
-              if($_SESSION['jabatan']=='admin' && $_SESSION['nama']=='Admin'){
+              if($_SESSION['jabatan']=='admin' && $_SESSION['nama']== 'Administrator'){
                 echo "
                   <li class='nav-item'>
                     <a class='nav-link active' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
@@ -221,7 +221,6 @@
                         <label class="form-control-label">Field</label>
                             <div class="input-group input-group-merge">
                             <select class='form-control' name="entity[]" selected="Varchar / String Text">
-                            <option value="jurusanss">Jurusan</option>
                                 <option value="jadwals">Jadwal</option>
                                 <option value="kehadirans">Kehadiran</option>
                                 <option value="mahasiswas">Mahasiswa</option>
@@ -307,7 +306,6 @@
                         "<label class='form-control-label'>Field</label>"+
                             "<div class='input-group input-group-merge'>"+
                             "<select class='form-control' name='entity[]' selected='Varchar / String Text'>"+
-                            "<option value='jurusanss'>Jurusan</option>"+
                                 "<option value='jadwals'>Jadwal</option>"+
                                 "<option value='kehadirans'>Kehadiran</option>"+
                                 "<option value='mahasiswas'>Mahasiswa</option>"+

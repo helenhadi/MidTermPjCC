@@ -1,7 +1,7 @@
 <?php 
 session_start();
 include ('connectdb.php');
-$mysqli = konek('localhost', 'root', '', 'master_schema');
+$mysqli = konek('localhost', 'root', '', 'presensi_cloud');
 if (isset($_POST['btnsignin'])) {
     $uid = $_POST['uid'];
     $password = $_POST['password'];
