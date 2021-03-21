@@ -24,8 +24,8 @@ $mysqli = konek('localhost', 'root', '');
   <link rel="stylesheet" href="./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <link rel="stylesheet" href="./assets/css/argon.css?v=1.1.0" type="text/css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" rel="stylesheet">
-  </link>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</link>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -62,25 +62,25 @@ $mysqli = konek('localhost', 'root', '');
             <?php
             if ($_SESSION['jabatan'] == 'admin' && $_SESSION['nama'] == 'Administrator') {
               echo "
-                  <li class='nav-item'>
-                    <a class='nav-link' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
-                      <i class='ni ni-badge text-primary'></i>
-                      <span class='nav-link-text'>Tambah Jurusan</span>
-                    </a>
-                  </li>
-                  <li class='nav-item active'>
-                    <a class='nav-link' href='tambah_user.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
-                      <i class='ni ni-single-02 text-primary'></i>
-                      <span class='nav-link-text'>Tambah User</span>
-                    </a>
-                  </li>
-                  <li class='nav-item'>
-                    <a class='nav-link' href='#navbar-dashboards' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
-                      <i class='ni ni-bulb-61 text-primary'></i>
-                      <span class='nav-link-text'>Manage DAC Rules</span>
-                    </a>
-                  </li>
-                ";
+              <li class='nav-item'>
+              <a class='nav-link' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+              <i class='ni ni-badge text-primary'></i>
+              <span class='nav-link-text'>Tambah Jurusan</span>
+              </a>
+              </li>
+              <li class='nav-item active'>
+              <a class='nav-link' href='tambah_user.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+              <i class='ni ni-single-02 text-primary'></i>
+              <span class='nav-link-text'>Tambah User</span>
+              </a>
+              </li>
+              <li class='nav-item'>
+              <a class='nav-link' href='#navbar-dashboards' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+              <i class='ni ni-bulb-61 text-primary'></i>
+              <span class='nav-link-text'>Manage DAC Rules</span>
+              </a>
+              </li>
+              ";
             }
             ?>
           </ul>
@@ -231,23 +231,6 @@ $mysqli = konek('localhost', 'root', '');
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label class="form-control-label">Jurusan</label>
-                          <div class="input-group input-group-merge">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
-                            </div>
-                            <select class="form-control" name="jurusan" data-toggle="select">
-                              <option value='dekan'>Jurusan 1</option>
-                              <option value='wadek'>Jurusan 1</option>
-                              <option value='kajur'>Jurusan 1</option>
-                              <option value='kalab'>Jurusan 1</option>
-                              <option value='dosen'>Jurusan 1</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
                           <label class="form-control-label">Jabatan</label>
                           <div class="input-group input-group-merge">
                             <div class="input-group-prepend">
@@ -264,53 +247,99 @@ $mysqli = konek('localhost', 'root', '');
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="form-control-label" style='opacity:0%;'>Add</label>
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="form-control-label">Fakultas</label>
+                          <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
+                            </div>
+                            <select class="form-control" id="fakultas" name="fakultas" data-toggle="select">
+                              <?php
+                              $sql = "SELECT * FROM fakultass order by nama ASC";
+                              $stmt = $mysqli->prepare($sql);
+                              $stmt->execute();
+                              $res = $stmt->get_result();
+
+                              while ($row = $res->fetch_assoc()) {
+                                echo "<option value='".$row['id']."'>".$row['nama']."</option>";
+                              }
+                              ?>
+                            </select>
                           </div>
-                          <input class="btn btn-primary" type="submit" name="adduser" value="Tambah User" />
                         </div>
                       </div>
-                    </div>
-                  </form>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="form-control-label">Jurusan</label>
+                          <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
+                            </div>
+                            <select class="form-control" name="jurusans" data-toggle="select">
+                              <option value=''>No Jurusan</option>
+                              <?php
+                              $sql = "SELECT * FROM jurusans order by nama ASC where fakultass_id=?";
+                              $stmt = $mysqli->prepare($sql);
+                              $stmt->bind_param("i", $fakultass_id);
+                              $stmt->execute();
+                              $res = $stmt->get_result();
+
+                              while ($row = $res->fetch_assoc()) {
+                                echo "<option value='".$row['id']."'>".$row['nama']."</option>";
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="form-control-label" style='opacity:0%;'>Add</label>
+                          <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                            </div>
+                            <input class="btn btn-primary" type="submit" name="adduser" value="Tambah User" />
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </li>
-      </ul>
-    </div>
-    <!-- Argon Scripts -->
-    <!-- Core -->
-    <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
-    <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-    <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-    <!-- Optional JS -->
-    <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-    <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
-    <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
-    <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-    <!-- Argon JS -->
-    <script src="./assets/js/argon.js?v=1.1.0"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-    <!-- Demo JS - remove this in your project -->
-    <script src="./assets/js/demo.min.js"></script>
-    <script>
-      function swalgood(msg1, msg2) {
-        Swal.fire(
-          msg1,
-          msg2,
-          'success'
+    </ul>
+  </div>
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <!-- Optional JS -->
+  <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+  <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+  <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+  <!-- Argon JS -->
+  <script src="./assets/js/argon.js?v=1.1.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+  <!-- Demo JS - remove this in your project -->
+  <script src="./assets/js/demo.min.js"></script>
+  <script>
+    function swalgood(msg1, msg2) {
+      Swal.fire(
+        msg1,
+        msg2,
+        'success'
         );
-      }
-    </script>
+    }
+    
+  </script>
 </body>
 
 </html>

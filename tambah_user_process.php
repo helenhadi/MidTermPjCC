@@ -8,6 +8,8 @@ if (isset($_POST['adduser'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
         $saltedPwd = sha1(md5($password));
+        $password = $_POST['jurusan'];
+        $password = $_POST['password'];
         $sql = "SELECT * FROM users WHERE username=? AND password=?";
         $stmt = $mysqli->prepare($sql);
         $stmt->bind_param("ss", $uid, $saltedPwd);
@@ -29,4 +31,6 @@ if (isset($_POST['adduser'])) {
         $_SESSION['err'] = "Passwords does not match!";
     }
 }
+else
+    header("Location: dashboard.php");
 ?>
