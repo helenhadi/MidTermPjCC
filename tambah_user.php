@@ -78,8 +78,8 @@ $mysqli = konek('localhost', 'root', '');
               <span class='nav-link-text'>Tambah Jurusan</span>
               </a>
               </li>
-              <li class='nav-item active'>
-              <a class='nav-link' href='tambah_user.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+              <li class='nav-item'>
+              <a class='nav-link active' href='tambah_user.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
               <i class='ni ni-single-02 text-primary'></i>
               <span class='nav-link-text'>Tambah User</span>
               </a>
