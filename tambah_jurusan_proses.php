@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
     else {
-        $mysqli->select_db('master_schema');
+        $mysqli->select_db('presensi_cloud');
         $sql = "insert into jurusans (kode,nama) values ('".$nama.$fakultas_id."','".$nama."')";
         $result = $mysqli->query($sql);
         if ($result === TRUE) {
