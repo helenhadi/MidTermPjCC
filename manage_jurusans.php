@@ -1,17 +1,5 @@
-<?php
-session_start();
-if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jurusan'])) {
-  header("location: login.php");
-}
-if ($_SESSION['jabatan'] != 'admin' && $_SESSION['nama'] != 'Administrator') {
-  header("location: dashboard.php");
-}
-include('connectdb.php');
-$mysqli = konek('localhost', 'root', '', 'presensi_cloud');
-?>
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,7 +15,29 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
   </link>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-
+<?php
+session_start();
+if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jurusan'])) {
+  header("location: login.php");
+}
+if ($_SESSION['jabatan'] != 'admin' && $_SESSION['nama'] != 'Administrator') {
+  header("location: dashboard.php");
+}
+if (isset($_SESSION['success'])) {
+  $status = $_SESSION['success'];
+  echo '<script type="text/javascript">';
+  echo "setTimeout(function () {swal('Success!', '" . $status . "', 'success');";
+  echo '}, 1);</script>';
+}
+if (isset($_SESSION['error'])) {
+  $status = $_SESSION['error'];
+  echo '<script type="text/javascript">';
+  echo "setTimeout(function () {swal('Failed!', '" . $status ."', 'error');";
+  echo '}, 1);</script>';
+}
+include('connectdb.php');
+$mysqli = konek('localhost', 'root', '', 'presensi_cloud');
+?>
 <body>
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -295,7 +305,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
                           </div>
-                          <input onclick='swalgood(`Sukses`,`Field Dihapus.`)' class='btn btn-danger' type='button' value='Kurangi Custom Field' id='deletecustom' /> &nbsp; &nbsp;
+                          <input onclick='swalgood(`Sukses`,`Field Dihapus.`)' class='btn btn-danger' type='button' value='Kurangi Field' id='deletecustom' /> &nbsp; &nbsp;
                           <input onclick="swalgood('Sukses','Field Tambahan Berhasil Ditambahkan.')" class="btn btn-outline-default btn-round" type="button" value="Tambah Field" id="addcustom" /> &nbsp; &nbsp;
                           <input class="btn btn-primary" type="submit" value="Tambah Jurusan" />
                         </div>

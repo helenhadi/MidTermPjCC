@@ -3,11 +3,6 @@ session_start();
 if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jabatan'])) {
   header("location: login.php");
 }
-if (isset($_SESSION['username'])) {
-  echo "
-    
-    ";
-}
 ?>
 <!DOCTYPE html>
 <html>

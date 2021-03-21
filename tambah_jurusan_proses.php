@@ -17,44 +17,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     else {
         $mysqli->select_db('presensi_cloud');
-        $sql = "insert into jurusans (nama, fakultass_id) values ('".$nama."','".$fakultas_id."')";
-        $result = $mysqli->query($sql);
-        if ($result === TRUE) {
-            $sql2 = "select id from jurusans order by id desc limit 1";
-            $result2 = $mysqli->query($sql2);
-            $row = $result2->fetch_assoc();
-            $id = $row['id'];
-            $newSchema = 'presensi_cloud_'.$id;
-            $sql3 = "create database ".$newSchema;
-            $result3 = $mysqli->query($sql3);
+        $sql = "SELECT * FROM jurusans WHERE nama = ? AND fakultass_id = ?";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("si", $nama, $fakultas_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res->num_rows <= 0) {
+            $sql = "insert into jurusans (nama, fakultass_id) values ('".$nama."','".$fakultas_id."')";
+            $result = $mysqli->query($sql);
+            if ($result === TRUE) {
+                $sql2 = "select id from jurusans order by id desc limit 1";
+                $result2 = $mysqli->query($sql2);
+                $row = $result2->fetch_assoc();
+                $id = $row['id'];
+                $newSchema = 'presensi_cloud_'.$id;
+                $sql3 = "create database ".$newSchema;
+                $result3 = $mysqli->query($sql3);
 
-            $restore_file  = "master_schema.sql";
-            $server_name   = "localhost";
-            $username      = "root";
-            $password      = "";
+                $restore_file  = "master_schema.sql";
+                $server_name   = "localhost";
+                $username      = "root";
+                $password      = "";
 
-            $cmd = "mysql -h $server_name -u $username $newSchema < $restore_file";
-            exec($cmd);
-            $mysqli->select_db($newSchema);
-            if($fields[0] != '' || $fields[0] != null){
-                for ($i = 0; $i <= count($entities) - 1; $i++) {
-                    $sql = "ALTER TABLE " . $entities[$i] . " ADD COLUMN " . $fields[$i] . " " . $typee[$i];
-                    $result = $mysqli->query($sql);
+                $cmd = "mysql -h $server_name -u $username $newSchema < $restore_file";
+                exec($cmd);
+                $mysqli->select_db($newSchema);
+                if($fields[0] != '' || $fields[0] != null){
+                    for ($i = 0; $i <= count($entities) - 1; $i++) {
+                        $sql = "ALTER TABLE " . $entities[$i] . " ADD COLUMN " . $fields[$i] . " " . $typee[$i];
+                        $result = $mysqli->query($sql);
+                    }
+                    $mysqli->select_db('presensi_cloud');
+                    $sql = "Insert Into metadatas (entity, custom_field, jurusans_id) Values (?,?,?)";
+                    for ($i = 0; $i <= count($entities) - 1; $i++) {
+                        $stmt = $mysqli->prepare($sql);
+                        $stmt->bind_param("ssi", $entities[$i], $fields[$i], $id);
+                        $stmt->execute();
+                    }
                 }
-                $mysqli->select_db('presensi_cloud');
-                $sql = "Insert Into metadatas (entity, custom_field, jurusans_id) Values (?,?,?)";
-                for ($i = 0; $i <= count($entities) - 1; $i++) {
-                    $stmt = $mysqli->prepare($sql);
-                    $stmt->bind_param("ssi", $entities[$i], $fields[$i], $id);
-                    $stmt->execute();
-                }
+                $_SESSION['success'] = "Jurusan berhasil ditambahkan.";
+                header("Location:manage_jurusans.php");
+                exit;
             }
-            $_SESSION['success'] = "Jurusan berhasil ditambahkan.";
+            else {
+                $_SESSION['error'] = $mysqli->error;
+            }
+        } else {
+            $_SESSION['error'] = "Jurusan sudah ada!";
             header("Location:manage_jurusans.php");
-            exit;
-        }
-        else {
-            $_SESSION['error'] = $mysqli->error;
         }
     }
 }
