@@ -35,19 +35,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $cmd = "mysql -h $server_name -u $username $newSchema < $restore_file";
             exec($cmd);
             $mysqli->select_db($newSchema);
-            for ($i=0; $i <= count($entities)-1 ; $i++) { 
-                $sql = "ALTER TABLE ".$entities[$i]." ADD COLUMN ".$fields[$i]." ".$typee[$i];
-                $result = $mysqli->query($sql);
-            }
-            $mysqli->select_db('presensi_cloud');
-            $sql = "Insert Into metadatas (entity, custom_field, jurusans_id) Values (?,?,?)";
-            for ($i=0; $i <= count($entities)-1 ; $i++) { 
-                $stmt = $mysqli->prepare($sql);
-                $stmt->bind_param("ssi", $entities[$i], $fields[$i], $id);
-                $stmt->execute();
+            if($fields[0] != '' || $fields[0] != null){
+                for ($i = 0; $i <= count($entities) - 1; $i++) {
+                    $sql = "ALTER TABLE " . $entities[$i] . " ADD COLUMN " . $fields[$i] . " " . $typee[$i];
+                    $result = $mysqli->query($sql);
+                }
+                $mysqli->select_db('presensi_cloud');
+                $sql = "Insert Into metadatas (entity, custom_field, jurusans_id) Values (?,?,?)";
+                for ($i = 0; $i <= count($entities) - 1; $i++) {
+                    $stmt = $mysqli->prepare($sql);
+                    $stmt->bind_param("ssi", $entities[$i], $fields[$i], $id);
+                    $stmt->execute();
+                }
             }
             $_SESSION['msg'] = "Jurusan berhasil ditambahkan.";
-            header("Location:dashboard.php");
+            header("Location:tambah_user.php");
             exit;
         }
         else {

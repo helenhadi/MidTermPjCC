@@ -1,16 +1,17 @@
 <?php
-  session_start();
-  if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jurusan'])) {
-    header("location: login.php");
-  }
-  if(isset($_SESSION['username'])){
-    echo "
+session_start();
+if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jurusan'])) {
+  header("location: login.php");
+}
+if (isset($_SESSION['username'])) {
+  echo "
     
     ";
-  }
+}
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,9 +23,11 @@
   <link rel="stylesheet" href="./assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <link rel="stylesheet" href="./assets/css/argon.css?v=1.1.0" type="text/css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" rel="stylesheet"></link>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" rel="stylesheet">
+  </link>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+
 <body>
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -56,9 +59,9 @@
                 <span class="nav-link-text">Dashboard</span>
               </a>
             </li>
-            <?php 
-              if($_SESSION['jabatan']=='admin' && $_SESSION['nama']== 'Administrator'){
-                echo "
+            <?php
+            if ($_SESSION['jabatan'] == 'admin' && $_SESSION['nama'] == 'Administrator') {
+              echo "
                   <li class='nav-item'>
                     <a class='nav-link' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                       <i class='ni ni-badge text-primary'></i>
@@ -78,7 +81,7 @@
                     </a>
                   </li>
                 ";
-              }
+            }
             ?>
           </ul>
           <!-- Divider -->
@@ -128,7 +131,7 @@
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <div class="media-body ml-2 d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION['nama']?></span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION['nama'] ?></span>
                   </div>
                 </div>
               </a>
@@ -174,20 +177,37 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-12">
+          <?php
+          if (isset($_SESSION['msg'])) {
+            echo "<div class='card bg-gradient-success border-0'>
+              <div class='card-body'>
+                <div class='row'>
+                  <div class='col-12'>
+                    <span class='h2 font-weight-bold mb-0 text-white'>
+                    ". $_SESSION['msg']."
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>";
+            unset($_SESSION['msg']);
+          }
+          ?>
           <div class="card bg-gradient-default border-0">
             <!-- Card body -->
             <div class="card-body">
               <div class="row">
+
                 <div class="col-12">
-                  <h5 class="card-title text-muted mb-0 text-white">Hi, 
-                  <?php 
-                        echo $_SESSION['nama'];
-                  ?></h5>
+                  <h5 class="card-title text-muted mb-0 text-white">Hi,
+                    <?php
+                    echo $_SESSION['nama'];
+                    ?></h5>
                   <span class="h2 font-weight-bold mb-0 text-white">
-                    <?php 
-                      if($_SESSION['jabatan']=='admin'){
-                        echo "Administrator";
-                      }
+                    <?php
+                    if ($_SESSION['jabatan'] == 'admin') {
+                      echo "Administrator";
+                    }
                     ?>
                   </span>
                 </div>
@@ -196,9 +216,9 @@
           </div>
         </div>
         <!-- Field Admin -->
-        <?php 
-              if($_SESSION['jabatan']=='admin' && $_SESSION['nama']=='Administrator'){
-                echo "
+        <?php
+        if ($_SESSION['jabatan'] == 'admin' && $_SESSION['nama'] == 'Administrator') {
+          echo "
                     <div class='col-4'>
                     <a href='manage_jurusans.php'>
                         <div class='card bg-gradient-info border-0 btn text-left'>
@@ -243,31 +263,32 @@
                   </div>
                 </div>
                 ";
-              }
-            ?>
+        }
+        ?>
         <!-- Field Admin -->
       </div>
-        </li>
-    </ul>
-  </div>
-  <!-- Argon Scripts -->
-  <!-- Core -->
-  <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
-  <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-  <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-  <!-- Optional JS -->
-  <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
-  <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
-  <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-  
-  <script src="./assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
-  <!-- Argon JS -->
-  <script src="./assets/js/argon.js?v=1.1.0"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-  <!-- Demo JS - remove this in your project -->
-  <script src="./assets/js/demo.min.js"></script>
+      </li>
+      </ul>
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+    <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Optional JS -->
+    <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+    <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+    <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+
+    <script src="./assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <!-- Argon JS -->
+    <script src="./assets/js/argon.js?v=1.1.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <!-- Demo JS - remove this in your project -->
+    <script src="./assets/js/demo.min.js"></script>
 </body>
+
 </html>

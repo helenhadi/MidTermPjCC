@@ -235,7 +235,7 @@
                         <div class="form-group">
                         <label class="form-control-label">Nama Field</label>
                             <div class="input-group input-group-merge">
-                            <input required class="form-control" name="field_name[]" placeholder="nama field" type="text">
+                            <input class="form-control" name="field_name[]" placeholder="nama field" type="text">
                             </div>
                         </div>
                         </div>
@@ -320,7 +320,7 @@
                         "<div class='form-group'>"+
                         "<label class='form-control-label'>Nama Field</label>"+
                             "<div class='input-group input-group-merge'>"+
-                            "<input required class='form-control' name='field_name[]' placeholder='nama field' type='text'>"+
+                            "<input class='form-control' name='field_name[]' placeholder='nama field' type='text'>"+
                             "</div>"+
                         "</div>"+
                         "</div>"+
