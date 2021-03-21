@@ -1,4 +1,12 @@
-<html>
+<?php
+	session_start();
+	if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jabatan'])) {
+		header("location: login.php");
+	}else{
+		header("location: dashboard.php");
+	}
+?>
+<!-- <html>
 <head>
 	<title>Presensi Cloud</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,16 +15,16 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 	<!-- Nucleo Icons -->
-	<link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-	<link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+	<!-- <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+	<link href="./assets/css/nucleo-svg.css" rel="stylesheet" /> -->
 	<!-- Font Awesome Icons -->
-	<link href="./assets/css/font-awesome.css" rel="stylesheet" />
+	<!-- <link href="./assets/css/font-awesome.css" rel="stylesheet" />
 	<link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
 	<!-- CSS Files -->
-	<link href="./assets/css/argon-design-system.css?v=1.2.2" rel="stylesheet" />
-</head>
-<style>
-		html,p,b,u,a,i,h1,h2,h3,h4,h5,h6{
+	<!-- <link href="./assets/css/argon-design-system.css?v=1.2.2" rel="stylesheet" /> --> 
+<!-- </head> 
+<style> -->
+		<!-- html,p,b,u,a,i,h1,h2,h3,h4,h5,h6{
 			font-family: 'Nunito', sans-serif;
 		}
 		body{
@@ -40,15 +48,15 @@
 			height:95%;
 			box-shadow: 0 10px 10px 0 rgba(0,0,0,0.2);
 		}
-</style>
-<body>
-	<div class="card">
-		<h2>Multi Schema Cloud</h2>
+</style> -->
+<!-- <body>
+	<div class="card"> -->
+		<!-- <h2>Multi Schema Cloud</h2> -->
 		<?php 
-			include('connectdb.php');
-			$mysqli = konek('localhost', 'root', '');
-			?>
-		<form method="POST" enctype="multipart/form-data" action="simpan.php">
+			//include('connectdb.php');
+			//$mysqli = konek('localhost', 'root', '');
+		?>
+		<!-- <form method="POST" enctype="multipart/form-data" action="simpan.php">
 			<label>Nama Jurusan : </label><input class="form-control" required type="text" name="nama"/>
 			<div id="customs">
 				<label>Custom Field </label><br><label>Nama : </label>
@@ -102,4 +110,4 @@
 		</script>
 	</div>
 </body>
-</html>
+</html> -->

@@ -10,6 +10,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="./assets/img/brand/favicon.png" type="image/png">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <title>
     Login 
