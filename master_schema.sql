@@ -11,22 +11,18 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema master_schema
--- -----------------------------------------------------
+-- Schema- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema master_schema
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `master_schema` DEFAULT CHARACTER SET utf8mb4 ;
+-- Schema- -----------------------------------------------------
 -- -----------------------------------------------------
 -- Schema presensi_cloud
 -- -----------------------------------------------------
-USE `master_schema` ;
 
 -- -----------------------------------------------------
--- Table `master_schema`.`mahasiswas`
+-- Table `mahasiswas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`mahasiswas` (
+CREATE TABLE IF NOT EXISTS `mahasiswas` (
   `id` INT(11) NOT NULL,
   `nrp` VARCHAR(255) NULL DEFAULT NULL,
   `user_id` VARCHAR(255) NULL,
@@ -36,9 +32,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `master_schema`.`matakuliahs`
+-- Table `matakuliahs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`matakuliahs` (
+CREATE TABLE IF NOT EXISTS `matakuliahs` (
   `id` INT(11) NOT NULL,
   `nama` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -47,9 +43,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `master_schema`.`matakuliahs_buka`
+-- Table `matakuliahs_buka`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`matakuliahs_buka` (
+CREATE TABLE IF NOT EXISTS `matakuliahs_buka` (
   `id` INT(11) NOT NULL,
   `kp` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -58,9 +54,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `master_schema`.`matakuliahs_kp`
+-- Table `matakuliahs_kp`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`matakuliahs_kp` (
+CREATE TABLE IF NOT EXISTS `matakuliahs_kp` (
   `matakuliahs_id` INT(11) NOT NULL,
   `matakuliahs_buka_id` INT(11) NOT NULL,
   `kapasitas` VARCHAR(45) NOT NULL,
@@ -69,12 +65,12 @@ CREATE TABLE IF NOT EXISTS `master_schema`.`matakuliahs_kp` (
   INDEX `fk_matakuliahs_has_matakuliahs_buka_matakuliahs1_idx` (`matakuliahs_id` ASC),
   CONSTRAINT `fk_matakuliahs_has_matakuliahs_buka_matakuliahs1`
     FOREIGN KEY (`matakuliahs_id`)
-    REFERENCES `master_schema`.`matakuliahs` (`id`)
+    REFERENCES `matakuliahs` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_matakuliahs_has_matakuliahs_buka_matakuliahs_buka1`
     FOREIGN KEY (`matakuliahs_buka_id`)
-    REFERENCES `master_schema`.`matakuliahs_buka` (`id`)
+    REFERENCES `matakuliahs_buka` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -82,9 +78,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `master_schema`.`ambil_matakuliahs`
+-- Table `ambil_matakuliahs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`ambil_matakuliahs` (
+CREATE TABLE IF NOT EXISTS `ambil_matakuliahs` (
   `mahasiswas_id` INT(11) NOT NULL,
   `matakuliahs_id` INT(11) NOT NULL,
   `matakuliahs_buka_id` INT(11) NOT NULL,
@@ -93,12 +89,12 @@ CREATE TABLE IF NOT EXISTS `master_schema`.`ambil_matakuliahs` (
   INDEX `fk_mahasiswas_has_matakuliahs_has_matakuliahs_buka_mahasisw_idx` (`mahasiswas_id` ASC),
   CONSTRAINT `fk_mahasiswas_has_matakuliahs_has_matakuliahs_buka_mahasiswas1`
     FOREIGN KEY (`mahasiswas_id`)
-    REFERENCES `master_schema`.`mahasiswas` (`id`)
+    REFERENCES `mahasiswas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_mahasiswas_has_matakuliahs_has_matakuliahs_buka_matakuliah1`
     FOREIGN KEY (`matakuliahs_id` , `matakuliahs_buka_id`)
-    REFERENCES `master_schema`.`matakuliahs_kp` (`matakuliahs_id` , `matakuliahs_buka_id`)
+    REFERENCES `matakuliahs_kp` (`matakuliahs_id` , `matakuliahs_buka_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -106,9 +102,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `master_schema`.`jadwals`
+-- Table `jadwals`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`jadwals` (
+CREATE TABLE IF NOT EXISTS `jadwals` (
   `id` INT(11) NOT NULL,
   `hari` VARCHAR(45) NOT NULL,
   `jam_mulai` VARCHAR(45) NOT NULL,
@@ -119,9 +115,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `master_schema`.`jadwal_matakuliahs`
+-- Table `jadwal_matakuliahs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`jadwal_matakuliahs` (
+CREATE TABLE IF NOT EXISTS `jadwal_matakuliahs` (
   `matakuliahs_id` INT(11) NOT NULL,
   `matakuliahs_buka_id` INT(11) NOT NULL,
   `jadwals_id` INT(11) NOT NULL,
@@ -130,12 +126,12 @@ CREATE TABLE IF NOT EXISTS `master_schema`.`jadwal_matakuliahs` (
   INDEX `fk_matakuliahs_has_matakuliahs_buka_has_jadwals_matakuliahs_idx` (`matakuliahs_id` ASC, `matakuliahs_buka_id` ASC),
   CONSTRAINT `fk_matakuliahs_has_matakuliahs_buka_has_jadwals_jadwals1`
     FOREIGN KEY (`jadwals_id`)
-    REFERENCES `master_schema`.`jadwals` (`id`)
+    REFERENCES `jadwals` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_matakuliahs_has_matakuliahs_buka_has_jadwals_matakuliahs_h1`
     FOREIGN KEY (`matakuliahs_id` , `matakuliahs_buka_id`)
-    REFERENCES `master_schema`.`matakuliahs_kp` (`matakuliahs_id` , `matakuliahs_buka_id`)
+    REFERENCES `matakuliahs_kp` (`matakuliahs_id` , `matakuliahs_buka_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -143,9 +139,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `master_schema`.`kehadirans`
+-- Table `kehadirans`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`kehadirans` (
+CREATE TABLE IF NOT EXISTS `kehadirans` (
   `mahasiswas_id` INT(11) NOT NULL,
   `matakuliahs_id` INT(11) NOT NULL,
   `matakuliahs_buka_id` INT(11) NOT NULL,
@@ -159,12 +155,12 @@ CREATE TABLE IF NOT EXISTS `master_schema`.`kehadirans` (
   INDEX `fk_mahasiswas_has_matakuliahs_has_matakuliahs_buka_has_jadw_idx1` (`mahasiswas_id` ASC),
   CONSTRAINT `fk_mahasiswas_has_matakuliahs_has_matakuliahs_buka_has_jadwal1`
     FOREIGN KEY (`mahasiswas_id`)
-    REFERENCES `master_schema`.`mahasiswas` (`id`)
+    REFERENCES `mahasiswas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_mahasiswas_has_matakuliahs_has_matakuliahs_buka_has_jadwal2`
     FOREIGN KEY (`matakuliahs_id` , `matakuliahs_buka_id` , `jadwals_id`)
-    REFERENCES `master_schema`.`jadwal_matakuliahs` (`matakuliahs_id` , `matakuliahs_buka_id` , `jadwals_id`)
+    REFERENCES `jadwal_matakuliahs` (`matakuliahs_id` , `matakuliahs_buka_id` , `jadwals_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -172,9 +168,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `master_schema`.`karyawans`
+-- Table `karyawans`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`karyawans` (
+CREATE TABLE IF NOT EXISTS `karyawans` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `npk` VARCHAR(255) NULL,
   `jabatan` ENUM('dekan', 'wadek', 'kajur', 'kalab', 'dosen') NULL,
@@ -184,9 +180,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `master_schema`.`dac_rules`
+-- Table `dac_rules`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`dac_rules` (
+CREATE TABLE IF NOT EXISTS `dac_rules` (
   `id` INT NOT NULL,
   `kode` VARCHAR(45) NULL,
   `entity` VARCHAR(45) NULL,
@@ -198,9 +194,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `master_schema`.`dac_roles`
+-- Table `dac_roles`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `master_schema`.`dac_roles` (
+CREATE TABLE IF NOT EXISTS `dac_roles` (
   `id` INT NOT NULL,
   `karyawan_id` INT NOT NULL,
   `dac_rule_id` INT NOT NULL,
@@ -209,12 +205,12 @@ CREATE TABLE IF NOT EXISTS `master_schema`.`dac_roles` (
   INDEX `fk_dac_roles_karyawan1_idx` (`karyawan_id` ASC),
   CONSTRAINT `fk_dac_roles_dac_rules1`
     FOREIGN KEY (`dac_rule_id`)
-    REFERENCES `master_schema`.`dac_rules` (`id`)
+    REFERENCES `dac_rules` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_dac_roles_karyawan1`
     FOREIGN KEY (`karyawan_id`)
-    REFERENCES `master_schema`.`karyawans` (`id`)
+    REFERENCES `karyawans` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

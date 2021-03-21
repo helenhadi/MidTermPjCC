@@ -16,14 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     else {
         $mysqli->select_db('presensi_cloud');
-        $sql = "insert into jurusans (kode,nama) values ('".$nama.$fakultas_id."','".$nama."')";
+        $sql = "insert into jurusans (nama, fakultass_id) values ('".$nama."','".$fakultas_id."')";
         $result = $mysqli->query($sql);
         if ($result === TRUE) {
             $sql2 = "select id from jurusans order by id desc limit 1";
             $result2 = $mysqli->query($sql2);
             $row = $result2->fetch_assoc();
             $id = $row['id'];
-            $newSchema = 'presensi_cloud_'.$nama;
+            $newSchema = 'presensi_cloud_'.$id;
             $sql3 = "create database ".$newSchema;
             $result3 = $mysqli->query($sql3);
 
@@ -40,10 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $result = $mysqli->query($sql);
             }
             $mysqli->select_db('presensi_cloud');
-            $sql = "Insert Into metadatas (entity, custom_field, fakultas_id) Values (?,?,?)";
+            $sql = "Insert Into metadatas (entity, custom_field, jurusans_id) Values (?,?,?)";
             for ($i=0; $i <= count($entities)-1 ; $i++) { 
                 $stmt = $mysqli->prepare($sql);
-                $stmt->bind_param("ssi", $entities[$i], $fields[$i], $fakultas_id);
+                $stmt->bind_param("ssi", $entities[$i], $fields[$i], $id);
                 $stmt->execute();
             }
             $_SESSION['msg'] = "Jurusan berhasil ditambahkan.";
