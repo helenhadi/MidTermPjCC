@@ -24,14 +24,14 @@ if (isset($_POST['adduser'])) {
         
         $stmt->execute();
         if ($stmt->affected_rows > 0) {
-            $_SESSION['msg'] = "Insert user succeed!";
+            $_SESSION['success'] = "Insert user succeed!";
         }
         else {
-            $_SESSION['msg'] = "Failed to insert user, please try again...";
+            $_SESSION['error'] = "Failed to insert user, please try again...";
         }
     }
     else {
-        $_SESSION['msg'] = "Passwords does not match!";
+        $_SESSION['error'] = "Passwords does not match!";
     }
 
     header("Location: tambah_user.php");
