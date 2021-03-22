@@ -172,7 +172,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `karyawans`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `karyawans` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `npk` VARCHAR(255) NULL,
   `user_id` INT(11) NULL,
   PRIMARY KEY (`id`))
