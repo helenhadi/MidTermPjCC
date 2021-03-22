@@ -3,7 +3,8 @@ session_start();
 include ('connectdb.php');
 $mysqli = konek('localhost', 'root', '', '');
 $mysqli->select_db('presensi_cloud');
-if (isset($_GET['edtid'])) {
+if (isset($_POST['edtdacf'])) {
+  $id = $_POST['edtid'];
   $kode = $_POST['kode'];
   $jurusan = $_POST['jurusan'];
   $entity = $_POST['entity'];
@@ -13,7 +14,7 @@ if (isset($_GET['edtid'])) {
 
   $sql = "update dac_rules set kode=?, jurusans_id=?, entity=?, field=?, operator=?, value=? where id=?";
   $stmt = $mysqli->prepare($sql);
-  $stmt->bind_param("ssssssi", $kode, $jurusan, $entity, $field, $operator, $value. $_GET['edtid']);
+  $stmt->bind_param("ssssssi", $kode, $jurusan, $entity, $field, $operator, $value. $id);
   $stmt->execute();
 
   if ($stmt->affected_rows > 0) {
