@@ -223,6 +223,17 @@ $mysqli = konek('localhost', 'root', '');
                     <div class="row" id="fieldss">
                       <div class="col-md-12">
                         <div class="form-group">
+                          <label class="form-control-label">NRP/ NPK</label>
+                          <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                            </div>
+                            <input required class="form-control" name="kode" placeholder="NRP/ NPK" type="text">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
                           <label class="form-control-label">Nama</label>
                           <div class="input-group input-group-merge">
                             <div class="input-group-prepend">

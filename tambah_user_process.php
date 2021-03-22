@@ -33,24 +33,20 @@ if (isset($_POST['adduser'])) {
         if ($stmt->affected_rows > 0) {
             if ($jabatan != 'dekan' || $jabatan != 'wadek') {
                 $user_id = $stmt->insert_id;
+                $kode = $_POST['kode'];
 
                 $database = "presensi_cloud_".$jurusan;
                 $mysqli->select_db($database);
 
                 if ($jabatan == 'mhs') {
-                    $nrp = 160418084;
-
                     $sql = "insert into mahasiswas(nrp, user_id) values (?, ?)";
-                    $stmt = $mysqli->prepare($sql);
-                    $stmt->bind_param("si", $nrp, $user_id);
                 }
                 else {
-                    $npk = 160418084;
-
                     $sql = "insert into karyawans(npk, user_id) values (?, ?)";
-                    $stmt = $mysqli->prepare($sql);
-                    $stmt->bind_param("si", $npk, $user_id);
                 }
+
+                $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param("si", $kode, $user_id);
                 $stmt->execute();
 
                 if ($stmt->affected_rows > 0)
