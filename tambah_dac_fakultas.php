@@ -248,43 +248,14 @@ $mysqli = konek('localhost', 'root', '');
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label class="form-control-label">Repeat Password</label>
-                          <div class="input-group input-group-merge">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="ni ni-key-25"></i></span>
-                            </div>
-                            <input required class="form-control" name="r_password" placeholder="repeat password" type="password">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Jabatan</label>
-                          <div class="input-group input-group-merge">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
-                            </div>
-                            <select class="form-control" name="jabatan" data-toggle="select">
-                              <option value='dekan'>Dekan</option>
-                              <option value='wadek'>Wakil Dekan</option>
-                              <option value='kajur'>Kepala Jurusan</option>
-                              <option value='kalab'>Kepala Laboratorium</option>
-                              <option value='dosen'>Dosen</option>
-                              <option value='mhs'>Mahasiswa</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
                           <label class="form-control-label">Fakultas</label>
                           <div class="input-group input-group-merge">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
                             </div>
-                            <select class="form-control" id="fakultas" name="fakultas" data-toggle="select" onchange="changeJurusan(this.value)">
-                              <option value='0'>Pilih Fakultas</option>
+                            <select class="form-control" name="fakultas" data-toggle="select">
                               <?php
+                              $mysqli->select_db('presensi_cloud');
                               $sql = "SELECT * FROM fakultass order by nama ASC";
                               $stmt = $mysqli->prepare($sql);
                               $stmt->execute();
@@ -294,19 +265,6 @@ $mysqli = konek('localhost', 'root', '');
                                 echo "<option value='" . $row['id'] . "'>" . $row['nama'] . "</option>";
                               }
                               ?>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Jurusan</label>
-                          <div class="input-group input-group-merge">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
-                            </div>
-                            <select id="jurusanlist" class="form-control" name="jurusan" data-toggle="select">
-                              <option value='0'>Pilih Jurusan</option>
                             </select>
                           </div>
                         </div>
