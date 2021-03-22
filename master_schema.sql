@@ -23,7 +23,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Table `mahasiswas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mahasiswas` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nrp` VARCHAR(255) NULL DEFAULT NULL,
   `user_id` VARCHAR(255) NULL,
   PRIMARY KEY (`id`))
@@ -35,7 +35,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `matakuliahs`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `matakuliahs` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nama` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
@@ -46,7 +46,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `matakuliahs_buka`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `matakuliahs_buka` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `kp` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
@@ -105,7 +105,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `jadwals`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `jadwals` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `hari` VARCHAR(45) NOT NULL,
   `jam_mulai` VARCHAR(45) NOT NULL,
   `jam_selesai` VARCHAR(45) NOT NULL,
@@ -183,7 +183,7 @@ ENGINE = InnoDB;
 -- Table `dac_rules`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dac_rules` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `kode` VARCHAR(45) NULL,
   `entity` VARCHAR(45) NULL,
   `field` VARCHAR(45) NULL,
@@ -197,7 +197,7 @@ ENGINE = InnoDB;
 -- Table `dac_roles`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dac_roles` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `karyawan_id` INT NOT NULL,
   `dac_rule_id` INT NOT NULL,
   PRIMARY KEY (`id`),
