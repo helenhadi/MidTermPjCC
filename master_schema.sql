@@ -25,7 +25,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 CREATE TABLE IF NOT EXISTS `mahasiswas` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nrp` VARCHAR(255) NULL DEFAULT NULL,
-  `user_id` VARCHAR(255) NULL,
+  `user_id` INT(11) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -174,8 +174,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `karyawans` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `npk` VARCHAR(255) NULL,
-  `jabatan` ENUM('dekan', 'wadek', 'kajur', 'kalab', 'dosen') NULL,
-  `user_id` VARCHAR(255) NULL,
+  `user_id` INT(11) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
