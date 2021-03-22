@@ -338,10 +338,10 @@ $mysqli = konek('localhost', 'root', '', '');
                                                         <!-- List user id -->
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
-                                                            <a href="#!" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Edit DAC">
+                                                            <a href="listdac_process.php?edtid=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Edit DAC">
                                                                 <i class="fas fa-user-edit"></i>
                                                             </a>
-                                                            <a href="#!" class="table-action table-action-delete" name="delete-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Delete DAC">
+                                                            <a href="listdac_process.php?delid=<?php echo $row['id']; ?>" class="table-action table-action-delete" name="delete-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Delete DAC">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </td>
