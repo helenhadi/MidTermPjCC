@@ -19,7 +19,10 @@ if (isset($_POST['btnsignin'])) {
         $_SESSION['err'] = "";
         $_SESSION['username'] = $uid;
         $_SESSION['nama'] = $row['nama'];
+        $_SESSION['idd'] = $row['id'];
         $_SESSION['jabatan'] = $row['jabatan'];
+        $_SESSION['fid'] = $row['fakultass_id'];
+        $_SESSION['jid'] = $row['jurusans_id'];
         header("Location: dashboard.php");
     }
 }

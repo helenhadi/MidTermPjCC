@@ -276,35 +276,26 @@ $mysqli = konek('localhost', 'root', '');
                 </div>
                 ";
         }else if($_SESSION['jabatan'] == 'dosen'){
-          echo "
-            <div class='col-4'>
-              <div class='card'>
+          $mysqli->select_db('presensi_cloud_'.$_SESSION['jid']);
+          $sql = "SELECT * FROM matakuliahs a INNER JOIN matakuliahs_kp b ON a.id=b.matakuliahs_id 
+                  INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id WHERE dosen_id=".$_SESSION['idd'];
+          $stmt = $mysqli->prepare($sql);
+          $stmt->execute();
+          $res = $stmt->get_result();
+
+          while ($row = $res->fetch_assoc()) {
+            echo "<div class='col-4'>
+            <a href='#'>
+              <div class='card btn text-left'>
                 <img class='card-img-top' src='./assets/img/theme/img-1-1000x600.jpg' alt='Card image cap'>
                 <div class='card-body'>
-                  <h5 class='card-title'>Fullstack Programming</h5>
+                  <h5 class='card-title'>" . $row['nama'] . "</h5>
                   <p class='card-text'>09.45 - 12.30</p>
                 </div>
               </div>
-            </div>
-            <div class='col-4'>
-              <div class='card'>
-                <img class='card-img-top' src='./assets/img/theme/img-1-1000x600.jpg' alt='Card image cap'>
-                <div class='card-body'>
-                  <h5 class='card-title'>Web Framework Programming</h5>
-                  <p class='card-text'>13.00 - 15.45</p>
-                </div>
-              </div>
-            </div>
-            <div class='col-4'>
-              <div class='card'>
-                <img class='card-img-top' src='./assets/img/theme/img-1-1000x600.jpg' alt='Card image cap'>
-                <div class='card-body'>
-                  <h5 class='card-title'>Cloud Computing</h5>
-                  <p class='card-text'>15.45 - 18.00</p>
-                </div>
-              </div>
-            </div>
-          ";
+              </a>
+            </div>";
+          }
         }
         ?>
         <!-- Field Admin -->
