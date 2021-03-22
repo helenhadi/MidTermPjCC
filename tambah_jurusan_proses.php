@@ -4,7 +4,7 @@ include ('connectdb.php');
 $mysqli = konek('localhost', 'root', '', '');
 $database = ""; //MASIH BINGUNG HOW TO GET THE JURUSAN ID :)
 $mysqli->select_db($database);
-if (isset($_POST['adddacf'])) {
+if (isset($_POST['adddacj'])) {
   $kode = $_POST['kode'];
   $entity = $_POST['entity'];
   $field = $_POST['field'];
