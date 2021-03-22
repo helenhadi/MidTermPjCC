@@ -319,7 +319,7 @@ $mysqli = konek('localhost', 'root', '');
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
                           </div>
-                          <input class="btn btn-primary" type="submit" name="adduser" value="Tambah DAC" />
+                          <input class="btn btn-primary" type="submit" name="adddacf" value="Tambah DAC" />
                         </div>
                       </div>
                     </div>
