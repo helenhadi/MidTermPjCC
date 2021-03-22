@@ -5,15 +5,15 @@ $mysqli = konek('localhost', 'root', '', '');
 $mysqli->select_db('presensi_cloud');
 if (isset($_POST['adddacf'])) {
   $kode = $_POST['kode'];
-  $jurusan_id = $_POST['jurusan'];
+  $jurusan = $_POST['jurusan'];
   $entity = $_POST['entity'];
   $field = $_POST['field'];
   $operator = $_POST['operator'];
   $value = $_POST['value'];
 
-  $sql = "insert into dac_rules(nama, username, password, jabatan, fakultass_id) values (?, ?, ?, ?, ?)";
+  $sql = "insert into dac_rules(kode, jurusans_id, entity, field, operator, value) values (?, ?, ?, ?, ?, ?)";
   $stmt = $mysqli->prepare($sql);
-  $stmt->bind_param("ssssi", $nama, $username, $saltedPwd, $jabatan, $fakultas);
+  $stmt->bind_param("ssssss", $kode, $jurusan, $entity, $field, $operator, $value);
   $stmt->execute();
 
   if ($stmt->affected_rows > 0) {
