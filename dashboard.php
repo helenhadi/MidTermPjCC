@@ -1,12 +1,5 @@
-<?php
-session_start();
-if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jabatan'])) {
-  header("location: login.php");
-}
-?>
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,6 +15,26 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSI
   </link>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+<?php
+session_start();
+if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jabatan'])) {
+  header("location: login.php");
+}
+if (isset($_SESSION['success'])) {
+  $status = $_SESSION['success'];
+  echo '<script type="text/javascript">';
+  echo "setTimeout(function () {swal('Success!', '" . $status . "', 'success');";
+  echo '}, 1);</script>';
+}
+if (isset($_SESSION['error'])) {
+  $status = $_SESSION['error'];
+  echo '<script type="text/javascript">';
+  echo "setTimeout(function () {swal('Failed!', '" . $status . "', 'error');";
+  echo '}, 1);</script>';
+}
+include('connectdb.php');
+$mysqli = konek('localhost', 'root', '');
+?>
 
 <body>
   <!-- Sidenav -->
@@ -70,7 +83,7 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSI
                     </a>
                   </li>
                   <li class='nav-item'>
-                    <a class='nav-link' href='#navbar-dashboards' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                    <a class='nav-link' href='listdac.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                       <i class='ni ni-bulb-61 text-primary'></i>
                       <span class='nav-link-text'>Manage DAC Rules</span>
                     </a>
@@ -179,7 +192,7 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSI
                 <div class='row'>
                   <div class='col-12'>
                     <span class='h2 font-weight-bold mb-0 text-white'>
-                    ". $_SESSION['msg']."
+                    " . $_SESSION['msg'] . "
                     </span>
                   </div>
                 </div>
@@ -202,6 +215,8 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSI
                     <?php
                     if ($_SESSION['jabatan'] == 'admin') {
                       echo "Administrator";
+                    } else {
+                      echo $_SESSION['jabatan'];
                     }
                     ?>
                   </span>
@@ -245,6 +260,7 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSI
                 </a>  
                 </div>
                 <div class='col-4'>
+                <a href='listdac.php'>
                   <div class='card bg-gradient-danger border-0 btn text-left'>
                     <!-- Card body -->
                     <div class='card-body'>
@@ -256,6 +272,7 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSI
                       </div>
                     </div>
                   </div>
+                  </a>
                 </div>
                 ";
         }
@@ -284,6 +301,14 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSI
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
     <!-- Demo JS - remove this in your project -->
     <script src="./assets/js/demo.min.js"></script>
+    <script type="text/javascript">
+      function swalgood(msg1, msg2) {
+        Swal.fire(
+          msg1,
+          msg2,
+          'success'
+        );
+      } 
+      </script>
 </body>
-
 </html>

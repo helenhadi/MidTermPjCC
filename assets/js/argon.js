@@ -1558,6 +1558,11 @@ var DatatableBasic = (function() {
 
 		var options = {
 			keys: !0,
+			aLengthMenu: [
+				[5, 10, 25, 50, 75, -1],
+				[5, 10, 25, 50, 75, "All"]
+			],
+			iDisplayLength: 5,
 			select: {
 				style: "multi"
 			},

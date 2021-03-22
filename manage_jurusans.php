@@ -21,6 +21,7 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSI
   header("location: login.php");
 }
 if ($_SESSION['jabatan'] != 'admin' && $_SESSION['nama'] != 'Administrator') {
+  $_SESSION['error'] = "Kamu tidak dapat mengakses page ini!";
   header("location: dashboard.php");
 }
 if (isset($_SESSION['success'])) {
@@ -85,7 +86,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                     </a>
                   </li>
                   <li class='nav-item'>
-                    <a class='nav-link' href='#navbar-dashboards' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                    <a class='nav-link' href='listdac.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                       <i class='ni ni-bulb-61 text-primary'></i>
                       <span class='nav-link-text'>Manage DAC Rules</span>
                     </a>
