@@ -71,7 +71,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
               </a>
             </li>
             <?php
-            if ($_SESSION['jabatan'] == 'admin' && $_SESSION['nama'] == 'Administrator') {
+            if ($_SESSION['jabatan'] == 'admin') {
               echo "
                   <li class='nav-item'>
                     <a class='nav-link active' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
