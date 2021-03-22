@@ -290,7 +290,7 @@ $mysqli = konek('localhost', 'root', '');
                         <div class="form-group">
                           <label class="form-control-label">Operator</label>
                           <div class="input-group input-group-merge">
-                            <select class='form-control' name="entity">
+                            <select class='form-control' name="operator">
                               <option value="=">'=' Equal as</option>
                               <option value="!=">'!=' Not equal as</option>
                               <option value=">">'>' Greater than</option>
