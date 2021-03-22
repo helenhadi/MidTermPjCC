@@ -230,10 +230,36 @@ $mysqli = konek('localhost', 'root', '', '');
                                             </div>
                                             <div class="col-6 text-right">
                                                 <!-- Insert DAC -->
-                                                <a href="#" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
-                                                    <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                    <span class="btn-inner--text">Tambah</span>
-                                                </a>
+                                                <?php
+                                                if ($_SESSION['jabatan'] == 'admin') {
+                                                    ?>
+                                                    <a href="tambah_dac_fakultas.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
+                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
+                                                        <span class="btn-inner--text">Tambah DAC Fakultas</span>
+                                                    </a>
+                                                    <a href="tambah_dac_jurusan.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
+                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
+                                                        <span class="btn-inner--text">Tambah DAC Jurusan</span>
+                                                    </a>
+                                                    <?php
+                                                }
+                                                elseif ($_SESSION['jabatan'] == 'dekan' || $_SESSION['jabatan'] == 'wadek') {
+                                                    ?>
+                                                    <a href="tambah_dac_fakultas.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
+                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
+                                                        <span class="btn-inner--text">Tambah</span>
+                                                    </a>
+                                                    <?php
+                                                }
+                                                elseif ($_SESSION['jabatan'] == 'kajur') { 
+                                                    ?>
+                                                    <a href="tambah_dac_jurusan.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
+                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
+                                                        <span class="btn-inner--text">Tambah</span>
+                                                    </a>
+                                                    <?php
+                                                }
+                                                ?>
                                                 <!-- Insert DAC -->
                                             </div>
                                         </div>
@@ -265,28 +291,45 @@ $mysqli = konek('localhost', 'root', '', '');
                                                 $count = 0;
                                                 while ($row = $res->fetch_assoc()) {
                                                     $count++;
+                                                    $dac_id = $row['id'];
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $count; ?></td>
                                                         <td><?php echo $row['kode']; ?></td>
                                                         <td><?php echo $row['nama']; ?></td>
-                                                        <td><?php echo $row['entity']; ?></td>
+                                                        <td><?php 
+                                                        $entity = $row['entity'];
+
+                                                        if ($entity == 'jadwals') 
+                                                            echo "Jadwal";
+                                                        elseif ($entity == 'kehadirans') 
+                                                            echo "Kehadiran";
+                                                        elseif ($entity == 'mahasiswas') 
+                                                            echo "Mahasiswa";
+                                                        elseif ($entity == 'matakuliahs') 
+                                                            echo "Mata Kuliah";
+                                                        elseif ($entity == 'matakuliahs_buka') 
+                                                            echo "Mata Kuliah yang Buka";
+                                                        else
+                                                            echo "Kelas Pararel Mata Kuliah";
+
+                                                        ?></td>
                                                         <td><?php echo $row['field']; ?></td>
                                                         <td><?php 
-                                                            $opt = $row['operator'];
+                                                        $opt = $row['operator'];
 
-                                                            if ($opt = '=') 
-                                                                echo "equal as";
-                                                            elseif ($opt = '!=') 
-                                                                echo "not equal as";
-                                                            elseif ($opt = '<') 
-                                                                echo "lower than";
-                                                            elseif ($opt = '>') 
-                                                                echo "grater than";
-                                                            elseif ($opt = '<=') 
-                                                                echo "lower than or equal as";
-                                                            else
-                                                                echo "grater than or equal as";
+                                                        if ($opt == '=') 
+                                                            echo "equal as";
+                                                        elseif ($opt == '!=') 
+                                                            echo "not equal as";
+                                                        elseif ($opt == '<') 
+                                                            echo "lower than";
+                                                        elseif ($opt == '>') 
+                                                            echo "grater than";
+                                                        elseif ($opt == '<=') 
+                                                            echo "lower than or equal as";
+                                                        else
+                                                            echo "grater than or equal as";
 
                                                         ?></td>
                                                         <td><?php echo $row['value']; ?></td>
@@ -295,10 +338,10 @@ $mysqli = konek('localhost', 'root', '', '');
                                                         <!-- List user id -->
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
-                                                            <a href="#!" class="table-action" data-toggle="tooltip" data-original-title="Edit DAC">
+                                                            <a href="#!" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Edit DAC">
                                                                 <i class="fas fa-user-edit"></i>
                                                             </a>
-                                                            <a href="#!" class="table-action table-action-delete" data-toggle="tooltip" data-original-title="Delete DAC">
+                                                            <a href="#!" class="table-action table-action-delete" name="delete-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Delete DAC">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </td>
