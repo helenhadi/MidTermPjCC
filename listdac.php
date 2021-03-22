@@ -272,7 +272,23 @@ $mysqli = konek('localhost', 'root', '', '');
                                                         <td><?php echo $row['nama']; ?></td>
                                                         <td><?php echo $row['entity']; ?></td>
                                                         <td><?php echo $row['field']; ?></td>
-                                                        <td><?php echo $row['operator']; ?></td>
+                                                        <td><?php 
+                                                            $opt = $row['operator'];
+
+                                                            if ($opt = '=') 
+                                                                echo "equal as";
+                                                            elseif ($opt = '!=') 
+                                                                echo "not equal as";
+                                                            elseif ($opt = '<') 
+                                                                echo "lower than";
+                                                            elseif ($opt = '>') 
+                                                                echo "grater than";
+                                                            elseif ($opt = '<=') 
+                                                                echo "lower than or equal as";
+                                                            else
+                                                                echo "grater than or equal as";
+
+                                                        ?></td>
                                                         <td><?php echo $row['value']; ?></td>
                                                         <!-- List user id -->
                                                         <td>User ID 1, User ID 2 dst</td>
