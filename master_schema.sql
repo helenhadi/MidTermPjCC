@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `matakuliahs_kp` (
   `matakuliahs_id` INT(11) NOT NULL,
   `matakuliahs_buka_id` INT(11) NOT NULL,
   `kapasitas` VARCHAR(45) NOT NULL,
+  `dosen_id` INT(11) NOT NULL,
   PRIMARY KEY (`matakuliahs_id`, `matakuliahs_buka_id`),
   INDEX `fk_matakuliahs_has_matakuliahs_buka_matakuliahs_buka1_idx` (`matakuliahs_buka_id` ASC),
   INDEX `fk_matakuliahs_has_matakuliahs_buka_matakuliahs1_idx` (`matakuliahs_id` ASC),
