@@ -11,7 +11,7 @@ if (isset($_POST['adddacf'])) {
   $operator = $_POST['operator'];
   $value = $_POST['value'];
 
-  $sql = "insert into users(nama, username, password, jabatan, fakultass_id) values (?, ?, ?, ?, ?)";
+  $sql = "insert into dac_rules(nama, username, password, jabatan, fakultass_id) values (?, ?, ?, ?, ?)";
   $stmt = $mysqli->prepare($sql);
   $stmt->bind_param("ssssi", $nama, $username, $saltedPwd, $jabatan, $fakultas);
   $stmt->execute();
