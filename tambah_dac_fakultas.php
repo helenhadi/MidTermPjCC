@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <link rel="stylesheet" href="./assets/css/argon.css?v=1.1.0" type="text/css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" rel="stylesheet">
-  </link>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</link>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <?php
 session_start();
@@ -195,7 +195,7 @@ $mysqli = konek('localhost', 'root', '');
                 <div class="col-12">
                   <?php
                   if (isset($_SESSION['success'])) {
-                  ?>
+                    ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                       <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                       <span class="alert-text"><strong>Success!</strong> <?php echo $_SESSION['success']; ?></span>
@@ -203,10 +203,10 @@ $mysqli = konek('localhost', 'root', '');
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                  <?php
+                    <?php
                     unset($_SESSION['success']);
                   } elseif (isset($_SESSION['error'])) {
-                  ?>
+                    ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                       <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                       <span class="alert-text"><strong>Error!</strong> <?php echo $_SESSION['error']; ?></span>
@@ -214,7 +214,7 @@ $mysqli = konek('localhost', 'root', '');
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                  <?php
+                    <?php
                     unset($_SESSION['error']);
                   }
                   ?>
@@ -234,6 +234,34 @@ $mysqli = konek('localhost', 'root', '');
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
+                          <label class="form-control-label">Jurusan</label>
+                          <div class="input-group input-group-merge">
+                            <select class="form-control" name="jurusan" data-toggle="select">
+                              <?php
+                              $mysqli->select_db('presensi_cloud');
+
+                              if (isset($_GET['id'])) {
+                                $sql = "SELECT * FROM jurusans where fakultass_id = ? order by nama ASC";
+                                $stmt = $mysqli->prepare($sql);
+                                $stmt->bind_param('i', $_GET['id']);
+                              }
+                              elseif (!(isset($_GET['id']) && $_SESSION['jabatan'] == 'admin')) {
+                                $sql = "SELECT * FROM jurusans order by nama ASC";
+                                $stmt = $mysqli->prepare($sql);
+                              }
+                              $stmt->execute();
+                              $res = $stmt->get_result();
+
+                              while ($row = $res->fetch_assoc()) {
+                                echo "<option value='".$row['id']."'>".$row['id']." - ".$row['nama']."</option>";
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
                           <label class="form-control-label">Entity</label>
                           <div class="input-group input-group-merge">
                             <select class='form-control' name="entity">
@@ -244,28 +272,43 @@ $mysqli = konek('localhost', 'root', '');
                               <option value="matakuliahs_buka">Mata Kuliah yang Buka</option>
                               <option value="matakuliahs_kp">Kelas Pararel Mata Kuliah</option>
                             </select>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label class="form-control-label">Fakultas</label>
+                          <label class="form-control-label">Field</label>
                           <div class="input-group input-group-merge">
                             <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
+                              <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                             </div>
-                            <select class="form-control" name="fakultas" data-toggle="select">
-                              <?php
-                              $mysqli->select_db('presensi_cloud');
-                              $sql = "SELECT * FROM fakultass order by nama ASC";
-                              $stmt = $mysqli->prepare($sql);
-                              $stmt->execute();
-                              $res = $stmt->get_result();
-
-                              while ($row = $res->fetch_assoc()) {
-                                echo "<option value='" . $row['id'] . "'>" . $row['nama'] . "</option>";
-                              }
-                              ?>
+                            <input required class="form-control" name="field" placeholder="field" type="text">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="form-control-label">Operator</label>
+                          <div class="input-group input-group-merge">
+                            <select class='form-control' name="operator">
+                              <option value="=">'=' Equal as</option>
+                              <option value="!=">'!=' Not equal as</option>
+                              <option value=">">'>' Greater than</option>
+                              <option value="<">'<' Lower than</option>
+                              <option value=">=">'>=' Greater than or equal as</option>
+                              <option value="<=">'<=' Lower than or equal as</option>
                             </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="form-control-label">Value</label>
+                          <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                            </div>
+                            <input required class="form-control" name="value" placeholder="value" type="text">
                           </div>
                         </div>
                       </div>
@@ -276,7 +319,7 @@ $mysqli = konek('localhost', 'root', '');
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
                           </div>
-                          <input class="btn btn-primary" type="submit" name="adduser" value="Tambah User" />
+                          <input class="btn btn-primary" type="submit" name="adddacf" value="Tambah DAC" />
                         </div>
                       </div>
                     </div>
@@ -287,34 +330,34 @@ $mysqli = konek('localhost', 'root', '');
           </div>
         </div>
       </div>
-      </li>
-      </ul>
-    </div>
-    <!-- Argon Scripts -->
-    <!-- Core -->
-    <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
-    <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-    <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-    <!-- Optional JS -->
-    <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-    <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
-    <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
-    <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-    <!-- Argon JS -->
-    <script src="./assets/js/argon.js?v=1.1.0"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-    <!-- Demo JS - remove this in your project -->
-    <script src="./assets/js/demo.min.js"></script>
-    <script type="text/javascript">
-      function swalgood(msg1, msg2) {
-        Swal.fire(
-          msg1,
-          msg2,
-          'success'
-        );
-      }
-    </script>
+    </li>
+  </ul>
+</div>
+<!-- Argon Scripts -->
+<!-- Core -->
+<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+<script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+<script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+<script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+<!-- Optional JS -->
+<script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+<script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+<script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+<!-- Argon JS -->
+<script src="./assets/js/argon.js?v=1.1.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+<!-- Demo JS - remove this in your project -->
+<script src="./assets/js/demo.min.js"></script>
+<script type="text/javascript">
+  function swalgood(msg1, msg2) {
+    Swal.fire(
+      msg1,
+      msg2,
+      'success'
+      );
+  }
+</script>
 </body>
 </html>
