@@ -215,8 +215,22 @@ $mysqli = konek('localhost', 'root', '');
                     <?php
                     if ($_SESSION['jabatan'] == 'admin') {
                       echo "Administrator";
-                    } else {
-                      echo $_SESSION['jabatan'];
+                    } else if ($_SESSION['jabatan'] != 'dekan' || $_SESSION['jabatan'] != 'wadek') {
+                      $sql = "SELECT * FROM jurusans WHERE id=" . $_SESSION['jid'];
+                      $stmt = $mysqli->prepare($sql);
+                      $stmt->execute();
+                      $res = $stmt->get_result();
+                      while ($row = $res->fetch_assoc()) {
+                        echo $row['nama'];
+                      }
+                    }else{
+                      $sql = "SELECT * FROM fakultass WHERE id=" . $_SESSION['fid'];
+                      $stmt = $mysqli->prepare($sql);
+                      $stmt->execute();
+                      $res = $stmt->get_result();
+                      while ($row = $res->fetch_assoc()) {
+                        echo $row['nama'];
+                      }
                     }
                     ?>
                   </span>

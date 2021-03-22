@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `presensi_cloud`.`users` (
   `username` VARCHAR(255) NULL,
   `password` VARCHAR(255) NULL,
   `nama` VARCHAR(255) NULL,
-  `jabatan` ENUM('admin', 'dekan', 'wadek', 'kajur', 'kalab', 'dosen', 'mhs') NULL,
+  `jabatan` ENUM('admin', 'dekan', 'wadek', 'kajur', 'dosen', 'mhs') NULL,
   `fakultass_id` INT(11) NOT NULL,
   `jurusans_id` INT(11) NULL,
   PRIMARY KEY (`id`),

@@ -110,7 +110,7 @@ CREATE TABLE `users` (
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `nama` varchar(255) DEFAULT NULL,
-  `jabatan` enum('admin','dekan','wadek','kajur','kalab','dosen','mhs') DEFAULT NULL,
+  `jabatan` enum('admin','dekan','wadek','kajur','dosen','mhs') DEFAULT NULL,
   `fakultass_id` int(11) NOT NULL,
   `jurusans_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

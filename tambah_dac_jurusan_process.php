@@ -268,7 +268,6 @@ $mysqli = konek('localhost', 'root', '');
                               <option value='dekan'>Dekan</option>
                               <option value='wadek'>Wakil Dekan</option>
                               <option value='kajur'>Kepala Jurusan</option>
-                              <option value='kalab'>Kepala Laboratorium</option>
                               <option value='dosen'>Dosen</option>
                               <option value='mhs'>Mahasiswa</option>
                             </select>
