@@ -283,7 +283,7 @@ $mysqli = konek('localhost', 'root', '', '');
                                                 <!-- Isi List DAC -->
                                                 <?php
                                                 $mysqli->select_db('presensi_cloud');
-                                                $sql = "SELECT * FROM dac_rules as dac inner join jurusans as jur on dac.jurusans_id=jur.id order by dac.kode ASC";
+                                                $sql = "SELECT dac.id as id, dac.kode as kode, dac.nama as nama, dac.entity as entity, dac.field as field, dac.operator as operator, dac.value as value FROM dac_rules as dac inner join jurusans as jur on dac.jurusans_id=jur.id order by dac.kode ASC";
                                                 $stmt = $mysqli->prepare($sql);
                                                 $stmt->execute();
                                                 $res = $stmt->get_result();
