@@ -14,7 +14,7 @@ if (isset($_POST['edtdacf'])) {
 
   $sql = "update dac_rules set kode=?, jurusans_id=?, entity=?, field=?, operator=?, value=? where id=?";
   $stmt = $mysqli->prepare($sql);
-  $stmt->bind_param("ssssssi", $kode, $jurusan, $entity, $field, $operator, $value. $id);
+  $stmt->bind_param("ssssssi", $kode, $jurusan, $entity, $field, $operator, $value, $id);
   $stmt->execute();
 
   if ($stmt->affected_rows > 0) {
