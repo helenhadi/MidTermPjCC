@@ -306,7 +306,7 @@ $mysqli = konek('localhost', 'root', '');
 
           while ($row = $res->fetch_assoc()) {
             echo "<div class='col-4'>
-            <a href='#" . $row['id_mk'] . "'>
+            <a href='detil_matkul.php?mkid=" . $row['id_mk'] . "'>
               <div class='card btn text-left'>
                 <img class='card-img-top' src='./assets/img/theme/img-1-1000x600.jpg' alt='Card image cap'>
                 <div class='card-body'>
