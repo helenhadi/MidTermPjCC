@@ -96,12 +96,6 @@ $mysqli = konek('localhost', 'root', '', '');
                             <span class='nav-link-text'>Manage DAC Rules</span>
                             </a>
                             </li>
-                            <li class='nav-item'>
-                            <a class='nav-link active' href='dacroles.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
-                            <i class='ni ni-bulb-61 text-primary'></i>
-                            <span class='nav-link-text'>Manage DAC Roles</span>
-                            </a>
-                            </li>
                             ";
                         }
                         ?>
@@ -183,11 +177,11 @@ $mysqli = konek('localhost', 'root', '', '');
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 d-inline-block mb-0">Manage DAC Rules</h6>
+                            <h6 class="h2 d-inline-block mb-0">Manage DAC Roles</h6>
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links">
                                     <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Manage DAC</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Manage DAC Roles</li>
                                 </ol>
                             </nav>
                         </div>
