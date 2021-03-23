@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,8 +13,8 @@
   <link rel="stylesheet" href="./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <link rel="stylesheet" href="./assets/css/argon.css?v=1.1.0" type="text/css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" rel="stylesheet">
-</link>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </link>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <?php
 session_start();
@@ -43,6 +44,7 @@ else
 include('connectdb.php');
 $mysqli = konek('localhost', 'root', '');
 ?>
+
 <body>
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -199,7 +201,7 @@ $mysqli = konek('localhost', 'root', '');
                 <div class="col-12">
                   <?php
                   if (isset($_SESSION['success'])) {
-                    ?>
+                  ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                       <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                       <span class="alert-text"><strong>Success!</strong> <?php echo $_SESSION['success']; ?></span>
@@ -207,10 +209,10 @@ $mysqli = konek('localhost', 'root', '');
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <?php
+                  <?php
                     unset($_SESSION['success']);
                   } elseif (isset($_SESSION['error'])) {
-                    ?>
+                  ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                       <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                       <span class="alert-text"><strong>Error!</strong> <?php echo $_SESSION['error']; ?></span>
@@ -218,7 +220,7 @@ $mysqli = konek('localhost', 'root', '');
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <?php
+                  <?php
                     unset($_SESSION['error']);
                   }
                   ?>
@@ -232,10 +234,11 @@ $mysqli = konek('localhost', 'root', '');
                       $stmt->bind_param("i", $edtid);
                       $stmt->execute();
                       $res = $stmt->get_result();
-echo $edtid."<br><br><br><br><br><br><br>";
-                      while ($row = $res->fetch_assoc() > 0) {
-                        
-                        ?>
+                      if($res->num_rows >0){
+                      while ($row = $res->fetch_assoc()) {
+                        $kodee = $row['kode'];
+                        $valuee = $row['value'];
+                      ?>
                         <div class="col-md-12">
                           <div class="form-group">
                             <label class="form-control-label">Kode</label>
@@ -243,7 +246,7 @@ echo $edtid."<br><br><br><br><br><br><br>";
                               <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                               </div>
-                              <input required class="form-control" name="kode" placeholder="kode" type="text" <?php echo "value='".$row['kode']."'"; ?>>
+                              <input required class="form-control" name="kode" placeholder="kode" type="text" value="<?php echo $kodee; ?>">
                             </div>
                           </div>
                         </div>
@@ -259,8 +262,7 @@ echo $edtid."<br><br><br><br><br><br><br>";
                                   $sql = "SELECT * FROM jurusans where fakultass_id = ? order by nama ASC";
                                   $stmt = $mysqli->prepare($sql);
                                   $stmt->bind_param('i', $_GET['id']);
-                                }
-                                elseif (!(isset($_GET['id']) && $_SESSION['jabatan'] == 'admin')) {
+                                } elseif (!(isset($_GET['id']) && $_SESSION['jabatan'] == 'admin')) {
                                   $sql = "SELECT * FROM jurusans order by nama ASC";
                                   $stmt = $mysqli->prepare($sql);
                                 }
@@ -268,7 +270,7 @@ echo $edtid."<br><br><br><br><br><br><br>";
                                 $res = $stmt->get_result();
 
                                 while ($row = $res->fetch_assoc()) {
-                                  echo "<option value='".$row['id']."'>".$row['id']." - ".$row['nama']."</option>";
+                                  echo "<option value='" . $row['id'] . "'>" . $row['id'] . " - " . $row['nama'] . "</option>";
                                 }
                                 ?>
                               </select>
@@ -323,62 +325,64 @@ echo $edtid."<br><br><br><br><br><br><br>";
                               <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                               </div>
-                              <input required class="form-control" name="value" placeholder="value" type="text">
+                              <input required class="form-control" name="value" placeholder="value" type="text" value="<?php echo $valuee; ?>">
                             </div>
                           </div>
                         </div>
-                        <?php
-                          }
-                          if ($res->fetch_assoc() < 1)
-                            echo "Failed to get DAC Rule ID ".$_GET['edtid'];
-                        ?>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="form-control-label" style='opacity:0%;'>Add</label>
-                          <div class="input-group input-group-merge">
-                            <div class="input-group-prepend">
-                            </div>
-                            <input type="hidden" name="edtid" value="<?php echo $_GET['edtid'] ?>" />
-                            <input class="btn btn-primary" type="submit" name="edtdacf" value="Edit DAC" />
+                      <?php
+                      }
+                    }else{
+                        echo "Failed to get DAC Rule ID " . $_GET['edtid'];
+                    }
+                      ?>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="form-control-label" style='opacity:0%;'>Add</label>
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
                           </div>
+                          <input type="hidden" name="edtid" value="<?php echo $_GET['edtid'] ?>" />
+                          <input class="btn btn-primary" type="submit" name="edtdacf" value="Edit DAC" />
                         </div>
                       </div>
-                    </form>
-                  </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
       </li>
-    </ul>
-  </div>
-  <!-- Argon Scripts -->
-  <!-- Core -->
-  <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
-  <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-  <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-  <!-- Optional JS -->
-  <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
-  <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
-  <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-  <!-- Argon JS -->
-  <script src="./assets/js/argon.js?v=1.1.0"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-  <!-- Demo JS - remove this in your project -->
-  <script src="./assets/js/demo.min.js"></script>
-  <script type="text/javascript">
-    function swalgood(msg1, msg2) {
-      Swal.fire(
-        msg1,
-        msg2,
-        'success'
+      </ul>
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+    <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Optional JS -->
+    <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+    <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+    <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+    <!-- Argon JS -->
+    <script src="./assets/js/argon.js?v=1.1.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <!-- Demo JS - remove this in your project -->
+    <script src="./assets/js/demo.min.js"></script>
+    <script type="text/javascript">
+      function swalgood(msg1, msg2) {
+        Swal.fire(
+          msg1,
+          msg2,
+          'success'
         );
-    }
-  </script>
+      }
+    </script>
 </body>
+
 </html>
