@@ -15,6 +15,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" rel="stylesheet">
     </link>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="./assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="./assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="./assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
 </head>
 <?php
 session_start();
@@ -36,6 +39,7 @@ if (isset($_SESSION['error'])) {
     echo "setTimeout(function () {swal('Failed!', '" . $status . "', 'error');";
     echo '}, 1);</script>';
 }
+$idmatakuliah = $_GET['mkid'];
 include('connectdb.php');
 $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
 ?>
@@ -218,44 +222,113 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                     <?php
                                         unset($_SESSION['error']);
                                     }
+                                    $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
+                                    $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id as id_hari FROM matakuliahs a INNER JOIN matakuliahs_kp b ON 
+          a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
+          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE a.id=" . $idmatakuliah;
+                                    $stmt = $mysqli->prepare($sql);
+                                    $stmt->execute();
+                                    $res = $stmt->get_result();
+
+                                    while ($row = $res->fetch_assoc()) {
+                                        $nama = $row['nama'];
+                                        $hari = $row['hari'];
+                                        $jamm = $row['jam_mulai'];
+                                        $jams = $row['jam_selesai'];
+                                        $kp = $row['kp'];
+                                    }
+                                    echo $nama . ' KP ' . $kp . '<br>';
+                                    echo $hari . ", " . $jamm . " - " . $jams;
+                                    echo "<br><br> Absensi yang lalu"
                                     ?>
+                                    <div class="table-responsive py-4">
+                                        <table class="table table-flush" id="datatable-basic">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Tanggal</th>
+                                                    <th>Jam Kelas</th>
+                                                    <th>Pin</th>
+                                                    <th>Status</th>
+                                                    <th>Detil</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+                                            $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id as id_hari FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
+          a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
+          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE a.id=".$idmatakuliah." ORDER BY k.tanggal ASC";
+                                            $stmt = $mysqli->prepare($sql);
+                                            $stmt->execute();
+                                            $res = $stmt->get_result();
+
+                                            while ($row = $res->fetch_assoc()) {
+                                                $tanggal = $row['tanggal'];
+                                                $hari = $row['hari'];
+                                                $jamm = $row['jam_mulai'];
+                                                $jams = $row['jam_selesai'];
+                                                $kode = $row['e_code'];
+                                                $status = $row['isbuka'];
+                                                if($status == 0){
+                                                    $status = 'FALSE';
+                                                }else{
+                                                    $status = 'TRUE';
+                                                }
+                                                echo "
+                                                <td>$tanggal</td>
+                                                <td>$hari, $jamm - $jams</td>
+                                                <td>$kode</td>
+                                                <td>$status</td>
+                                                <th><a href='#$tanggal'>Lihat</a></th>
+                                                ";
+                                            }
+                                            ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                </li>
+                </ul>
             </div>
-            </li>
-            </ul>
-        </div>
-        <!-- Argon Scripts -->
-        <!-- Core -->
-        <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
-        <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-        <!-- Optional JS -->
-        <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-        <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
-        <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
-        <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-        <!-- Argon JS -->
-        <script src="./assets/js/argon.js?v=1.1.0"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-        <!-- Demo JS - remove this in your project -->
-        <script src="./assets/js/demo.min.js"></script>
-        <script type="text/javascript">
-        </script>
-        <script>
-            function swalgood(msg1, msg2) {
-                Swal.fire(
-                    msg1,
-                    msg2,
-                    'success'
-                );
-            }
-        </script>
+            <!-- Argon Scripts -->
+            <!-- Core -->
+            <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+            <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+            <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+            <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+            <!-- Optional JS -->
+            <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+            <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+            <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+            <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+            <script src="./assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+            <script src="./assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+            <script src="./assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+            <script src="./assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+            <script src="./assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+            <script src="./assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+            <script src="./assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+            <script src="./assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+            <!-- Argon JS -->
+            <script src="./assets/js/argon.js?v=1.1.0"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+            <!-- Demo JS - remove this in your project -->
+            <script src="./assets/js/demo.min.js"></script>
+            <script type="text/javascript">
+            </script>
+            <script>
+                function swalgood(msg1, msg2) {
+                    Swal.fire(
+                        msg1,
+                        msg2,
+                        'success'
+                    );
+                }
+            </script>
 </body>
 
 </html>
