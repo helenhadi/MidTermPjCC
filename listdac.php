@@ -338,7 +338,7 @@ $mysqli = konek('localhost', 'root', '', '');
                                                         <!-- List user id -->
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
-                                                            <a href="dacroles.php?id=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="DAC Role Holders">
+                                                            <a href="dacroles.php?roleid=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="DAC Role Holders">
                                                                 <i class="fas fa-tag"></i>
                                                             </a>
                                                             <a href="edit_dac_fakultas.php?edtid=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Edit DAC">
