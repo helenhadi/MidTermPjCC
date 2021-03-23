@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -33,12 +34,13 @@ if (isset($_SESSION['success'])) {
 if (isset($_SESSION['error'])) {
   $status = $_SESSION['error'];
   echo '<script type="text/javascript">';
-  echo "setTimeout(function () {swal('Failed!', '" . $status ."', 'error');";
+  echo "setTimeout(function () {swal('Failed!', '" . $status . "', 'error');";
   echo '}, 1);</script>';
 }
 include('connectdb.php');
 $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
 ?>
+
 <body>
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -255,7 +257,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="form-control-label">Field</label>
                           <div class="input-group input-group-merge">
@@ -270,7 +272,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="form-control-label">Nama Field</label>
                           <div class="input-group input-group-merge">
@@ -278,7 +280,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="form-control-label">Tipe Field</label>
                           <div class="input-group input-group-merge">
@@ -291,11 +293,31 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-3">
+                    </div>
+                    <div class="row" id="entities">
+                      <div class="col-md-12">
                         <div class="form-group">
-                          <label class="form-control-label" style="opacity:0%">Tipe Field</label>
-                          <div class="input-group input-group-merge" style="opacity:0%">
-                            aaaaaa
+                          <h5 class="card-title text-uppercase text-muted mb-0 text-black">Entity Kustom </h5>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="form-control-label">Nama Entity</label>
+                          <div class="input-group input-group-merge">
+                            <input class="form-control" name="entityc_name[]" placeholder="nama entity" type="text">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="form-control-label">Tipe Entity</label>
+                          <div class="input-group input-group-merge">
+                            <select class='form-control' name="typee_en[]" selected="Varchar / String Text">
+                              <option value="varchar(45)">Text</option>
+                              <option value="int">Angka</option>
+                              <option value="datetime">Tanggal</option>
+                              <option value="double">Angka Desimal</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -306,8 +328,10 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
                           </div>
-                          <input onclick='swalgood(`Sukses`,`Field Dihapus.`)' class='btn btn-danger' type='button' value='Kurangi Field' id='deletecustom' /> &nbsp; &nbsp;
-                          <input onclick="swalgood('Sukses','Field Tambahan Berhasil Ditambahkan.')" class="btn btn-outline-default btn-round" type="button" value="Tambah Field" id="addcustom" /> &nbsp; &nbsp;
+                          <input class='btn btn-danger' type='button' value='Kurangi Field' id='deletecustom' /> &nbsp; &nbsp;
+                          <input class='btn btn-danger' type='button' value='Kurangi Entity' id='deletecustomentity' /> &nbsp; &nbsp;
+                          <input class="btn btn-outline-default btn-round" type="button" value="Tambah Field" id="addcustom" /> &nbsp; &nbsp;
+                          <input class="btn btn-outline-default btn-round" type="button" value="Tambah Entity" id="addcentity" /> &nbsp; &nbsp;
                           <input class="btn btn-primary" type="submit" value="Tambah Jurusan" />
                         </div>
                       </div>
@@ -341,10 +365,11 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
     <script src="./assets/js/demo.min.js"></script>
     <script type="text/javascript">
       var count = 0;
+      var count2 = 0;
       $("#addcustom").click(function() {
         count++;
         document.getElementById("deletecustom").style.display = "block";
-        $("#fieldss").append("<div class='col-md-3 cf_" + count + "'>" +
+        $("#fieldss").append("<div class='col-md-4 cf_" + count + "'>" +
           "<div class='form-group'>" +
           "<label class='form-control-label'>Field</label>" +
           "<div class='input-group input-group-merge'>" +
@@ -359,7 +384,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
           "</div>" +
           "</div>" +
           "</div>" +
-          "<div class='col-md-3 cf_" + count + "'>" +
+          "<div class='col-md-4 cf_" + count + "'>" +
           "<div class='form-group'>" +
           "<label class='form-control-label'>Nama Field</label>" +
           "<div class='input-group input-group-merge'>" +
@@ -367,7 +392,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
           "</div>" +
           "</div>" +
           "</div>" +
-          "<div class='col-md-3 cf_" + count + "'>" +
+          "<div class='col-md-4 cf_" + count + "'>" +
           "<div class='form-group'>" +
           "<label class='form-control-label'>Tipe Field</label>" +
           "<div class='input-group input-group-merge'>" +
@@ -378,14 +403,32 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
           "<option value='double'>Angka Desimal</option>" +
           "</select>" +
           "</div>" +
-          "</div></div>" +
-          "<div class='col-md-3 cf_" + count + "'>" +
-          "<div class='form-group'>" +
-          "<label class='form-control-label' style='opacity:0%;'>Tipe Field</label>" +
-          "<div class='input-group input-group-merge'>" +
-          "" +
-          "</div>" +
           "</div></div>");
+      });
+      $("#addcentity").click(function() {
+        count2++;
+        document.getElementById("deletecustomentity").style.display = "block";
+        $("#entities").append("<div class='col-md-6 ce_" + count2 + "'>" +
+          "<div class='form-group'>" +
+          "<label class='form-control-label'>Nama Entity</label>" +
+          "<div class='input-group input-group-merge'>" +
+          "<input class='form-control' name='entityc_name[]' placeholder='nama entity' type='text'>" +
+          "</div>" +
+          "</div>" +
+          "</div>" +
+          "<div class='col-md-6 ce_" + count2 + "'>" +
+          "<div class='form-group'>" +
+          "<label class='form-control-label'>Tipe Entity</label>" +
+          "<div class='input-group input-group-merge'>" +
+          "<select class='form-control' name='typee_en[]' selected='Varchar / String Text'>" +
+          "<option value='varchar(45)'>Text</option>" +
+          "<option value='int'>Angka</option>" +
+          "<option value='datetime'>Tanggal</option>" +
+          "<option value='double'>Angka Desimal</option>" +
+          "</select>" +
+          "</div>" +
+          "</div>" +
+          "</div>");
       });
       $('body').on('click', '#deletecustom', function() {
         $('.cf_' + count).remove();
@@ -394,10 +437,22 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
           document.getElementById("deletecustom").style.display = "none";
         }
       });
+      $('body').on('click', '#deletecustomentity', function() {
+        $('.ce_' + count2).remove();
+        count2--;
+        if (count2 == 0) {
+          document.getElementById("deletecustomentity").style.display = "none";
+        }
+      });
       if (count > 0) {
         document.getElementById("deletecustom").style.display = "block";
       } else {
         document.getElementById("deletecustom").style.display = "none";
+      }
+      if (count2 > 0) {
+        document.getElementById("deletecustomentity").style.display = "block";
+      } else {
+        document.getElementById("deletecustomentity").style.display = "none";
       }
     </script>
     <script>
