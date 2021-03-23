@@ -36,6 +36,10 @@ if (isset($_SESSION['error'])) {
   echo "setTimeout(function () {swal('Failed!', '" . $status . "', 'error');";
   echo '}, 1);</script>';
 }
+if (!(isset($_GET['edtid'])))
+  header("location: listdac.php");
+else
+  $edtid = $_GET['edtid'];
 include('connectdb.php');
 $mysqli = konek('localhost', 'root', '');
 ?>
@@ -221,144 +225,160 @@ $mysqli = konek('localhost', 'root', '');
                   <form method="POST" enctype="multipart/form-data" action="listdac_process.php">
                     <!-- Input groups with icon -->
                     <div class="row" id="fieldss">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Kode</label>
-                          <div class="input-group input-group-merge">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                      <?php
+                      $mysqli->select_db('presensi_cloud');
+                      $sql = "SELECT * FROM dac_rules where id=? limit 1";
+                      $stmt = $mysqli->prepare($sql);
+                      $stmt->bind_param("i", $edtid);
+                      $stmt->execute();
+                      $res = $stmt->get_result();
+echo $edtid."<br><br><br><br><br><br><br>";
+                      while ($row = $res->fetch_assoc() > 0) {
+                        
+                        ?>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="form-control-label">Kode</label>
+                            <div class="input-group input-group-merge">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                              </div>
+                              <input required class="form-control" name="kode" placeholder="kode" type="text" <?php echo "value='".$row['kode']."'"; ?>>
                             </div>
-                            <input required class="form-control" name="kode" placeholder="kode" type="text">
                           </div>
                         </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Jurusan</label>
-                          <div class="input-group input-group-merge">
-                            <select class="form-control" name="jurusan" data-toggle="select">
-                              <?php
-                              $mysqli->select_db('presensi_cloud');
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="form-control-label">Jurusan</label>
+                            <div class="input-group input-group-merge">
+                              <select class="form-control" name="jurusan" data-toggle="select">
+                                <?php
+                                $mysqli->select_db('presensi_cloud');
 
-                              if (isset($_GET['id'])) {
-                                $sql = "SELECT * FROM jurusans where fakultass_id = ? order by nama ASC";
-                                $stmt = $mysqli->prepare($sql);
-                                $stmt->bind_param('i', $_GET['id']);
-                              }
-                              elseif (!(isset($_GET['id']) && $_SESSION['jabatan'] == 'admin')) {
-                                $sql = "SELECT * FROM jurusans order by nama ASC";
-                                $stmt = $mysqli->prepare($sql);
-                              }
-                              $stmt->execute();
-                              $res = $stmt->get_result();
+                                if (isset($_GET['id'])) {
+                                  $sql = "SELECT * FROM jurusans where fakultass_id = ? order by nama ASC";
+                                  $stmt = $mysqli->prepare($sql);
+                                  $stmt->bind_param('i', $_GET['id']);
+                                }
+                                elseif (!(isset($_GET['id']) && $_SESSION['jabatan'] == 'admin')) {
+                                  $sql = "SELECT * FROM jurusans order by nama ASC";
+                                  $stmt = $mysqli->prepare($sql);
+                                }
+                                $stmt->execute();
+                                $res = $stmt->get_result();
 
-                              while ($row = $res->fetch_assoc()) {
-                                echo "<option value='".$row['id']."'>".$row['id']." - ".$row['nama']."</option>";
-                              }
-                              ?>
-                            </select>
+                                while ($row = $res->fetch_assoc()) {
+                                  echo "<option value='".$row['id']."'>".$row['id']." - ".$row['nama']."</option>";
+                                }
+                                ?>
+                              </select>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Entity</label>
-                          <div class="input-group input-group-merge">
-                            <select class='form-control' name="entity">
-                              <option value="jadwals">Jadwal</option>
-                              <option value="kehadirans">Kehadiran</option>
-                              <option value="mahasiswas">Mahasiswa</option>
-                              <option value="matakuliahs">Mata Kuliah</option>
-                              <option value="matakuliahs_buka">Mata Kuliah yang Buka</option>
-                              <option value="matakuliahs_kp">Kelas Pararel Mata Kuliah</option>
-                            </select>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="form-control-label">Entity</label>
+                            <div class="input-group input-group-merge">
+                              <select class='form-control' name="entity">
+                                <option value="jadwals">Jadwal</option>
+                                <option value="kehadirans">Kehadiran</option>
+                                <option value="mahasiswas">Mahasiswa</option>
+                                <option value="matakuliahs">Mata Kuliah</option>
+                                <option value="matakuliahs_buka">Mata Kuliah yang Buka</option>
+                                <option value="matakuliahs_kp">Kelas Pararel Mata Kuliah</option>
+                              </select>
+                            </div>
                           </div>
                         </div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="form-control-label">Field</label>
+                            <div class="input-group input-group-merge">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                              </div>
+                              <input required class="form-control" name="field" placeholder="field" type="text">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="form-control-label">Operator</label>
+                            <div class="input-group input-group-merge">
+                              <select class='form-control' name="operator">
+                                <option value="=">'=' Equal as</option>
+                                <option value="!=">'!=' Not equal as</option>
+                                <option value=">">'>' Greater than</option>
+                                <option value="<">'<' Lower than</option>
+                                <option value=">=">'>=' Greater than or equal as</option>
+                                <option value="<=">'<=' Lower than or equal as</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="form-control-label">Value</label>
+                            <div class="input-group input-group-merge">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                              </div>
+                              <input required class="form-control" name="value" placeholder="value" type="text">
+                            </div>
+                          </div>
+                        </div>
+                        <?php
+                          }
+                          if ($res->fetch_assoc() < 1)
+                            echo "Failed to get DAC Rule ID ".$_GET['edtid'];
+                        ?>
                       </div>
-                      <div class="col-md-12">
+                      <div class="col-md-4">
                         <div class="form-group">
-                          <label class="form-control-label">Field</label>
+                          <label class="form-control-label" style='opacity:0%;'>Add</label>
                           <div class="input-group input-group-merge">
                             <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                             </div>
-                            <input required class="form-control" name="field" placeholder="field" type="text">
+                            <input type="hidden" name="edtid" value="<?php echo $_GET['edtid'] ?>" />
+                            <input class="btn btn-primary" type="submit" name="edtdacf" value="Edit DAC" />
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Operator</label>
-                          <div class="input-group input-group-merge">
-                            <select class='form-control' name="operator">
-                              <option value="=">'=' Equal as</option>
-                              <option value="!=">'!=' Not equal as</option>
-                              <option value=">">'>' Greater than</option>
-                              <option value="<">'<' Lower than</option>
-                              <option value=">=">'>=' Greater than or equal as</option>
-                              <option value="<=">'<=' Lower than or equal as</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="form-control-label">Value</label>
-                          <div class="input-group input-group-merge">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
-                            </div>
-                            <input required class="form-control" name="value" placeholder="value" type="text">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="form-control-label" style='opacity:0%;'>Add</label>
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                          </div>
-                          <input type="hidden" name="edtid" value="<?php echo $_GET['edtid'] ?>" />
-                          <input class="btn btn-primary" type="submit" name="edtdacf" value="Edit DAC" />
-                        </div>
-                      </div>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </li>
-  </ul>
-</div>
-<!-- Argon Scripts -->
-<!-- Core -->
-<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-<script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="./assets/vendor/js-cookie/js.cookie.js"></script>
-<script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-<script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-<!-- Optional JS -->
-<script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-<script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
-<script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
-<script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-<!-- Argon JS -->
-<script src="./assets/js/argon.js?v=1.1.0"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-<!-- Demo JS - remove this in your project -->
-<script src="./assets/js/demo.min.js"></script>
-<script type="text/javascript">
-  function swalgood(msg1, msg2) {
-    Swal.fire(
-      msg1,
-      msg2,
-      'success'
-      );
-  }
-</script>
+      </li>
+    </ul>
+  </div>
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <!-- Optional JS -->
+  <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+  <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+  <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+  <!-- Argon JS -->
+  <script src="./assets/js/argon.js?v=1.1.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+  <!-- Demo JS - remove this in your project -->
+  <script src="./assets/js/demo.min.js"></script>
+  <script type="text/javascript">
+    function swalgood(msg1, msg2) {
+      Swal.fire(
+        msg1,
+        msg2,
+        'success'
+        );
+    }
+  </script>
 </body>
 </html>
