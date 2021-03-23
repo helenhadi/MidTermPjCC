@@ -23,6 +23,16 @@ if (isset($_POST['btnsignin'])) {
         $_SESSION['jabatan'] = $row['jabatan'];
         $_SESSION['fid'] = $row['fakultass_id'];
         $_SESSION['jid'] = $row['jurusans_id'];
+        if($_SESSION['jabatan'] == 'mhs'){
+            $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
+            $sql = "SELECT * FROM mahasiswas WHERE user_id=?";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("i", $_SESSION['idd']);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            $row = $res->fetch_assoc();
+            $_SESSION['mid'] = $row['id'];
+        }
         header("Location: dashboard.php");
     }
 }
