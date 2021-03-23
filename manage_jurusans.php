@@ -21,7 +21,7 @@ session_start();
 if (!isset($_SESSION['username']) && !isset($_SESSION['nama']) && !isset($_SESSION['jurusan'])) {
   header("location: login.php");
 }
-if ($_SESSION['jabatan'] != 'admin' && $_SESSION['nama'] != 'Administrator') {
+if ($_SESSION['jabatan'] != 'admin') {
   $_SESSION['error'] = "Kamu tidak dapat mengakses page ini!";
   header("location: dashboard.php");
 }
