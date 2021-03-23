@@ -57,7 +57,7 @@ $res = $stmt->get_result();
 while ($row = $res->fetch_assoc()) {
     $kode = $row['kode'];
     $nama = $row['nama'];
-    
+
     $entity = $row['entity'];
     if ($entity == 'jadwals') 
         $entity = "Jadwal";
@@ -228,7 +228,7 @@ while ($row = $res->fetch_assoc()) {
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links">
                                     <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Manage DAC Roles ID: <?php echo $roleid; ?></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Manage Roles DAC Code: <?php echo $kode; ?></li>
                                 </ol>
                             </nav>
                         </div>
@@ -316,13 +316,10 @@ while ($row = $res->fetch_assoc()) {
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>No.</th>
-                                                    <th>Kode</th>
+                                                    <th>Nama</th>
+                                                    <th>Jabatan</th>
+                                                    <th>Fakultas</th>
                                                     <th>Jurusan</th>
-                                                    <th>Entity</th>
-                                                    <th>Field</th>
-                                                    <th>Operator</th>
-                                                    <th>Value</th>
-                                                    <th>User ID</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -330,59 +327,23 @@ while ($row = $res->fetch_assoc()) {
                                                 <!-- Isi List DAC -->
                                                 <?php
                                                 $mysqli->select_db('presensi_cloud');
-                                                $sql = "SELECT * from dac_roles ORDER BY id";
+                                                $sql = "SELECT * from dac_roles as dr inner join users as u on dr.user_id=u.id where dr.dac_rule_id = ? ORDER BY u.nama ASC";
                                                 $stmt = $mysqli->prepare($sql);
+                                                $stmt->bind_param("i", $roleid);
                                                 $stmt->execute();
                                                 $res = $stmt->get_result();
 
                                                 $count = 0;
                                                 while ($row = $res->fetch_assoc()) {
                                                     $count++;
-                                                    $dac_id = $row['id'];
+                                                    $dac_roles_id = $row['id'];
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $count; ?></td>
-                                                        <td><?php echo $row['kode']; ?></td>
                                                         <td><?php echo $row['nama']; ?></td>
-                                                        <td><?php 
-                                                        $entity = $row['entity'];
-
-                                                        if ($entity == 'jadwals') 
-                                                            echo "Jadwal";
-                                                        elseif ($entity == 'kehadirans') 
-                                                            echo "Kehadiran";
-                                                        elseif ($entity == 'mahasiswas') 
-                                                            echo "Mahasiswa";
-                                                        elseif ($entity == 'matakuliahs') 
-                                                            echo "Mata Kuliah";
-                                                        elseif ($entity == 'matakuliahs_buka') 
-                                                            echo "Mata Kuliah yang Buka";
-                                                        else
-                                                            echo "Kelas Pararel Mata Kuliah";
-
-                                                        ?></td>
-                                                        <td><?php echo $row['field']; ?></td>
-                                                        <td><?php 
-                                                        $opt = $row['operator'];
-
-                                                        if ($opt == '=') 
-                                                            echo "equal as";
-                                                        elseif ($opt == '!=') 
-                                                            echo "not equal as";
-                                                        elseif ($opt == '<') 
-                                                            echo "lower than";
-                                                        elseif ($opt == '>') 
-                                                            echo "grater than";
-                                                        elseif ($opt == '<=') 
-                                                            echo "lower than or equal as";
-                                                        else
-                                                            echo "grater than or equal as";
-
-                                                        ?></td>
-                                                        <td><?php echo $row['value']; ?></td>
-                                                        <!-- List user id -->
-                                                        <td>User ID 1, User ID 2 dst</td>
-                                                        <!-- List user id -->
+                                                        <td><?php echo $row['jabatan']; ?></td>
+                                                        <td><?php echo $row['fakultass_id']; ?></td>
+                                                        <td><?php echo $row['jurusans_id']; ?></td>
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
                                                             <a href="edit_dac_fakultas.php?edtid=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Edit DAC">
