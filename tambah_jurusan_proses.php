@@ -61,14 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($entitycustom[0] != '' || $entitycustom[0] != null) {
                   $mysqli->select_db($newSchema);
                   for ($i = 0; $i <= count($entitycustom) - 1; $i++) {
-                    $sql = "CREATE TABLE " . $entitycustom[$i] . "(id " . $typeentitycustom[$i]. " NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))";
+                    $sql = "CREATE TABLE " . $entitycustom[$i] . "(id " . $typeentitycustom[$i]. ")";
                     $result = $mysqli->query($sql);
                   }
                   $mysqli->select_db('presensi_cloud');
                   $sql = "Insert Into metadatas (entity, custom_field, jurusans_id) Values (?,?,?)";
                   for ($i = 0; $i <= count($entitycustom) - 1; $i++) {
                     $stmt = $mysqli->prepare($sql);
-                    $stmt->bind_param("ssi", $entitycustom[$i], '', $id);
+                    $kos = '';
+                    $stmt->bind_param("ssi", $entitycustom[$i], $kos, $id);
                     $stmt->execute();
                   }
                 }
