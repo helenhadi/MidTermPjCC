@@ -337,6 +337,8 @@ while ($row = $res->fetch_assoc()) {
                                                 while ($row = $res->fetch_assoc()) {
                                                     $count++;
                                                     $dac_roles_id = $row['id'];
+                                                    //LN, THIS IS YOUR LAST UPDATE
+                                                    //U WANT TO SHOW THE FACULTY AND MAJOR NAME + CUD THE ROLES :)
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $count; ?></td>
