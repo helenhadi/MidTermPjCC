@@ -241,7 +241,7 @@ $mysqli = konek('localhost', 'root', '');
         </div>
         <!-- Field Admin -->
         <?php
-        if ($_SESSION['jabatan'] == 'admin' && $_SESSION['nama'] == 'Administrator') {
+        if ($_SESSION['jabatan'] == 'admin') {
           echo "
                     <div class='col-4'>
                     <a href='manage_jurusans.php'>
@@ -291,20 +291,21 @@ $mysqli = konek('localhost', 'root', '');
                 ";
         }else if($_SESSION['jabatan'] == 'dosen'){
           $mysqli->select_db('presensi_cloud_'.$_SESSION['jid']);
-          $sql = "SELECT * FROM matakuliahs a INNER JOIN matakuliahs_kp b ON a.id=b.matakuliahs_id 
-                  INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id WHERE dosen_id=".$_SESSION['idd'];
+          $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id as id_hari FROM matakuliahs a INNER JOIN matakuliahs_kp b ON 
+          a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
+          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE dosen_id=".$_SESSION['idd'];
           $stmt = $mysqli->prepare($sql);
           $stmt->execute();
           $res = $stmt->get_result();
 
           while ($row = $res->fetch_assoc()) {
             echo "<div class='col-4'>
-            <a href='#'>
+            <a href='#" . $row['id_mk'] . "'>
               <div class='card btn text-left'>
                 <img class='card-img-top' src='./assets/img/theme/img-1-1000x600.jpg' alt='Card image cap'>
                 <div class='card-body'>
                   <h5 class='card-title'>" . $row['nama'] . "</h5>
-                  <p class='card-text'>09.45 - 12.30</p>
+                  <p class='card-text'>" . $row['hari'] . ", " . $row['jam_mulai'] . " - " . $row['jam_selesai'] . "</p>
                 </div>
               </div>
               </a>
@@ -312,21 +313,22 @@ $mysqli = konek('localhost', 'root', '');
           }
         } else if ($_SESSION['jabatan'] == 'mhs') {
           $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
-          $sql = "SELECT * FROM matakuliahs a INNER JOIN matakuliahs_kp b ON a.id=b.matakuliahs_id 
+          $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id FROM matakuliahs a INNER JOIN matakuliahs_kp b ON a.id=b.matakuliahs_id 
                   INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN ambil_matakuliahs d ON a.id=d.matakuliahs_id 
-                  WHERE mahasiswas_id=" . $_SESSION['idd'];
+                  INNER JOIN jadwal_matakuliahs e ON a.id=e.matakuliahs_id
+                  INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE d.mahasiswas_id=" . $_SESSION['mid'];
           $stmt = $mysqli->prepare($sql);
           $stmt->execute();
           $res = $stmt->get_result();
 
           while ($row = $res->fetch_assoc()) {
             echo "<div class='col-4'>
-            <a href='#'>
+            <a href='#" . $row['id_mk'] . "'>
               <div class='card btn text-left'>
                 <img class='card-img-top' src='./assets/img/theme/img-1-1000x600.jpg' alt='Card image cap'>
                 <div class='card-body'>
                   <h5 class='card-title'>" . $row['nama'] . "</h5>
-                  <p class='card-text'>09.45 - 12.30</p>
+                  <p class='card-text'>" . $row['hari'] . ", " . $row['jam_mulai'] . " - " . $row['jam_selesai'] . "</p>
                 </div>
               </div>
               </a>
