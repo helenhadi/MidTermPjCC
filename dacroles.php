@@ -40,8 +40,55 @@ if (isset($_SESSION['error'])) {
     echo "setTimeout(function () {swal('Failed!', '" . $status . "', 'error');";
     echo '}, 1);</script>';
 }
+if (!(isset($_GET['roleid'])))
+  header("location: listdac.php");
+else
+  $roleid = $_GET['roleid'];
 include('connectdb.php');
 $mysqli = konek('localhost', 'root', '', '');
+
+$mysqli->select_db('presensi_cloud');
+$sql = "SELECT dac.id as id, dac.kode as kode, jur.nama as nama, dac.entity as entity, dac.field as field, dac.operator as operator, dac.value as value FROM dac_rules as dac inner join jurusans as jur on dac.jurusans_id=jur.id where dac.id = ? order by dac.kode ASC limit 1";
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("i", $roleid);
+$stmt->execute();
+$res = $stmt->get_result();
+
+while ($row = $res->fetch_assoc()) {
+    $kode = $row['kode'];
+    $nama = $row['nama'];
+    
+    $entity = $row['entity'];
+    if ($entity == 'jadwals') 
+        $entity = "Jadwal";
+    elseif ($entity == 'kehadirans') 
+        $entity = "Kehadiran";
+    elseif ($entity == 'mahasiswas') 
+        $entity = "Mahasiswa";
+    elseif ($entity == 'matakuliahs') 
+        $entity = "Mata Kuliah";
+    elseif ($entity == 'matakuliahs_buka') 
+        $entity = "Mata Kuliah yang Buka";
+    else
+        $entity = "Kelas Pararel Mata Kuliah";
+
+    $field = $row['field'];
+
+    $opt = $row['operator'];
+    if ($opt == '=') 
+        $opt = "equal as";
+    elseif ($opt == '!=') 
+        $opt = "not equal as";
+    elseif ($opt == '<') 
+        $opt = "lower than";
+    elseif ($opt == '>') 
+        $opt = "grater than";
+    elseif ($opt == '<=') 
+        $opt = "lower than or equal as";
+    else
+        $opt = "grater than or equal as";
+    $value = $row['value'];
+}
 ?>
 
 <body>
@@ -181,7 +228,7 @@ $mysqli = konek('localhost', 'root', '', '');
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links">
                                     <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Manage DAC Roles</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Manage DAC Roles ID: <?php echo $roleid; ?></li>
                                 </ol>
                             </nav>
                         </div>
@@ -226,7 +273,7 @@ $mysqli = konek('localhost', 'root', '', '');
                                     <div class="card-header border-0">
                                         <div class="row">
                                             <div class="col-6">
-                                                <h3 class="mb-0">DAC</h3>
+                                                <h3 class="mb-0">DAC Holders</h3>
                                             </div>
                                             <div class="col-6 text-right">
                                                 <!-- Insert DAC -->
