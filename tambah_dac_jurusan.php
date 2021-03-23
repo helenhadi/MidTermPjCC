@@ -80,13 +80,13 @@ $mysqli = konek('localhost', 'root', '');
               </a>
               </li>
               <li class='nav-item'>
-              <a class='nav-link active' href='tambah_user.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+              <a class='nav-link' href='tambah_user.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
               <i class='ni ni-single-02 text-primary'></i>
               <span class='nav-link-text'>Tambah User</span>
               </a>
               </li>
               <li class='nav-item'>
-              <a class='nav-link' href='listdac.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+              <a class='nav-link active' href='listdac.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
               <i class='ni ni-bulb-61 text-primary'></i>
               <span class='nav-link-text'>Manage DAC Rules</span>
               </a>
