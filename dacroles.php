@@ -338,7 +338,6 @@ while ($row = $res->fetch_assoc()) {
                                                     $count++;
                                                     $dac_roles_id = $row['id'];
                                                     //LN, THIS IS YOUR LAST UPDATE
-                                                    //U WANT TO SHOW THE FACULTY AND MAJOR NAME + CUD THE ROLES :)
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $count; ?></td>
@@ -348,10 +347,7 @@ while ($row = $res->fetch_assoc()) {
                                                         <td><?php echo $row['jurusans_id']; ?></td>
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
-                                                            <a href="edit_dac_fakultas.php?edtid=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Edit DAC">
-                                                                <i class="fas fa-user-edit"></i>
-                                                            </a>
-                                                            <a href="listdac_process.php?delid=<?php echo $row['id']; ?>" class="table-action table-action-delete" name="delete-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Delete DAC">
+                                                            <a href="dacroles_process.php?delid=<?php echo $dac_roles_id; ?>" class="table-action table-action-delete" name="delete-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Delete DAC">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </td>
