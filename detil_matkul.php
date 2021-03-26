@@ -234,7 +234,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                     ?>
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="card bg-gradient-default">
+                                            <div class="card bg-default">
                                                 <div class="card-body">
                                                     <?php
                                                     $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
@@ -252,16 +252,20 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                         $jams = $row['jam_selesai'];
                                                         $kp = $row['kp'];
                                                         $kpid = $row['id_kp'];
+                                                        $kodeun = $row['e_code'];
+                                                        if($kodeun == ''){
+                                                            $kodeun = '-';
+                                                        }
                                                     }
                                                     echo "<h3 class='card-title text-white'>" . $nama . ' KP ' . $kp . '</h3>';
                                                     echo "<p class='text-white'>" . $hari . ", " . $jamm . " - " . $jams . '</p>';
-                                                    echo "<p class='text-white'> Kode Unik : </p>";
+                                                    echo "<p class='font-weight-bold text-white'> Kode Unik : <p class='text-white' id='kunik'>". $kodeun."</p></p>";
                                                     ?>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <div class="card bg-gradient-default">
+                                            <div class="card bg-default">
                                                 <div class="card-body">
                                                     <div class="d-flex justify-content-between">
                                                         <a href="#" class="mr-4">&nbsp</a>
@@ -397,58 +401,60 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                 }
 
                 $("#btntogglekelas").click(function() {
-                    var statusk = <?php
-                                    $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
-                                    $sql = "SELECT * from matakuliahs_kp WHERE matakuliahs_id=" . $idmatakuliah . " AND matakuliahs_buka_id=" . $kpid;
-                                    $stmt = $mysqli->prepare($sql);
-                                    $stmt->execute();
-                                    $res = $stmt->get_result();
-                                    $row = $res->fetch_assoc();
-                                    echo $row['status'];
-                                    $stmt->close();
-                                    ?>;
-                                    alert(statusk);
-                    if (statusk == 0) {
-                        $.ajax({
-                            type: "POST",
-                            url: "updatekelas.php",
-                            data: {
-                                int: 1,
-                                idmatkul: <?php echo $idmatakuliah; ?>,
-                                idkp: <?php echo $kpid; ?>
-                            },
-                            success: function(data) {
-                                var obj = JSON.parse(data);
-                                $("#btntogglekelas").html("");
-                                $("#statusKelass").html("");
-                                if (obj['status']) {
-                                    var dataa = obj['data'];
-                                    document.getElementById('btntogglekelas').innerHTML = 'Tutup Kelas';
-                                    document.getElementById('statusKelass').innerHTML = 'Buka';
+                    var statusk = "";
+                    $.ajax({
+                        type: "POST",
+                        url: "selectkelasstatus.php",
+                        data: {
+                            idmatkul: <?php echo $idmatakuliah; ?>,
+                            idkp: <?php echo $kpid; ?>
+                        },
+                        success: function(data) {
+                            var obj = JSON.parse(data);
+                            if (obj['status']) {
+                                statusk = obj['data'];
+                                if (statusk == 0) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "updatekelas.php",
+                                        data: {
+                                            int: 1,
+                                            idmatkul: <?php echo $idmatakuliah; ?>,
+                                            idkp: <?php echo $kpid; ?>
+                                        },
+                                        success: function(data) {
+                                            var obj = JSON.parse(data);
+                                            if (obj['status']) {
+                                                var dataa = obj['data'];
+                                                document.getElementById('btntogglekelas').innerHTML = 'Tutup Kelas';
+                                                document.getElementById('statusKelass').innerHTML = 'Buka';
+                                                document.getElementById('kunik').innerHTML = obj['kunik'];
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "updatekelas.php",
+                                        data: {
+                                            int: 0,
+                                            idmatkul: <?php echo $idmatakuliah; ?>,
+                                            idkp: <?php echo $kpid; ?>
+                                        },
+                                        success: function(data) {
+                                            var obj = JSON.parse(data);
+                                            if (obj['status']) {
+                                                var dataa = obj['data'];
+                                                document.getElementById('btntogglekelas').innerHTML = 'Buka Kelas';
+                                                document.getElementById('statusKelass').innerHTML = 'Tutup';
+                                                document.getElementById('kunik').innerHTML = '-';
+                                            }
+                                        }
+                                    });
                                 }
                             }
-                        });
-                    } else {
-                        $.ajax({
-                            type: "POST",
-                            url: "updatekelas.php",
-                            data: {
-                                int: 0,
-                                idmatkul: <?php echo $idmatakuliah; ?>,
-                                idkp: <?php echo $kpid; ?>
-                            },
-                            success: function(data) {
-                                var obj = JSON.parse(data);
-                                $("#btntogglekelas").html("");
-                                $("#statusKelass").html("");
-                                if (obj['status']) {
-                                    var dataa = obj['data'];
-                                    document.getElementById('btntogglekelas').innerHTML = 'Buka Kelas';
-                                    document.getElementById('statusKelass').innerHTML = 'Tutup';
-                                }
-                            }
-                        });
-                    }
+                        }
+                    });
                 });
             </script>
 </body>
