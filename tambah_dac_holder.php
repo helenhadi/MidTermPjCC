@@ -279,27 +279,6 @@ while ($row = $res->fetch_assoc()) {
                                         unset($_SESSION['error']);
                                     }
                                     ?>
-                                    <div class="card-header border-0">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <h3 class="mb-0">DAC Holders</h3>
-                                            </div>
-                                            <div class="col-6 text-right">
-                                                <!-- Insert DAC -->
-                                                <?php
-                                                if ($_SESSION['jabatan'] == 'admin' || $_SESSION['jabatan'] == 'dekan' || $_SESSION['jabatan'] == 'wadek') {
-                                                ?>
-                                                    <a href="tambah_dac_holder.php?roldeid=<?php echo $roleid ?>" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Add DAC Role Holder">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah Holder</span>
-                                                    </a>
-                                                <?php
-                                                }
-                                                ?>
-                                                <!-- Insert DAC -->
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="table-responsive py-4">
                                         <table class="table table-flush" id="datatable-basic">
                                             <thead class="thead-light">

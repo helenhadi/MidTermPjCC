@@ -276,7 +276,6 @@ $mysqli = konek('localhost', 'root', '', '');
                                                     <th>Field</th>
                                                     <th>Operator</th>
                                                     <th>Value</th>
-                                                    <th>User ID</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -334,9 +333,6 @@ $mysqli = konek('localhost', 'root', '', '');
 
                                                             ?></td>
                                                         <td><?php echo $row['value']; ?></td>
-                                                        <!-- List user id -->
-                                                        <td>User ID 1, User ID 2 dst</td>
-                                                        <!-- List user id -->
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
                                                             <a href="dacroles.php?roleid=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="DAC Role Holders">
