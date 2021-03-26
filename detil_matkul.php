@@ -231,25 +231,85 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                     <?php
                                         unset($_SESSION['error']);
                                     }
-                                    $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
-                                    $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id as id_hari FROM matakuliahs a INNER JOIN matakuliahs_kp b ON 
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="card bg-gradient-default">
+                                                <div class="card-body">
+                                                    <?php
+                                                    $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
+                                                    $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id as id_hari FROM matakuliahs a INNER JOIN matakuliahs_kp b ON 
           a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
           ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE a.id=" . $idmatakuliah;
-                                    $stmt = $mysqli->prepare($sql);
-                                    $stmt->execute();
-                                    $res = $stmt->get_result();
+                                                    $stmt = $mysqli->prepare($sql);
+                                                    $stmt->execute();
+                                                    $res = $stmt->get_result();
 
-                                    while ($row = $res->fetch_assoc()) {
-                                        $nama = $row['nama'];
-                                        $hari = $row['hari'];
-                                        $jamm = $row['jam_mulai'];
-                                        $jams = $row['jam_selesai'];
-                                        $kp = $row['kp'];
-                                    }
-                                    echo $nama . ' KP ' . $kp . '<br>';
-                                    echo $hari . ", " . $jamm . " - " . $jams;
-                                    echo "<br><br> Absensi yang lalu"
-                                    ?>
+                                                    while ($row = $res->fetch_assoc()) {
+                                                        $nama = $row['nama'];
+                                                        $hari = $row['hari'];
+                                                        $jamm = $row['jam_mulai'];
+                                                        $jams = $row['jam_selesai'];
+                                                        $kp = $row['kp'];
+                                                        $kpid = $row['id_kp'];
+                                                    }
+                                                    echo "<h3 class='card-title text-white'>" . $nama . ' KP ' . $kp . '</h3>';
+                                                    echo "<p class='text-white'>" . $hari . ", " . $jamm . " - " . $jams . '</p>';
+                                                    echo "<p class='text-white'> Kode Unik : </p>";
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="card bg-gradient-default">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between">
+                                                        <a href="#" class="mr-4">&nbsp</a>
+                                                        <button type="button" id="btntogglekelas" class="btn btn-sm bg-white float-right">
+                                                            <?php
+                                                            $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
+                                                            $sql = "SELECT * from matakuliahs_kp WHERE matakuliahs_id=" . $idmatakuliah . " AND matakuliahs_buka_id=" . $kpid;
+                                                            $stmt = $mysqli->prepare($sql);
+                                                            $stmt->execute();
+                                                            $res = $stmt->get_result();
+                                                            $row = $res->fetch_assoc();
+                                                            $statusKelass = 'Tutup';
+                                                            if ($row['status'] == 0) {
+                                                                $statusKelasss = 'Buka Kelas';
+                                                                echo $statusKelasss;
+                                                            } else {
+                                                                $statusKelasss = 'Tutup Kelas';
+                                                                echo $statusKelasss;
+                                                            }
+                                                            ?>
+                                                        </button>
+                                                    </div>
+                                                    <h3 class="card-title text-white">Status Kelas</h3>
+                                                    <blockquote class="blockquote text-white mb-0">
+                                                        <p id='statusKelass'>
+                                                            <?php
+                                                            $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
+                                                            $sql = "SELECT * from matakuliahs_kp WHERE matakuliahs_id=" . $idmatakuliah . " AND matakuliahs_buka_id=" . $kpid;
+                                                            $stmt = $mysqli->prepare($sql);
+                                                            $stmt->execute();
+                                                            $res = $stmt->get_result();
+                                                            $row = $res->fetch_assoc();
+                                                            $statusKelass = 'Tutup';
+                                                            if ($row['status'] == 0) {
+                                                                $statusKelass = 'Tutup';
+                                                                echo $statusKelass;
+                                                            } else {
+                                                                $statusKelass = 'Buka';
+                                                                echo $statusKelass;
+                                                            }
+                                                            ?>
+                                                        </p>
+                                                    </blockquote>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    Absensi yang lalu :
                                     <div class="table-responsive py-4">
                                         <table class="table table-flush" id="datatable-basic">
                                             <thead class="thead-light">
@@ -328,8 +388,6 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
             <!-- Demo JS - remove this in your project -->
             <script src="./assets/js/demo.min.js"></script>
             <script type="text/javascript">
-            </script>
-            <script>
                 function swalgood(msg1, msg2) {
                     Swal.fire(
                         msg1,
@@ -337,6 +395,61 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                         'success'
                     );
                 }
+
+                $("#btntogglekelas").click(function() {
+                    var statusk = <?php
+                                    $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
+                                    $sql = "SELECT * from matakuliahs_kp WHERE matakuliahs_id=" . $idmatakuliah . " AND matakuliahs_buka_id=" . $kpid;
+                                    $stmt = $mysqli->prepare($sql);
+                                    $stmt->execute();
+                                    $res = $stmt->get_result();
+                                    $row = $res->fetch_assoc();
+                                    echo $row['status'];
+                                    $stmt->close();
+                                    ?>;
+                                    alert(statusk);
+                    if (statusk == 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: "updatekelas.php",
+                            data: {
+                                int: 1,
+                                idmatkul: <?php echo $idmatakuliah; ?>,
+                                idkp: <?php echo $kpid; ?>
+                            },
+                            success: function(data) {
+                                var obj = JSON.parse(data);
+                                $("#btntogglekelas").html("");
+                                $("#statusKelass").html("");
+                                if (obj['status']) {
+                                    var dataa = obj['data'];
+                                    document.getElementById('btntogglekelas').innerHTML = 'Tutup Kelas';
+                                    document.getElementById('statusKelass').innerHTML = 'Buka';
+                                }
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            type: "POST",
+                            url: "updatekelas.php",
+                            data: {
+                                int: 0,
+                                idmatkul: <?php echo $idmatakuliah; ?>,
+                                idkp: <?php echo $kpid; ?>
+                            },
+                            success: function(data) {
+                                var obj = JSON.parse(data);
+                                $("#btntogglekelas").html("");
+                                $("#statusKelass").html("");
+                                if (obj['status']) {
+                                    var dataa = obj['data'];
+                                    document.getElementById('btntogglekelas').innerHTML = 'Buka Kelas';
+                                    document.getElementById('statusKelass').innerHTML = 'Tutup';
+                                }
+                            }
+                        });
+                    }
+                });
             </script>
 </body>
 
