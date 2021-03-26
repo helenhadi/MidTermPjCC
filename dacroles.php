@@ -287,29 +287,11 @@ while ($row = $res->fetch_assoc()) {
                                             <div class="col-6 text-right">
                                                 <!-- Insert DAC -->
                                                 <?php
-                                                if ($_SESSION['jabatan'] == 'admin') {
+                                                if ($_SESSION['jabatan'] == 'admin' || $_SESSION['jabatan'] == 'dekan' || $_SESSION['jabatan'] == 'wadek') {
                                                 ?>
-                                                    <a href="tambah_dac_fakultas.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC Role">
+                                                    <a href="tambah_dac_holder.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Add DAC Role Holder">
                                                         <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah DAC Role Fakultas</span>
-                                                    </a>
-                                                    <a href="tambah_dac_jurusan.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC Role">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah DAC Role Jurusan</span>
-                                                    </a>
-                                                <?php
-                                                } elseif ($_SESSION['jabatan'] == 'dekan' || $_SESSION['jabatan'] == 'wadek') {
-                                                ?>
-                                                    <a href="tambah_dac_fakultas.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC Role">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah Role</span>
-                                                    </a>
-                                                <?php
-                                                } elseif ($_SESSION['jabatan'] == 'kajur') {
-                                                ?>
-                                                    <a href="tambah_dac_jurusan.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC Role">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah Role</span>
+                                                        <span class="btn-inner--text">Tambah Holder</span>
                                                     </a>
                                                 <?php
                                                 }
@@ -354,7 +336,7 @@ while ($row = $res->fetch_assoc()) {
                                                         <td><?php echo $row['jurusans_id']; ?></td>
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
-                                                            <a href="dacroles_process.php?delid=<?php echo $dac_roles_id; ?>" class="table-action table-action-delete" name="delete-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Delete DAC">
+                                                            <a href="dacroles_process.php?delid=<?php echo $dac_roles_id; ?>" class="table-action table-action-delete" name="delete-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Delete DAC Holder">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </td>
