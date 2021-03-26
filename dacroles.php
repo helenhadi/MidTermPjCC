@@ -289,7 +289,7 @@ while ($row = $res->fetch_assoc()) {
                                                 <?php
                                                 if ($_SESSION['jabatan'] == 'admin' || $_SESSION['jabatan'] == 'dekan' || $_SESSION['jabatan'] == 'wadek') {
                                                 ?>
-                                                    <a href="tambah_dac_holder.php?roldeid=<?php echo $roleid ?>" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Add DAC Role Holder">
+                                                    <a href="tambah_dac_holder.php?roleid=<?php echo $roleid ?>" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Add DAC Role Holder">
                                                         <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
                                                         <span class="btn-inner--text">Tambah Holder</span>
                                                     </a>

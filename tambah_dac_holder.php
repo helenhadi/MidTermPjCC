@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="./assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="./assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="./assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
-    </link>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</link>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <?php
 session_start();
@@ -95,7 +95,7 @@ while ($row = $res->fetch_assoc()) {
     <!-- Sidenav -->
     <?php
     if ($_SESSION['jabatan'] == 'admin') {
-    ?>
+        ?>
         <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
             <div class="scrollbar-inner">
                 <!-- Brand -->
@@ -128,25 +128,25 @@ while ($row = $res->fetch_assoc()) {
                             <?php
                             if ($_SESSION['jabatan'] == 'admin') {
                                 echo "
-                            <li class='nav-item'>
-                            <a class='nav-link' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
-                            <i class='ni ni-badge text-primary'></i>
-                            <span class='nav-link-text'>Tambah Jurusan</span>
-                            </a>
-                            </li>
-                            <li class='nav-item'>
-                            <a class='nav-link' href='tambah_user.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
-                            <i class='ni ni-single-02 text-primary'></i>
-                            <span class='nav-link-text'>Tambah User</span>
-                            </a>
-                            </li>
-                            <li class='nav-item'>
-                            <a class='nav-link active' href='listdac.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
-                            <i class='ni ni-bulb-61 text-primary'></i>
-                            <span class='nav-link-text'>Manage DAC Rules</span>
-                            </a>
-                            </li>
-                            ";
+                                <li class='nav-item'>
+                                <a class='nav-link' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                                <i class='ni ni-badge text-primary'></i>
+                                <span class='nav-link-text'>Tambah Jurusan</span>
+                                </a>
+                                </li>
+                                <li class='nav-item'>
+                                <a class='nav-link' href='tambah_user.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                                <i class='ni ni-single-02 text-primary'></i>
+                                <span class='nav-link-text'>Tambah User</span>
+                                </a>
+                                </li>
+                                <li class='nav-item'>
+                                <a class='nav-link active' href='listdac.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                                <i class='ni ni-bulb-61 text-primary'></i>
+                                <span class='nav-link-text'>Manage DAC Rules</span>
+                                </a>
+                                </li>
+                                ";
                             }
                             ?>
                         </ul>
@@ -159,7 +159,7 @@ while ($row = $res->fetch_assoc()) {
                 </div>
             </div>
         </nav>
-    <?php
+        <?php
     }
     ?>
     <!-- Main content -->
@@ -256,7 +256,7 @@ while ($row = $res->fetch_assoc()) {
                                 <div class="col-12">
                                     <?php
                                     if (isset($_SESSION['success'])) {
-                                    ?>
+                                        ?>
                                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                                             <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                                             <span class="alert-text"><strong>Success!</strong> <?php echo $_SESSION['success']; ?></span>
@@ -264,10 +264,10 @@ while ($row = $res->fetch_assoc()) {
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    <?php
+                                        <?php
                                         unset($_SESSION['success']);
                                     } elseif (isset($_SESSION['error'])) {
-                                    ?>
+                                        ?>
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                             <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                                             <span class="alert-text"><strong>Error!</strong> <?php echo $_SESSION['error']; ?></span>
@@ -275,7 +275,7 @@ while ($row = $res->fetch_assoc()) {
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    <?php
+                                        <?php
                                         unset($_SESSION['error']);
                                     }
                                     ?>
@@ -295,7 +295,7 @@ while ($row = $res->fetch_assoc()) {
                                                 <!-- Isi List DAC -->
                                                 <?php
                                                 $mysqli->select_db('presensi_cloud');
-                                                $sql = "SELECT *, dr.id as id from dac_roles as dr inner join users as u on dr.user_id=u.id where dr.dac_rule_id = ? ORDER BY u.nama ASC";
+                                                $sql = "select * from users u where id not in (select drole.user_id from dac_roles drole where drole.dac_rule_id = ?) and u.jabatan!='mhs' ORDER BY u.nama ASC";
                                                 $stmt = $mysqli->prepare($sql);
                                                 $stmt->bind_param("i", $roleid);
                                                 $stmt->execute();
@@ -304,8 +304,8 @@ while ($row = $res->fetch_assoc()) {
                                                 $count = 0;
                                                 while ($row = $res->fetch_assoc()) {
                                                     $count++;
-                                                    $dac_roles_id = $row['id'];
-                                                ?>
+                                                    $userid = $row['id'];
+                                                    ?>
                                                     <tr>
                                                         <td><?php echo $count; ?></td>
                                                         <td><?php echo $row['nama']; ?></td>
@@ -314,13 +314,15 @@ while ($row = $res->fetch_assoc()) {
                                                         <td><?php echo $row['jurusans_id']; ?></td>
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
-                                                            <a href="dacroles_process.php?delid=<?php echo $dac_roles_id; ?>&roleid=<?php echo $roleid; ?>" class="table-action table-action-delete" name="delete-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Delete DAC Holder">
-                                                                <i class="fas fa-trash"></i>
-                                                            </a>
+                                                            <form method="POST" enctype="multipart/form-data" action="dacroles_process.php">
+                                                                <input type="hidden" name="roleid" value="<?php echo $roleid; ?>">
+                                                                <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                                                <input type="submit" name="addholder" class="btn" value="Add Holder">
+                                                            </form>
                                                         </td>
                                                         <!-- Edit Delete -->
                                                     </tr>
-                                                <?php
+                                                    <?php
                                                 }
                                                 ?>
                                                 <!-- Isi List DAC -->
@@ -333,43 +335,43 @@ while ($row = $res->fetch_assoc()) {
                     </div>
                 </div>
             </div>
-            </li>
-            </ul>
-        </div>
-        <!-- Argon Scripts -->
-        <!-- Core -->
-        <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
-        <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-        <!-- Optional JS -->
-        <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-        <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
-        <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
-        <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-        <script src="./assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="./assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="./assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="./assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-        <script src="./assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
-        <script src="./assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
-        <script src="./assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
-        <script src="./assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
-        <!-- Argon JS -->
-        <script src="./assets/js/argon.js?v=1.1.0"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-        <!-- Demo JS - remove this in your project -->
-        <script src="./assets/js/demo.min.js"></script>
-        <script type="text/javascript">
-            function swalgood(msg1, msg2) {
-                Swal.fire(
-                    msg1,
-                    msg2,
-                    'success'
-                );
-            }
-        </script>
+        </li>
+    </ul>
+</div>
+<!-- Argon Scripts -->
+<!-- Core -->
+<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+<script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+<script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+<script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+<!-- Optional JS -->
+<script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+<script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+<script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+<script src="./assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="./assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="./assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="./assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="./assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="./assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+<!-- Argon JS -->
+<script src="./assets/js/argon.js?v=1.1.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+<!-- Demo JS - remove this in your project -->
+<script src="./assets/js/demo.min.js"></script>
+<script type="text/javascript">
+    function swalgood(msg1, msg2) {
+        Swal.fire(
+            msg1,
+            msg2,
+            'success'
+            );
+    }
+</script>
 </body>
 
 </html>
