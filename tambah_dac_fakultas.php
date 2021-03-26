@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,8 +13,8 @@
   <link rel="stylesheet" href="./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <link rel="stylesheet" href="./assets/css/argon.css?v=1.1.0" type="text/css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" rel="stylesheet">
-</link>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </link>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <?php
 session_start();
@@ -39,6 +40,7 @@ if (isset($_SESSION['error'])) {
 include('connectdb.php');
 $mysqli = konek('localhost', 'root', '');
 ?>
+
 <body>
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -141,6 +143,9 @@ $mysqli = konek('localhost', 'root', '');
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
+                  <span class="avatar avatar-sm rounded-circle bg-transparent">
+                    <i class="ni ni-circle-08 bg-transparent"></i>
+                  </span>
                   <div class="media-body ml-2 d-none d-lg-block">
                     <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION['nama'] ?></span>
                   </div>
@@ -195,7 +200,7 @@ $mysqli = konek('localhost', 'root', '');
                 <div class="col-12">
                   <?php
                   if (isset($_SESSION['success'])) {
-                    ?>
+                  ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                       <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                       <span class="alert-text"><strong>Success!</strong> <?php echo $_SESSION['success']; ?></span>
@@ -203,10 +208,10 @@ $mysqli = konek('localhost', 'root', '');
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <?php
+                  <?php
                     unset($_SESSION['success']);
                   } elseif (isset($_SESSION['error'])) {
-                    ?>
+                  ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                       <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                       <span class="alert-text"><strong>Error!</strong> <?php echo $_SESSION['error']; ?></span>
@@ -214,7 +219,7 @@ $mysqli = konek('localhost', 'root', '');
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <?php
+                  <?php
                     unset($_SESSION['error']);
                   }
                   ?>
@@ -244,8 +249,7 @@ $mysqli = konek('localhost', 'root', '');
                                 $sql = "SELECT * FROM jurusans where fakultass_id = ? order by nama ASC";
                                 $stmt = $mysqli->prepare($sql);
                                 $stmt->bind_param('i', $_GET['id']);
-                              }
-                              elseif (!(isset($_GET['id']) && $_SESSION['jabatan'] == 'admin')) {
+                              } elseif (!(isset($_GET['id']) && $_SESSION['jabatan'] == 'admin')) {
                                 $sql = "SELECT * FROM jurusans order by nama ASC";
                                 $stmt = $mysqli->prepare($sql);
                               }
@@ -253,7 +257,7 @@ $mysqli = konek('localhost', 'root', '');
                               $res = $stmt->get_result();
 
                               while ($row = $res->fetch_assoc()) {
-                                echo "<option value='".$row['id']."'>".$row['id']." - ".$row['nama']."</option>";
+                                echo "<option value='" . $row['id'] . "'>" . $row['id'] . " - " . $row['nama'] . "</option>";
                               }
                               ?>
                             </select>
@@ -330,34 +334,35 @@ $mysqli = konek('localhost', 'root', '');
           </div>
         </div>
       </div>
-    </li>
-  </ul>
-</div>
-<!-- Argon Scripts -->
-<!-- Core -->
-<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-<script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="./assets/vendor/js-cookie/js.cookie.js"></script>
-<script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-<script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-<!-- Optional JS -->
-<script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-<script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
-<script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
-<script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-<!-- Argon JS -->
-<script src="./assets/js/argon.js?v=1.1.0"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-<!-- Demo JS - remove this in your project -->
-<script src="./assets/js/demo.min.js"></script>
-<script type="text/javascript">
-  function swalgood(msg1, msg2) {
-    Swal.fire(
-      msg1,
-      msg2,
-      'success'
-      );
-  }
-</script>
+      </li>
+      </ul>
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+    <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Optional JS -->
+    <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+    <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+    <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+    <!-- Argon JS -->
+    <script src="./assets/js/argon.js?v=1.1.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <!-- Demo JS - remove this in your project -->
+    <script src="./assets/js/demo.min.js"></script>
+    <script type="text/javascript">
+      function swalgood(msg1, msg2) {
+        Swal.fire(
+          msg1,
+          msg2,
+          'success'
+        );
+      }
+    </script>
 </body>
+
 </html>

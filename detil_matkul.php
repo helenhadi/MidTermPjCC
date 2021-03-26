@@ -46,38 +46,41 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
 
 <body>
     <!-- Sidenav -->
-    <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
-        <div class="scrollbar-inner">
-            <!-- Brand -->
-            <div class="sidenav-header d-flex align-items-center">
-                <a class="navbar-brand" href="dashboard.php">
-                    <img src="./assets/img/brand/blue.jpg" class="navbar-brand-img" alt="...">
-                </a>
-                <div class="ml-auto">
-                    <!-- Sidenav toggler -->
-                    <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin" data-target="#sidenav-main">
-                        <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
+    <?php
+    if ($_SESSION['jabatan'] == 'admin') {
+    ?>
+        <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+            <div class="scrollbar-inner">
+                <!-- Brand -->
+                <div class="sidenav-header d-flex align-items-center">
+                    <a class="navbar-brand" href="dashboard.php">
+                        <img src="./assets/img/brand/blue.jpg" class="navbar-brand-img" alt="...">
+                    </a>
+                    <div class="ml-auto">
+                        <!-- Sidenav toggler -->
+                        <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin" data-target="#sidenav-main">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="navbar-inner">
-                <!-- Collapse -->
-                <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-                    <!-- Nav items -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="dashboard.php" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
-                                <i class="ni ni-shop text-primary"></i>
-                                <span class="nav-link-text">Dashboard</span>
-                            </a>
-                        </li>
-                        <?php
-                        if ($_SESSION['jabatan'] == 'admin') {
-                            echo "
+                <div class="navbar-inner">
+                    <!-- Collapse -->
+                    <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                        <!-- Nav items -->
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="dashboard.php" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+                                    <i class="ni ni-shop text-primary"></i>
+                                    <span class="nav-link-text">Dashboard</span>
+                                </a>
+                            </li>
+                            <?php
+                            if ($_SESSION['jabatan'] == 'admin') {
+                                echo "
                   <li class='nav-item'>
                     <a class='nav-link active' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                       <i class='ni ni-badge text-primary'></i>
@@ -97,18 +100,21 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                     </a>
                   </li>
                 ";
-                        }
-                        ?>
-                    </ul>
-                    <!-- Divider -->
-                    <hr class="my-3">
-                    <!-- Heading -->
-                    <!-- <h6 class="navbar-heading p-0 text-muted">Documentation</h6> -->
-                    <!-- Navigation -->
+                            }
+                            ?>
+                        </ul>
+                        <!-- Divider -->
+                        <hr class="my-3">
+                        <!-- Heading -->
+                        <!-- <h6 class="navbar-heading p-0 text-muted">Documentation</h6> -->
+                        <!-- Navigation -->
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    <?php
+    }
+    ?>
     <!-- Main content -->
     <div class="main-content" id="panel">
         <!-- Topnav -->
@@ -146,6 +152,9 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                         <li class="nav-item dropdown">
                             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="media align-items-center">
+                                    <span class="avatar avatar-sm rounded-circle bg-transparent">
+                                        <i class="ni ni-circle-08 bg-transparent"></i>
+                                    </span>
                                     <div class="media-body ml-2 d-none d-lg-block">
                                         <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION['nama'] ?></span>
                                     </div>
@@ -253,35 +262,35 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <?php
-                                            $sql = "SELECT *, a.id as id_mk, b.status as status_matkul, c.id as id_kp, f.id as id_hari, k.e_code as code FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
+                                                <?php
+                                                $sql = "SELECT *, a.id as id_mk, b.status as status_matkul, c.id as id_kp, f.id as id_hari, k.e_code as code FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
           a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
-          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE a.id=".$idmatakuliah." ORDER BY k.tanggal ASC";
-                                            $stmt = $mysqli->prepare($sql);
-                                            $stmt->execute();
-                                            $res = $stmt->get_result();
+          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE a.id=" . $idmatakuliah . " ORDER BY k.tanggal ASC";
+                                                $stmt = $mysqli->prepare($sql);
+                                                $stmt->execute();
+                                                $res = $stmt->get_result();
 
-                                            while ($row = $res->fetch_assoc()) {
-                                                $tanggal = $row['tanggal'];
-                                                $hari = $row['hari'];
-                                                $jamm = $row['jam_mulai'];
-                                                $jams = $row['jam_selesai'];
-                                                $kode = $row['code'];
-                                                $status = $row['status_matkul'];
-                                                if($status == 0){
-                                                    $status = 'FALSE';
-                                                }else{
-                                                    $status = 'TRUE';
-                                                }
-                                                echo "
+                                                while ($row = $res->fetch_assoc()) {
+                                                    $tanggal = $row['tanggal'];
+                                                    $hari = $row['hari'];
+                                                    $jamm = $row['jam_mulai'];
+                                                    $jams = $row['jam_selesai'];
+                                                    $kode = $row['code'];
+                                                    $status = $row['status_matkul'];
+                                                    if ($status == 0) {
+                                                        $status = 'FALSE';
+                                                    } else {
+                                                        $status = 'TRUE';
+                                                    }
+                                                    echo "
                                                 <td>$tanggal</td>
                                                 <td>$hari, $jamm - $jams</td>
                                                 <td>$kode</td>
                                                 <td>$status</td>
                                                 <th><a href='#$tanggal'>Lihat</a></th>
                                                 ";
-                                            }
-                                            ?>
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>

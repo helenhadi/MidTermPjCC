@@ -143,6 +143,9 @@ $mysqli = konek('localhost', 'root', '');
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
+                  <span class="avatar avatar-sm rounded-circle bg-transparent">
+                    <i class="ni ni-circle-08 bg-transparent"></i>
+                  </span>
                   <div class="media-body ml-2 d-none d-lg-block">
                     <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION['nama'] ?></span>
                   </div>

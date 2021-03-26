@@ -147,6 +147,9 @@ $mysqli = konek('localhost', 'root', '');
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
+                  <span class="avatar avatar-sm rounded-circle bg-transparent">
+                    <i class="ni ni-circle-08 bg-transparent"></i>
+                  </span>
                   <div class="media-body ml-2 d-none d-lg-block">
                     <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION['nama'] ?></span>
                   </div>
@@ -234,106 +237,106 @@ $mysqli = konek('localhost', 'root', '');
                       $stmt->bind_param("i", $edtid);
                       $stmt->execute();
                       $res = $stmt->get_result();
-                      if($res->num_rows >0){
-                      while ($row = $res->fetch_assoc()) {
-                        $kodee = $row['kode'];
-                        $valuee = $row['value'];
+                      if ($res->num_rows > 0) {
+                        while ($row = $res->fetch_assoc()) {
+                          $kodee = $row['kode'];
+                          $valuee = $row['value'];
                       ?>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label class="form-control-label">Kode</label>
-                            <div class="input-group input-group-merge">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="form-control-label">Kode</label>
+                              <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                                </div>
+                                <input required class="form-control" name="kode" placeholder="kode" type="text" value="<?php echo $kodee; ?>">
                               </div>
-                              <input required class="form-control" name="kode" placeholder="kode" type="text" value="<?php echo $kodee; ?>">
                             </div>
                           </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label class="form-control-label">Jurusan</label>
-                            <div class="input-group input-group-merge">
-                              <select class="form-control" name="jurusan" data-toggle="select">
-                                <?php
-                                $mysqli->select_db('presensi_cloud');
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="form-control-label">Jurusan</label>
+                              <div class="input-group input-group-merge">
+                                <select class="form-control" name="jurusan" data-toggle="select">
+                                  <?php
+                                  $mysqli->select_db('presensi_cloud');
 
-                                if (isset($_GET['id'])) {
-                                  $sql = "SELECT * FROM jurusans where fakultass_id = ? order by nama ASC";
-                                  $stmt = $mysqli->prepare($sql);
-                                  $stmt->bind_param('i', $_GET['id']);
-                                } elseif (!(isset($_GET['id']) && $_SESSION['jabatan'] == 'admin')) {
-                                  $sql = "SELECT * FROM jurusans order by nama ASC";
-                                  $stmt = $mysqli->prepare($sql);
-                                }
-                                $stmt->execute();
-                                $res = $stmt->get_result();
+                                  if (isset($_GET['id'])) {
+                                    $sql = "SELECT * FROM jurusans where fakultass_id = ? order by nama ASC";
+                                    $stmt = $mysqli->prepare($sql);
+                                    $stmt->bind_param('i', $_GET['id']);
+                                  } elseif (!(isset($_GET['id']) && $_SESSION['jabatan'] == 'admin')) {
+                                    $sql = "SELECT * FROM jurusans order by nama ASC";
+                                    $stmt = $mysqli->prepare($sql);
+                                  }
+                                  $stmt->execute();
+                                  $res = $stmt->get_result();
 
-                                while ($row = $res->fetch_assoc()) {
-                                  echo "<option value='" . $row['id'] . "'>" . $row['id'] . " - " . $row['nama'] . "</option>";
-                                }
-                                ?>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label class="form-control-label">Entity</label>
-                            <div class="input-group input-group-merge">
-                              <select class='form-control' name="entity">
-                                <option value="jadwals">Jadwal</option>
-                                <option value="kehadirans">Kehadiran</option>
-                                <option value="mahasiswas">Mahasiswa</option>
-                                <option value="matakuliahs">Mata Kuliah</option>
-                                <option value="matakuliahs_buka">Mata Kuliah yang Buka</option>
-                                <option value="matakuliahs_kp">Kelas Pararel Mata Kuliah</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label class="form-control-label">Field</label>
-                            <div class="input-group input-group-merge">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                                  while ($row = $res->fetch_assoc()) {
+                                    echo "<option value='" . $row['id'] . "'>" . $row['id'] . " - " . $row['nama'] . "</option>";
+                                  }
+                                  ?>
+                                </select>
                               </div>
-                              <input required class="form-control" name="field" placeholder="field" type="text">
                             </div>
                           </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label class="form-control-label">Operator</label>
-                            <div class="input-group input-group-merge">
-                              <select class='form-control' name="operator">
-                                <option value="=">'=' Equal as</option>
-                                <option value="!=">'!=' Not equal as</option>
-                                <option value=">">'>' Greater than</option>
-                                <option value="<">'<' Lower than</option>
-                                <option value=">=">'>=' Greater than or equal as</option>
-                                <option value="<=">'<=' Lower than or equal as</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label class="form-control-label">Value</label>
-                            <div class="input-group input-group-merge">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="form-control-label">Entity</label>
+                              <div class="input-group input-group-merge">
+                                <select class='form-control' name="entity">
+                                  <option value="jadwals">Jadwal</option>
+                                  <option value="kehadirans">Kehadiran</option>
+                                  <option value="mahasiswas">Mahasiswa</option>
+                                  <option value="matakuliahs">Mata Kuliah</option>
+                                  <option value="matakuliahs_buka">Mata Kuliah yang Buka</option>
+                                  <option value="matakuliahs_kp">Kelas Pararel Mata Kuliah</option>
+                                </select>
                               </div>
-                              <input required class="form-control" name="value" placeholder="value" type="text" value="<?php echo $valuee; ?>">
                             </div>
                           </div>
-                        </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="form-control-label">Field</label>
+                              <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                                </div>
+                                <input required class="form-control" name="field" placeholder="field" type="text">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="form-control-label">Operator</label>
+                              <div class="input-group input-group-merge">
+                                <select class='form-control' name="operator">
+                                  <option value="=">'=' Equal as</option>
+                                  <option value="!=">'!=' Not equal as</option>
+                                  <option value=">">'>' Greater than</option>
+                                  <option value="<">'<' Lower than</option>
+                                  <option value=">=">'>=' Greater than or equal as</option>
+                                  <option value="<=">'<=' Lower than or equal as</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="form-control-label">Value</label>
+                              <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                                </div>
+                                <input required class="form-control" name="value" placeholder="value" type="text" value="<?php echo $valuee; ?>">
+                              </div>
+                            </div>
+                          </div>
                       <?php
-                      }
-                    }else{
+                        }
+                      } else {
                         echo "Failed to get DAC Rule ID " . $_GET['edtid'];
-                    }
+                      }
                       ?>
                     </div>
                     <div class="col-md-4">
