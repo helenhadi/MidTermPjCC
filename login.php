@@ -91,9 +91,9 @@
             </div>
           </div>
           <div class="row mt-3">
-            <div class="col-6">
+            <!-- <div class="col-6">
                 <a href="register.php" class="text-light"><small>Buat akun baru</small></a>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
