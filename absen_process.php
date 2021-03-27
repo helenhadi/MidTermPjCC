@@ -20,7 +20,7 @@
     $stmt->execute();
     $res = $stmt->get_result();
     if($res->num_rows > 0){
-        $sql = "SELECT * from kehadirans WHERE mahasiswas_id=" . $_SESSION['idd'] . " AND matakuliahs_id=" . $idmatakuliah . " AND matakuliahs_buka_id=" . $kpid . " AND e_code=" . $kode_absen;
+        $sql = "SELECT * from kehadirans WHERE mahasiswas_id=" . $_SESSION['mid'] . " AND matakuliahs_id=" . $idmatakuliah . " AND matakuliahs_buka_id=" . $kpid . " AND e_code=" . $kode_absen;
         $stmt = $mysqli->prepare($sql);
         $stmt->execute();
         $res = $stmt->get_result();
@@ -31,8 +31,7 @@
             ]);
         }else{
             $sql = "INSERT INTO kehadirans (mahasiswas_id,matakuliahs_id,matakuliahs_buka_id,jadwals_id,tanggal,status,e_code) 
-            VALUES (". $_SESSION['idd']. "," . $idmatakuliah . "," . $kpid . "," . $jid .",'" . $datenow . "','" . $hadir . "'," . $kode_absen . ")";
-            echo $sql;
+            VALUES (". $_SESSION['mid']. "," . $idmatakuliah . "," . $kpid . "," . $jid .",'" . $datenow . "','" . $hadir . "'," . $kode_absen . ")";
             $stmt = $mysqli->prepare($sql);
             $stmt->execute();
             if($stmt->affected_rows > 0){
