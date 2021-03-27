@@ -329,7 +329,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                     <?php
                                                     $sql = "SELECT *, a.id as id_mk, b.status as status_matkul, c.id as id_kp, f.id as id_hari, k.e_code as code FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
           a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
-          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE a.id=" . $idmatakuliah . " ORDER BY k.tanggal ASC";
+          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE k.matakuliahs_id=" . $idmatakuliah . " AND k.matakuliahs_buka_id=" . $kpid . " GROUP BY code ORDER BY k.tanggal ASC";
                                                     $stmt = $mysqli->prepare($sql);
                                                     $stmt->execute();
                                                     $res = $stmt->get_result();
