@@ -326,35 +326,37 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php
-                                                $sql = "SELECT *, a.id as id_mk, b.status as status_matkul, c.id as id_kp, f.id as id_hari, k.e_code as code FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
+                                                    <?php
+                                                    $sql = "SELECT *, a.id as id_mk, b.status as status_matkul, c.id as id_kp, f.id as id_hari, k.e_code as code FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
           a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
           ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE a.id=" . $idmatakuliah . " ORDER BY k.tanggal ASC";
-                                                $stmt = $mysqli->prepare($sql);
-                                                $stmt->execute();
-                                                $res = $stmt->get_result();
+                                                    $stmt = $mysqli->prepare($sql);
+                                                    $stmt->execute();
+                                                    $res = $stmt->get_result();
 
-                                                while ($row = $res->fetch_assoc()) {
-                                                    $tanggal = $row['tanggal'];
-                                                    $hari = $row['hari'];
-                                                    $jamm = $row['jam_mulai'];
-                                                    $jams = $row['jam_selesai'];
-                                                    $kode = $row['code'];
-                                                    $status = $row['status_matkul'];
-                                                    if ($status == 0) {
-                                                        $status = 'FALSE';
-                                                    } else {
-                                                        $status = 'TRUE';
-                                                    }
-                                                    echo "
+                                                    while ($row = $res->fetch_assoc()) {
+                                                        $tanggal = $row['tanggal'];
+                                                        $hari = $row['hari'];
+                                                        $jamm = $row['jam_mulai'];
+                                                        $jams = $row['jam_selesai'];
+                                                        $kode = $row['code'];
+                                                        $status = $row['status_matkul'];
+                                                        if ($status == 0) {
+                                                            $status = 'FALSE';
+                                                        } else {
+                                                            $status = 'TRUE';
+                                                        }
+                                                        echo "
+                                                <tr>
                                                 <td>$tanggal</td>
                                                 <td>$hari, $jamm - $jams</td>
                                                 <td>$kode</td>
                                                 <td>$status</td>
-                                                <th><a href='#$tanggal'>Lihat</a></th>
+                                                <td><a href='#$tanggal'>Lihat</a></td>
+                                                </tr>
                                                 ";
-                                                }
-                                                ?>
+                                                    }
+                                                    ?>
                                             </tbody>
                                         </table>
                                     </div>
