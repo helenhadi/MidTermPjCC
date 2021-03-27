@@ -378,6 +378,25 @@ $mysqli = konek('localhost', 'root', '');
           'success'
         );
       }
+
+      function absen(idmatkul, idkp) {
+        var statusk = "";
+        $.ajax({
+          type: "POST",
+          url: "selectkelasstatus.php",
+          data: {
+            idmatkul: idmatkul,
+            idkp: idkp
+          },
+          success: function(data) {
+            var obj = JSON.parse(data);
+            if (obj['status']) {
+              statusk = obj['data'];
+
+            }
+          }
+        });
+      }
     </script>
 </body>
 

@@ -61,7 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($entitycustom[0] != '' || $entitycustom[0] != null) {
                   $mysqli->select_db($newSchema);
                   for ($i = 0; $i <= count($entitycustom) - 1; $i++) {
-                    $sql = "CREATE TABLE " . $entitycustom[$i] . "(id " . $typeentitycustom[$i]. ")";
+                      if($typeentitycustom[$i] == 'int'){
+                            $sql = "CREATE TABLE " . $entitycustom[$i] . "(id " . $typeentitycustom[$i] . " NOT NULL AUTO_INCREMENT, 
+                                    PRIMARY KEY('id'))";
+                      }else{
+                            $sql = "CREATE TABLE " . $entitycustom[$i] . "(id " . $typeentitycustom[$i] . ")";
+                      }
                     $result = $mysqli->query($sql);
                   }
                   $mysqli->select_db('presensi_cloud');
