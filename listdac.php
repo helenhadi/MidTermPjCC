@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="./assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="./assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="./assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
-    </link>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</link>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <?php
 session_start();
@@ -94,6 +94,12 @@ $mysqli = konek('localhost', 'root', '', '');
                             <a class='nav-link active' href='listdac.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                             <i class='ni ni-bulb-61 text-primary'></i>
                             <span class='nav-link-text'>Manage DAC Rules</span>
+                            </a>
+                            </li>
+                            <li class='nav-item'>
+                            <a class='nav-link' href='listdac.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                            <i class='ni ni-bulb-61 text-primary'></i>
+                            <span class='nav-link-text'>My DAC Roles</span>
                             </a>
                             </li>
                             ";
@@ -203,7 +209,7 @@ $mysqli = konek('localhost', 'root', '', '');
                                 <div class="col-12">
                                     <?php
                                     if (isset($_SESSION['success'])) {
-                                    ?>
+                                        ?>
                                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                                             <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                                             <span class="alert-text"><strong>Success!</strong> <?php echo $_SESSION['success']; ?></span>
@@ -211,10 +217,10 @@ $mysqli = konek('localhost', 'root', '', '');
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    <?php
+                                        <?php
                                         unset($_SESSION['success']);
                                     } elseif (isset($_SESSION['error'])) {
-                                    ?>
+                                        ?>
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                             <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                                             <span class="alert-text"><strong>Error!</strong> <?php echo $_SESSION['error']; ?></span>
@@ -222,7 +228,7 @@ $mysqli = konek('localhost', 'root', '', '');
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    <?php
+                                        <?php
                                         unset($_SESSION['error']);
                                     }
                                     ?>
@@ -235,7 +241,7 @@ $mysqli = konek('localhost', 'root', '', '');
                                                 <!-- Insert DAC -->
                                                 <?php
                                                 if ($_SESSION['jabatan'] == 'admin') {
-                                                ?>
+                                                    ?>
                                                     <a href="tambah_dac_fakultas.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
                                                         <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
                                                         <span class="btn-inner--text">Tambah DAC Fakultas</span>
@@ -244,21 +250,21 @@ $mysqli = konek('localhost', 'root', '', '');
                                                         <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
                                                         <span class="btn-inner--text">Tambah DAC Jurusan</span>
                                                     </a>
-                                                <?php
+                                                    <?php
                                                 } elseif ($_SESSION['jabatan'] == 'dekan' || $_SESSION['jabatan'] == 'wadek') {
-                                                ?>
+                                                    ?>
                                                     <a href="tambah_dac_fakultas.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
                                                         <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
                                                         <span class="btn-inner--text">Tambah</span>
                                                     </a>
-                                                <?php
+                                                    <?php
                                                 } elseif ($_SESSION['jabatan'] == 'kajur') {
-                                                ?>
+                                                    ?>
                                                     <a href="tambah_dac_jurusan.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
                                                         <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
                                                         <span class="btn-inner--text">Tambah</span>
                                                     </a>
-                                                <?php
+                                                    <?php
                                                 }
                                                 ?>
                                                 <!-- Insert DAC -->
@@ -292,46 +298,46 @@ $mysqli = konek('localhost', 'root', '', '');
                                                 while ($row = $res->fetch_assoc()) {
                                                     $count++;
                                                     $dac_id = $row['id'];
-                                                ?>
+                                                    ?>
                                                     <tr>
                                                         <td><?php echo $count; ?></td>
                                                         <td><?php echo $row['kode']; ?></td>
                                                         <td><?php echo $row['nama']; ?></td>
                                                         <td><?php
-                                                            $entity = $row['entity'];
+                                                        $entity = $row['entity'];
 
-                                                            if ($entity == 'jadwals')
-                                                                echo "Jadwal";
-                                                            elseif ($entity == 'kehadirans')
-                                                                echo "Kehadiran";
-                                                            elseif ($entity == 'mahasiswas')
-                                                                echo "Mahasiswa";
-                                                            elseif ($entity == 'matakuliahs')
-                                                                echo "Mata Kuliah";
-                                                            elseif ($entity == 'matakuliahs_buka')
-                                                                echo "Mata Kuliah yang Buka";
-                                                            else
-                                                                echo "Kelas Pararel Mata Kuliah";
+                                                        if ($entity == 'jadwals')
+                                                            echo "Jadwal";
+                                                        elseif ($entity == 'kehadirans')
+                                                            echo "Kehadiran";
+                                                        elseif ($entity == 'mahasiswas')
+                                                            echo "Mahasiswa";
+                                                        elseif ($entity == 'matakuliahs')
+                                                            echo "Mata Kuliah";
+                                                        elseif ($entity == 'matakuliahs_buka')
+                                                            echo "Mata Kuliah yang Buka";
+                                                        else
+                                                            echo "Kelas Pararel Mata Kuliah";
 
-                                                            ?></td>
+                                                        ?></td>
                                                         <td><?php echo $row['field']; ?></td>
                                                         <td><?php
-                                                            $opt = $row['operator'];
+                                                        $opt = $row['operator'];
 
-                                                            if ($opt == '=')
-                                                                echo "equal as";
-                                                            elseif ($opt == '!=')
-                                                                echo "not equal as";
-                                                            elseif ($opt == '<')
-                                                                echo "lower than";
-                                                            elseif ($opt == '>')
-                                                                echo "grater than";
-                                                            elseif ($opt == '<=')
-                                                                echo "lower than or equal as";
-                                                            else
-                                                                echo "grater than or equal as";
+                                                        if ($opt == '=')
+                                                            echo "equal as";
+                                                        elseif ($opt == '!=')
+                                                            echo "not equal as";
+                                                        elseif ($opt == '<')
+                                                            echo "lower than";
+                                                        elseif ($opt == '>')
+                                                            echo "grater than";
+                                                        elseif ($opt == '<=')
+                                                            echo "lower than or equal as";
+                                                        else
+                                                            echo "grater than or equal as";
 
-                                                            ?></td>
+                                                        ?></td>
                                                         <td><?php echo $row['value']; ?></td>
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
@@ -347,7 +353,7 @@ $mysqli = konek('localhost', 'root', '', '');
                                                         </td>
                                                         <!-- Edit Delete -->
                                                     </tr>
-                                                <?php
+                                                    <?php
                                                 }
                                                 ?>
                                                 <!-- Isi List DAC -->
@@ -360,43 +366,43 @@ $mysqli = konek('localhost', 'root', '', '');
                     </div>
                 </div>
             </div>
-            </li>
-            </ul>
-        </div>
-        <!-- Argon Scripts -->
-        <!-- Core -->
-        <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
-        <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-        <!-- Optional JS -->
-        <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-        <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
-        <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
-        <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-        <script src="./assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="./assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="./assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="./assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-        <script src="./assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
-        <script src="./assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
-        <script src="./assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
-        <script src="./assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
-        <!-- Argon JS -->
-        <script src="./assets/js/argon.js?v=1.1.0"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-        <!-- Demo JS - remove this in your project -->
-        <script src="./assets/js/demo.min.js"></script>
-        <script type="text/javascript">
-            function swalgood(msg1, msg2) {
-                Swal.fire(
-                    msg1,
-                    msg2,
-                    'success'
-                );
-            }
-        </script>
+        </li>
+    </ul>
+</div>
+<!-- Argon Scripts -->
+<!-- Core -->
+<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+<script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+<script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+<script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+<!-- Optional JS -->
+<script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+<script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+<script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+<script src="./assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="./assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="./assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="./assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="./assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="./assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+<!-- Argon JS -->
+<script src="./assets/js/argon.js?v=1.1.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+<!-- Demo JS - remove this in your project -->
+<script src="./assets/js/demo.min.js"></script>
+<script type="text/javascript">
+    function swalgood(msg1, msg2) {
+        Swal.fire(
+            msg1,
+            msg2,
+            'success'
+            );
+    }
+</script>
 </body>
 
 </html>
