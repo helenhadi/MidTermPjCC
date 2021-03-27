@@ -395,7 +395,44 @@ $mysqli = konek('localhost', 'root', '');
               if (statusk == 0) {
                 swal('Failed!', 'Kelas tidak sedang buka.', 'error');
               } else {
-                swal('Good!', 'Kelas sedang buka.', 'success');
+                Swal.fire({
+                  title: 'Absen',
+                  text: "Silakan masukan kode unik kelas untuk melanjutkan presensi",
+                  type: 'info',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Absen',
+                  input: 'text',
+                  inputLabel: 'Kode unik kelas',
+                  inputPlaceholder: 'Enter kode unik kelas',
+                  inputValidator: (value) => {
+                    if (!value) {
+                      return 'Kode kelas belum terisi!'
+                    }
+                  }
+                }).then((result) => {
+                  if (result.value) {
+                    var kode = "'"+result.value+"'";
+                    $.ajax({
+                      type: "POST",
+                      url: "absen_process.php",
+                      data: {
+                        idmatkul: idmatkul,
+                        idkp: idkp,
+                        kode: kode
+                      },
+                      success: function(data) {
+                        var obj = JSON.parse(data);
+                        if (obj['status']) {
+                          swal('Success!', obj['data'], 'success');
+                        } else {
+                          swal('Failed!', obj['data'], 'error');
+                        }
+                      }
+                    });
+                  }
+                });
               }
             }
           }
