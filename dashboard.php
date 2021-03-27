@@ -333,7 +333,7 @@ $mysqli = konek('localhost', 'root', '');
 
           while ($row = $res->fetch_assoc()) {
             echo "<div class='col-4'>
-            <a href='#" . $row['id_mk'] . "'>
+            <a href='#' onclick='absen(" . $row['id_mk'] . ", " . $row['id_kp'] . ")'>
               <div class='card btn text-left'>
                 <img class='card-img-top' src='./assets/img/theme/img-1-1000x600.jpg' alt='Card image cap'>
                 <div class='card-body'>
@@ -392,7 +392,11 @@ $mysqli = konek('localhost', 'root', '');
             var obj = JSON.parse(data);
             if (obj['status']) {
               statusk = obj['data'];
-
+              if (statusk == 0) {
+                swal('Failed!', 'Kelas tidak sedang buka.', 'error');
+              } else {
+                swal('Good!', 'Kelas sedang buka.', 'success');
+              }
             }
           }
         });

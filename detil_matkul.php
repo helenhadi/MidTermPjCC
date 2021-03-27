@@ -253,13 +253,13 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                         $kp = $row['kp'];
                                                         $kpid = $row['id_kp'];
                                                         $kodeun = $row['e_code'];
-                                                        if($kodeun == ''){
+                                                        if ($kodeun == '') {
                                                             $kodeun = '-';
                                                         }
                                                     }
                                                     echo "<h3 class='card-title text-white'>" . $nama . ' KP ' . $kp . '</h3>';
                                                     echo "<p class='text-white'>" . $hari . ", " . $jamm . " - " . $jams . '</p>';
-                                                    echo "<p class='font-weight-bold text-white'> Kode Unik : <p class='text-white' id='kunik'>". $kodeun."</p></p>";
+                                                    echo "<p class='font-weight-bold text-white'> Kode Unik : <p class='text-white' id='kunik'>" . $kodeun . "</p></p>";
                                                     ?>
                                                 </div>
                                             </div>
@@ -414,41 +414,75 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                             if (obj['status']) {
                                 statusk = obj['data'];
                                 if (statusk == 0) {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "updatekelas.php",
-                                        data: {
-                                            int: 1,
-                                            idmatkul: <?php echo $idmatakuliah; ?>,
-                                            idkp: <?php echo $kpid; ?>
-                                        },
-                                        success: function(data) {
-                                            var obj = JSON.parse(data);
-                                            if (obj['status']) {
-                                                var dataa = obj['data'];
-                                                document.getElementById('btntogglekelas').innerHTML = 'Tutup Kelas';
-                                                document.getElementById('statusKelass').innerHTML = 'Buka';
-                                                document.getElementById('kunik').innerHTML = obj['kunik'];
-                                            }
+                                    Swal.fire({
+                                        title: 'Buka Kelas?',
+                                        text: "Apakah anda ingin membuka kelas ini?",
+                                        type: 'question',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Buka'
+                                    }).then((result) => {
+                                        if (result.value) {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "updatekelas.php",
+                                                data: {
+                                                    int: 1,
+                                                    idmatkul: <?php echo $idmatakuliah; ?>,
+                                                    idkp: <?php echo $kpid; ?>
+                                                },
+                                                success: function(data) {
+                                                    var obj = JSON.parse(data);
+                                                    if (obj['status']) {
+                                                        var dataa = obj['data'];
+                                                        document.getElementById('btntogglekelas').innerHTML = 'Tutup Kelas';
+                                                        document.getElementById('statusKelass').innerHTML = 'Buka';
+                                                        document.getElementById('kunik').innerHTML = obj['kunik'];
+                                                        Swal.fire(
+                                                            'Kelas Dibuka!',
+                                                            'Kelas telah dibuka.',
+                                                            'success'
+                                                        );
+                                                    }
+                                                }
+                                            });
                                         }
                                     });
                                 } else {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "updatekelas.php",
-                                        data: {
-                                            int: 0,
-                                            idmatkul: <?php echo $idmatakuliah; ?>,
-                                            idkp: <?php echo $kpid; ?>
-                                        },
-                                        success: function(data) {
-                                            var obj = JSON.parse(data);
-                                            if (obj['status']) {
-                                                var dataa = obj['data'];
-                                                document.getElementById('btntogglekelas').innerHTML = 'Buka Kelas';
-                                                document.getElementById('statusKelass').innerHTML = 'Tutup';
-                                                document.getElementById('kunik').innerHTML = '-';
-                                            }
+                                    Swal.fire({
+                                        title: 'Tutup Kelas?',
+                                        text: "Apakah anda ingin menutup kelas ini?",
+                                        type: 'question',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Tutup'
+                                    }).then((result) => {
+                                        if (result.value) {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "updatekelas.php",
+                                                data: {
+                                                    int: 0,
+                                                    idmatkul: <?php echo $idmatakuliah; ?>,
+                                                    idkp: <?php echo $kpid; ?>
+                                                },
+                                                success: function(data) {
+                                                    var obj = JSON.parse(data);
+                                                    if (obj['status']) {
+                                                        var dataa = obj['data'];
+                                                        document.getElementById('btntogglekelas').innerHTML = 'Buka Kelas';
+                                                        document.getElementById('statusKelass').innerHTML = 'Tutup';
+                                                        document.getElementById('kunik').innerHTML = '-';
+                                                        Swal.fire(
+                                                            'Kelas Ditutup!',
+                                                            'Kelas telah ditutup.',
+                                                            'success'
+                                                        );
+                                                    }
+                                                }
+                                            });
                                         }
                                     });
                                 }
