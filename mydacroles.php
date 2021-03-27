@@ -310,7 +310,7 @@ $mysqli = konek('localhost', 'root', '', '');
                                                         <td><?php echo $row['value']; ?></td>
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
-                                                            <a href="daclistedusers.php?roleid=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="See Listed Users">
+                                                            <a href="daclistedusers.php?ruleid=<?php echo $dac_id; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="See Listed Users">
                                                                 <i class="fas fa-tag"></i>
                                                             </a>
                                                         </td>
