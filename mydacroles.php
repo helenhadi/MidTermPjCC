@@ -186,11 +186,11 @@ $mysqli = konek('localhost', 'root', '', '');
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 d-inline-block mb-0">Manage DAC Rules</h6>
+                            <h6 class="h2 d-inline-block mb-0">DAC Rules</h6>
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links">
                                     <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Manage DAC</li>
+                                    <li class="breadcrumb-item active" aria-current="page">My DAC Roles</li>
                                 </ol>
                             </nav>
                         </div>
@@ -237,38 +237,6 @@ $mysqli = konek('localhost', 'root', '', '');
                                             <div class="col-6">
                                                 <h3 class="mb-0">DAC</h3>
                                             </div>
-                                            <div class="col-6 text-right">
-                                                <!-- Insert DAC -->
-                                                <?php
-                                                if ($_SESSION['jabatan'] == 'admin') {
-                                                    ?>
-                                                    <a href="tambah_dac_fakultas.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah DAC Fakultas</span>
-                                                    </a>
-                                                    <a href="tambah_dac_jurusan.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah DAC Jurusan</span>
-                                                    </a>
-                                                    <?php
-                                                } elseif ($_SESSION['jabatan'] == 'dekan' || $_SESSION['jabatan'] == 'wadek') {
-                                                    ?>
-                                                    <a href="tambah_dac_fakultas.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah</span>
-                                                    </a>
-                                                    <?php
-                                                } elseif ($_SESSION['jabatan'] == 'kajur') {
-                                                    ?>
-                                                    <a href="tambah_dac_jurusan.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah</span>
-                                                    </a>
-                                                    <?php
-                                                }
-                                                ?>
-                                                <!-- Insert DAC -->
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="table-responsive py-4">
@@ -282,15 +250,16 @@ $mysqli = konek('localhost', 'root', '', '');
                                                     <th>Field</th>
                                                     <th>Operator</th>
                                                     <th>Value</th>
-                                                    <th>Action</th>
+                                                    <th>See Listed Users</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <!-- Isi List DAC -->
                                                 <?php
                                                 $mysqli->select_db('presensi_cloud');
-                                                $sql = "SELECT dac.id as id, dac.kode as kode, jur.nama as nama, dac.entity as entity, dac.field as field, dac.operator as operator, dac.value as value FROM dac_rules as dac inner join jurusans as jur on dac.jurusans_id=jur.id order by dac.kode ASC";
+                                                $sql = "SELECT dac.id as id, dac.kode as kode, jur.nama as nama, dac.entity as entity, dac.field as field, dac.operator as operator, dac.value as value FROM dac_rules as dac inner join jurusans as jur on dac.jurusans_id=jur.id inner join dac_roles dr on dr.dac_rule_id=dac.id inner join users u on u.id=dr.user_id where u.username = ? order by dac.kode ASC";
                                                 $stmt = $mysqli->prepare($sql);
+                                                $stmt->bind_param("s", $_SESSION['username']);
                                                 $stmt->execute();
                                                 $res = $stmt->get_result();
 
@@ -341,14 +310,8 @@ $mysqli = konek('localhost', 'root', '', '');
                                                         <td><?php echo $row['value']; ?></td>
                                                         <!-- Edit Delete -->
                                                         <td class="table-actions">
-                                                            <a href="dacroles.php?roleid=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="DAC Role Holders">
+                                                            <a href="daclistedusers.php?roleid=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="See Listed Users">
                                                                 <i class="fas fa-tag"></i>
-                                                            </a>
-                                                            <a href="edit_dac_fakultas.php?edtid=<?php echo $row['id']; ?>" class="table-action" name="edit-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Edit DAC">
-                                                                <i class="fas fa-user-edit"></i>
-                                                            </a>
-                                                            <a href="listdac_process.php?delid=<?php echo $row['id']; ?>" class="table-action table-action-delete" name="delete-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Delete DAC">
-                                                                <i class="fas fa-trash"></i>
                                                             </a>
                                                         </td>
                                                         <!-- Edit Delete -->
