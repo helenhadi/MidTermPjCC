@@ -48,7 +48,7 @@ include('connectdb.php');
 $mysqli = konek('localhost', 'root', '', '');
 
 $mysqli->select_db('presensi_cloud');
-$sql = "SELECT dac.id as id, dac.kode as kode, jur.nama as nama, dac.entity as entity, dac.field as field, dac.operator as operator, dac.value as value FROM dac_rules as dac inner join jurusans as jur on dac.jurusans_id=jur.id where dac.id = ? order by dac.kode ASC limit 1";
+$sql = "SELECT * FROM dac_rules where id = ? limit 1";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("i", $roleid);
 $stmt->execute();
