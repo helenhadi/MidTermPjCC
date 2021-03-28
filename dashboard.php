@@ -276,7 +276,7 @@ $mysqli = konek('localhost', 'root', '');
                 </div>
                 <div class='col-4'>
                 <a href='tambah_user.php'>
-                  <div class='card bg-gradient-success border-0 btn text-left'>
+                  <div class='card bg-gradient-cyan border-0 btn text-left'>
                     <!-- Card body -->
                     <div class='card-body'>
                       <div class='row'>
@@ -298,6 +298,21 @@ $mysqli = konek('localhost', 'root', '');
                         <div class='col-12'>
                           <h5 class='card-title text-uppercase text-muted mb-0 text-white'>Manage </h5>
                           <span class='h2 font-weight-bold mb-0 text-white'>DAC Rules</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </a>
+                </div>
+                <div class='col-4'>
+                <a href='mydacroles.php'>
+                  <div class='card bg-gradient-purple border-0 btn text-left'>
+                    <!-- Card body -->
+                    <div class='card-body'>
+                      <div class='row'>
+                        <div class='col-12'>
+                          <h5 class='card-title text-uppercase text-muted mb-0 text-white'>My </h5>
+                          <span class='h2 font-weight-bold mb-0 text-white'>DAC Roles</span>
                         </div>
                       </div>
                     </div>
