@@ -342,9 +342,9 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                         $kode = $row['code'];
                                                         $status = $row['status_matkul'];
                                                         if ($status == 0) {
-                                                            $status = 'FALSE';
+                                                            $status = 'TUTUP';
                                                         } else {
-                                                            $status = 'TRUE';
+                                                            $status = 'BUKA';
                                                         }
                                                         echo "
                                                 <tr>

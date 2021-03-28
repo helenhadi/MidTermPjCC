@@ -235,93 +235,98 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                     }
                                     ?>
                                     <div class="row">
-                                    <div class="table-responsive py-4">
-                                        <table class="table table-flush" id="datatable-basic">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th>Tanggal</th>
-                                                    <th>Jam Kelas</th>
-                                                    <th>Pin</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
-                                                $sql = "SELECT *, a.id as id_mk, b.status as status_matkul, c.id as id_kp, f.id as id_hari, k.e_code as code FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
-          a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
-          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE k.e_code='". $ekodee ."' AND k.matakuliahs_id=" . $idmatakuliah . " AND k.matakuliahs_buka_id=" . $kpid . " ORDER BY k.tanggal ASC";
-                                                $stmt = $mysqli->prepare($sql);
-                                                $stmt->execute();
-                                                $res = $stmt->get_result();
+                                        <div class="table-responsive py-4">
+                                            <table class="table table-flush" id="datatable-basic">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Nama</th>
+                                                        <th>NRP</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Pin</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
+                                                    $sql = "select * from mahasiswas m inner join ambil_matakuliahs am on 
+                                                    m.id=am.mahasiswas_id inner join (SELECT mahasiswas_id,tanggal,k.e_code as kodee FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id 
+                                                    INNER JOIN matakuliahs_kp b ON a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN 
+                                                    jadwal_matakuliahs e ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id 
+                                                    WHERE k.e_code='$ekodee' AND k.matakuliahs_id=$idmatakuliah AND k.matakuliahs_buka_id=$kpid ORDER BY k.tanggal ASC) krs 
+                                                    where am.matakuliahs_id=$idmatakuliah and am.matakuliahs_buka_id=$kpid and m.id=krs.mahasiswas_id";
+                                                    $stmt = $mysqli->prepare($sql);
+                                                    $stmt->execute();
+                                                    $res = $stmt->get_result();
 
-                                                while ($row = $res->fetch_assoc()) {
-                                                    $tanggal = $row['tanggal'];
-                                                    $hari = $row['hari'];
-                                                    $jamm = $row['jam_mulai'];
-                                                    $jams = $row['jam_selesai'];
-                                                    $kode = $row['code'];
-                                                    $status = $row['status_matkul'];
-                                                    if ($status == 0) {
-                                                        $status = 'FALSE';
-                                                    } else {
-                                                        $status = 'TRUE';
-                                                    }
-                                                    echo "
+                                                    while ($row = $res->fetch_assoc()) {
+                                                        $nrp = $row['nrp'];
+                                                        $mysqli->select_db('presensi_cloud');
+                                                        $sql1 = "select * from users where id = ".$row['user_id'];
+                                                        $stmt1 = $mysqli->prepare($sql1);
+                                                        $stmt1->execute();
+                                                        $res1 = $stmt1->get_result();
+                                                        $row1 = $res1->fetch_assoc();
+                                                        $nama = $row1['nama'];
+                                                        $tanggal = $row['tanggal'];
+                                                        $kode = $row['kodee'];
+                                                        $status = 'HADIR';
+                                                        echo "
                                                 <tr>
+                                                <td>$nama</td>
+                                                <td>$nrp</td>
                                                 <td>$tanggal</td>
-                                                <td>$hari, $jamm - $jams</td>
                                                 <td>$kode</td>
                                                 <td>$status</td>
                                                 </tr>
                                                 ";
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </li>
+                    </ul>
                 </div>
-                </li>
-                </ul>
-            </div>
-            <!-- Argon Scripts -->
-            <!-- Core -->
-            <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-            <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
-            <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-            <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-            <!-- Optional JS -->
-            <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-            <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
-            <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
-            <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-            <script src="./assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-            <script src="./assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-            <script src="./assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-            <script src="./assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-            <script src="./assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
-            <script src="./assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
-            <script src="./assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
-            <script src="./assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
-            <!-- Argon JS -->
-            <script src="./assets/js/argon.js?v=1.1.0"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-            <!-- Demo JS - remove this in your project -->
-            <script src="./assets/js/demo.min.js"></script>
-            <script type="text/javascript">
-                function swalgood(msg1, msg2) {
-                    Swal.fire(
-                        msg1,
-                        msg2,
-                        'success'
-                    );
-                }
-            </script>
+                <!-- Argon Scripts -->
+                <!-- Core -->
+                <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+                <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+                <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+                <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+                <!-- Optional JS -->
+                <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+                <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+                <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+                <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+                <script src="./assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+                <script src="./assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+                <script src="./assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+                <script src="./assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+                <script src="./assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+                <script src="./assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+                <script src="./assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+                <script src="./assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+                <!-- Argon JS -->
+                <script src="./assets/js/argon.js?v=1.1.0"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+                <!-- Demo JS - remove this in your project -->
+                <script src="./assets/js/demo.min.js"></script>
+                <script type="text/javascript">
+                    function swalgood(msg1, msg2) {
+                        Swal.fire(
+                            msg1,
+                            msg2,
+                            'success'
+                        );
+                    }
+                </script>
 </body>
 
 </html>
