@@ -40,6 +40,8 @@ if (isset($_SESSION['error'])) {
     echo '}, 1);</script>';
 }
 $idmatakuliah = $_GET['mkid'];
+$kpid = $_GET['kpid'];
+$ekodee = $_GET['ekode'];
 include('connectdb.php');
 $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
 ?>
@@ -186,11 +188,11 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 d-inline-block mb-0">Detil Matakuliah</h6>
+                            <h6 class="h2 d-inline-block mb-0">Detil Absensi</h6>
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links">
                                     <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Detil Matakuliah</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Detil Absensi</li>
                                 </ol>
                             </nav>
                         </div>
@@ -233,87 +235,6 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                     }
                                     ?>
                                     <div class="row">
-                                        <div class="col-6">
-                                            <div class="card bg-default">
-                                                <div class="card-body">
-                                                    <?php
-                                                    $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
-                                                    $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id as id_hari FROM matakuliahs a INNER JOIN matakuliahs_kp b ON 
-          a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
-          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE a.id=" . $idmatakuliah;
-                                                    $stmt = $mysqli->prepare($sql);
-                                                    $stmt->execute();
-                                                    $res = $stmt->get_result();
-
-                                                    while ($row = $res->fetch_assoc()) {
-                                                        $nama = $row['nama'];
-                                                        $hari = $row['hari'];
-                                                        $jamm = $row['jam_mulai'];
-                                                        $jams = $row['jam_selesai'];
-                                                        $kp = $row['kp'];
-                                                        $kpid = $row['id_kp'];
-                                                        $kodeun = $row['e_code'];
-                                                        if ($kodeun == '') {
-                                                            $kodeun = '-';
-                                                        }
-                                                    }
-                                                    echo "<h3 class='card-title text-white'>" . $nama . ' KP ' . $kp . '</h3>';
-                                                    echo "<p class='text-white'>" . $hari . ", " . $jamm . " - " . $jams . '</p>';
-                                                    echo "<p class='font-weight-bold text-white'> Kode Unik : <p class='text-white' id='kunik'>" . $kodeun . "</p></p>";
-                                                    ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="card bg-default">
-                                                <div class="card-body">
-                                                    <div class="d-flex justify-content-between">
-                                                        <a href="#" class="mr-4">&nbsp</a>
-                                                        <button type="button" id="btntogglekelas" class="btn btn-sm bg-white float-right">
-                                                            <?php
-                                                            $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
-                                                            $sql = "SELECT * from matakuliahs_kp WHERE matakuliahs_id=" . $idmatakuliah . " AND matakuliahs_buka_id=" . $kpid;
-                                                            $stmt = $mysqli->prepare($sql);
-                                                            $stmt->execute();
-                                                            $res = $stmt->get_result();
-                                                            $row = $res->fetch_assoc();
-                                                            $statusKelass = 'Tutup';
-                                                            if ($row['status'] == 0) {
-                                                                $statusKelasss = 'Buka Kelas';
-                                                                echo $statusKelasss;
-                                                            } else {
-                                                                $statusKelasss = 'Tutup Kelas';
-                                                                echo $statusKelasss;
-                                                            }
-                                                            ?>
-                                                        </button>
-                                                    </div>
-                                                    <h3 class="card-title text-white">Status Kelas</h3>
-                                                    <blockquote class="blockquote text-white mb-0">
-                                                        <p id='statusKelass'>
-                                                            <?php
-                                                            $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
-                                                            $sql = "SELECT * from matakuliahs_kp WHERE matakuliahs_id=" . $idmatakuliah . " AND matakuliahs_buka_id=" . $kpid;
-                                                            $stmt = $mysqli->prepare($sql);
-                                                            $stmt->execute();
-                                                            $res = $stmt->get_result();
-                                                            $row = $res->fetch_assoc();
-                                                            $statusKelass = 'Tutup';
-                                                            if ($row['status'] == 0) {
-                                                                $statusKelass = 'Tutup';
-                                                                echo $statusKelass;
-                                                            } else {
-                                                                $statusKelass = 'Buka';
-                                                                echo $statusKelass;
-                                                            }
-                                                            ?>
-                                                        </p>
-                                                    </blockquote>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    Absensi yang lalu :
                                     <div class="table-responsive py-4">
                                         <table class="table table-flush" id="datatable-basic">
                                             <thead class="thead-light">
@@ -322,41 +243,40 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                     <th>Jam Kelas</th>
                                                     <th>Pin</th>
                                                     <th>Status</th>
-                                                    <th>Detil</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                    <?php
-                                                    $sql = "SELECT *, a.id as id_mk, b.status as status_matkul, c.id as id_kp, f.id as id_hari, k.e_code as code FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
+                                                <?php
+                                                $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
+                                                $sql = "SELECT *, a.id as id_mk, b.status as status_matkul, c.id as id_kp, f.id as id_hari, k.e_code as code FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
           a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
-          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE k.matakuliahs_id=" . $idmatakuliah . " AND k.matakuliahs_buka_id=" . $kpid . " GROUP BY code ORDER BY k.tanggal ASC";
-                                                    $stmt = $mysqli->prepare($sql);
-                                                    $stmt->execute();
-                                                    $res = $stmt->get_result();
+          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE k.e_code='". $ekodee ."' AND k.matakuliahs_id=" . $idmatakuliah . " AND k.matakuliahs_buka_id=" . $kpid . " ORDER BY k.tanggal ASC";
+                                                $stmt = $mysqli->prepare($sql);
+                                                $stmt->execute();
+                                                $res = $stmt->get_result();
 
-                                                    while ($row = $res->fetch_assoc()) {
-                                                        $tanggal = $row['tanggal'];
-                                                        $hari = $row['hari'];
-                                                        $jamm = $row['jam_mulai'];
-                                                        $jams = $row['jam_selesai'];
-                                                        $kode = $row['code'];
-                                                        $status = $row['status_matkul'];
-                                                        if ($status == 0) {
-                                                            $status = 'FALSE';
-                                                        } else {
-                                                            $status = 'TRUE';
-                                                        }
-                                                        echo "
+                                                while ($row = $res->fetch_assoc()) {
+                                                    $tanggal = $row['tanggal'];
+                                                    $hari = $row['hari'];
+                                                    $jamm = $row['jam_mulai'];
+                                                    $jams = $row['jam_selesai'];
+                                                    $kode = $row['code'];
+                                                    $status = $row['status_matkul'];
+                                                    if ($status == 0) {
+                                                        $status = 'FALSE';
+                                                    } else {
+                                                        $status = 'TRUE';
+                                                    }
+                                                    echo "
                                                 <tr>
                                                 <td>$tanggal</td>
                                                 <td>$hari, $jamm - $jams</td>
                                                 <td>$kode</td>
                                                 <td>$status</td>
-                                                <td><a href='detil_absensi.php?ekode=$kode&mkid=$idmatakuliah&kpid=$kpid'>Lihat</a></td>
                                                 </tr>
                                                 ";
-                                                    }
-                                                    ?>
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -401,97 +321,6 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                         'success'
                     );
                 }
-
-                $("#btntogglekelas").click(function() {
-                    var statusk = "";
-                    $.ajax({
-                        type: "POST",
-                        url: "selectkelasstatus.php",
-                        data: {
-                            idmatkul: <?php echo $idmatakuliah; ?>,
-                            idkp: <?php echo $kpid; ?>
-                        },
-                        success: function(data) {
-                            var obj = JSON.parse(data);
-                            if (obj['status']) {
-                                statusk = obj['data'];
-                                if (statusk == 0) {
-                                    Swal.fire({
-                                        title: 'Buka Kelas?',
-                                        text: "Apakah anda ingin membuka kelas ini?",
-                                        type: 'question',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Buka'
-                                    }).then((result) => {
-                                        if (result.value) {
-                                            $.ajax({
-                                                type: "POST",
-                                                url: "updatekelas.php",
-                                                data: {
-                                                    int: 1,
-                                                    idmatkul: <?php echo $idmatakuliah; ?>,
-                                                    idkp: <?php echo $kpid; ?>
-                                                },
-                                                success: function(data) {
-                                                    var obj = JSON.parse(data);
-                                                    if (obj['status']) {
-                                                        var dataa = obj['data'];
-                                                        document.getElementById('btntogglekelas').innerHTML = 'Tutup Kelas';
-                                                        document.getElementById('statusKelass').innerHTML = 'Buka';
-                                                        document.getElementById('kunik').innerHTML = obj['kunik'];
-                                                        Swal.fire(
-                                                            'Kelas Dibuka!',
-                                                            'Kelas telah dibuka.',
-                                                            'success'
-                                                        );
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        title: 'Tutup Kelas?',
-                                        text: "Apakah anda ingin menutup kelas ini?",
-                                        type: 'question',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Tutup'
-                                    }).then((result) => {
-                                        if (result.value) {
-                                            $.ajax({
-                                                type: "POST",
-                                                url: "updatekelas.php",
-                                                data: {
-                                                    int: 0,
-                                                    idmatkul: <?php echo $idmatakuliah; ?>,
-                                                    idkp: <?php echo $kpid; ?>
-                                                },
-                                                success: function(data) {
-                                                    var obj = JSON.parse(data);
-                                                    if (obj['status']) {
-                                                        var dataa = obj['data'];
-                                                        document.getElementById('btntogglekelas').innerHTML = 'Buka Kelas';
-                                                        document.getElementById('statusKelass').innerHTML = 'Tutup';
-                                                        document.getElementById('kunik').innerHTML = '-';
-                                                        Swal.fire(
-                                                            'Kelas Ditutup!',
-                                                            'Kelas telah ditutup.',
-                                                            'success'
-                                                        );
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    });
-                });
             </script>
 </body>
 
