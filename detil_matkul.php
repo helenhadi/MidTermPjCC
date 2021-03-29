@@ -321,7 +321,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                     <th>Tanggal</th>
                                                     <th>Jam Kelas</th>
                                                     <th>Pin</th>
-                                                    <th>Status</th>
+                                                    <th>Status Terakhir</th>
                                                     <th>Detil</th>
                                                 </tr>
                                             </thead>
@@ -335,7 +335,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                     $res = $stmt->get_result();
 
                                                     while ($row = $res->fetch_assoc()) {
-                                                        $tanggal = $row['tanggal'];
+                                                        $tanggal = date_format(date_create($row['tanggal']), "d-m-Y");
                                                         $hari = $row['hari'];
                                                         $jamm = $row['jam_mulai'];
                                                         $jams = $row['jam_selesai'];
@@ -352,7 +352,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                 <td>$hari, $jamm - $jams</td>
                                                 <td>$kode</td>
                                                 <td>$status</td>
-                                                <td><a href='detil_absensi.php?ekode=$kode&mkid=$idmatakuliah&kpid=$kpid'>Lihat</a></td>
+                                                <td><a href='detil_absensi.php?ekode=$kode&mkid=$idmatakuliah&kpid=$kpid&tgl=$tanggal'>Lihat</a></td>
                                                 </tr>
                                                 ";
                                                     }

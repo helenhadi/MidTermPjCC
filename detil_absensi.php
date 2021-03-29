@@ -42,6 +42,7 @@ if (isset($_SESSION['error'])) {
 $idmatakuliah = $_GET['mkid'];
 $kpid = $_GET['kpid'];
 $ekodee = $_GET['ekode'];
+$tgl = date_format(date_create($_GET['tgl']), "d-m-Y");
 include('connectdb.php');
 $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
 ?>
@@ -269,7 +270,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                     $row = $res->fetch_assoc();
                                                     echo "<h3 class='card-title text-white'>" . $nama . ' KP ' . $kp . '</h3>';
                                                     echo "<p class='text-white'>Dosen : ".$row['nama']."</p>";
-                                                    echo "<p class='text-white'>Tanggal : " . $hari . ", " . $jamm . " - " . $jams . '</p>';
+                                                    echo "<p class='text-white'>Tanggal : " . $tgl . "</p>";
                                                     echo "<p class='font-weight-bold text-white'> Kode Unik : <p class='text-white' id='kunik'>" . $ekodee . "</p></p>";
                                                     ?>
                                                 </div>
@@ -283,7 +284,6 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                     <tr>
                                                         <th>Nama</th>
                                                         <th>NRP</th>
-                                                        <th>Tanggal</th>
                                                         <th>Pin</th>
                                                         <th>Status</th>
                                                     </tr>
@@ -310,14 +310,12 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                         $res1 = $stmt1->get_result();
                                                         $row1 = $res1->fetch_assoc();
                                                         $nama = $row1['nama'];
-                                                        $tanggal = $row['tanggal'];
                                                         $kode = $row['kodee'];
                                                         $status = 'HADIR';
                                                         echo "
                                                 <tr>
                                                 <td>$nama</td>
                                                 <td>$nrp</td>
-                                                <td>$tanggal</td>
                                                 <td>$kode</td>
                                                 <td>$status</td>
                                                 </tr>
@@ -343,14 +341,12 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                         $res1 = $stmt1->get_result();
                                                         $row1 = $res1->fetch_assoc();
                                                         $nama = $row1['nama'];
-                                                        $tanggal = $row['tanggal'];
                                                         $kode = $row['kodee'];
                                                         $status = 'TIDAK HADIR';
                                                         echo "
                                                 <tr>
                                                 <td>$nama</td>
                                                 <td>$nrp</td>
-                                                <td>$tanggal</td>
                                                 <td>$kode</td>
                                                 <td>$status</td>
                                                 </tr>
