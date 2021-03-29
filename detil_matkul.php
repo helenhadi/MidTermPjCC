@@ -326,27 +326,27 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                    <?php
-                                                    $sql = "SELECT *, a.id as id_mk, b.status as status_matkul, c.id as id_kp, f.id as id_hari, k.e_code as code FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
+                                                <?php
+                                                $sql = "SELECT *, a.id as id_mk, b.status as status_matkul, c.id as id_kp, f.id as id_hari, k.e_code as code FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id INNER JOIN matakuliahs_kp b ON 
           a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
           ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE k.matakuliahs_id=" . $idmatakuliah . " AND k.matakuliahs_buka_id=" . $kpid . " GROUP BY code ORDER BY k.tanggal ASC";
-                                                    $stmt = $mysqli->prepare($sql);
-                                                    $stmt->execute();
-                                                    $res = $stmt->get_result();
+                                                $stmt = $mysqli->prepare($sql);
+                                                $stmt->execute();
+                                                $res = $stmt->get_result();
 
-                                                    while ($row = $res->fetch_assoc()) {
-                                                        $tanggal = date_format(date_create($row['tanggal']), "d-m-Y");
-                                                        $hari = $row['hari'];
-                                                        $jamm = $row['jam_mulai'];
-                                                        $jams = $row['jam_selesai'];
-                                                        $kode = $row['code'];
-                                                        $status = $row['status_matkul'];
-                                                        if ($status == 0) {
-                                                            $status = 'TUTUP';
-                                                        } else {
-                                                            $status = 'BUKA';
-                                                        }
-                                                        echo "
+                                                while ($row = $res->fetch_assoc()) {
+                                                    $tanggal = date_format(date_create($row['tanggal']), "d-m-Y");
+                                                    $hari = $row['hari'];
+                                                    $jamm = $row['jam_mulai'];
+                                                    $jams = $row['jam_selesai'];
+                                                    $kode = $row['code'];
+                                                    $status = $row['status_matkul'];
+                                                    if ($status == 0) {
+                                                        $status = 'TUTUP';
+                                                    } else {
+                                                        $status = 'BUKA';
+                                                    }
+                                                    echo "
                                                 <tr>
                                                 <td>$tanggal</td>
                                                 <td>$hari, $jamm - $jams</td>
@@ -355,8 +355,8 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                 <td><a href='detil_absensi.php?ekode=$kode&mkid=$idmatakuliah&kpid=$kpid&tgl=$tanggal'>Lihat</a></td>
                                                 </tr>
                                                 ";
-                                                    }
-                                                    ?>
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -404,6 +404,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
 
                 $("#btntogglekelas").click(function() {
                     var statusk = "";
+                    var kn = "-";
                     $.ajax({
                         type: "POST",
                         url: "selectkelasstatus.php",
@@ -432,7 +433,8 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                 data: {
                                                     int: 1,
                                                     idmatkul: <?php echo $idmatakuliah; ?>,
-                                                    idkp: <?php echo $kpid; ?>
+                                                    idkp: <?php echo $kpid; ?>,
+                                                    kodeun: kn
                                                 },
                                                 success: function(data) {
                                                     var obj = JSON.parse(data);
@@ -452,6 +454,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                         }
                                     });
                                 } else {
+                                    kn = "<?php echo $kodeun; ?>";
                                     Swal.fire({
                                         title: 'Tutup Kelas?',
                                         text: "Apakah anda ingin menutup kelas ini?",
@@ -468,7 +471,8 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                 data: {
                                                     int: 0,
                                                     idmatkul: <?php echo $idmatakuliah; ?>,
-                                                    idkp: <?php echo $kpid; ?>
+                                                    idkp: <?php echo $kpid; ?>,
+                                                    kodeun: kn
                                                 },
                                                 success: function(data) {
                                                     var obj = JSON.parse(data);

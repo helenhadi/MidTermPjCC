@@ -292,7 +292,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                     <?php
                                                     $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
                                                     $sql = "select * from mahasiswas m inner join ambil_matakuliahs am on 
-                                                    m.id=am.mahasiswas_id inner join (SELECT mahasiswas_id,tanggal,k.e_code as kodee FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id 
+                                                    m.id=am.mahasiswas_id inner join (SELECT mahasiswas_id,tanggal,k.e_code as kodee, k.status as statuss FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id 
                                                     INNER JOIN matakuliahs_kp b ON a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN 
                                                     jadwal_matakuliahs e ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id 
                                                     WHERE k.e_code='$ekodee' AND k.matakuliahs_id=$idmatakuliah AND k.matakuliahs_buka_id=$kpid ORDER BY k.tanggal ASC) krs 
@@ -311,38 +311,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                         $row1 = $res1->fetch_assoc();
                                                         $nama = $row1['nama'];
                                                         $kode = $row['kodee'];
-                                                        $status = 'HADIR';
-                                                        echo "
-                                                <tr>
-                                                <td>$nama</td>
-                                                <td>$nrp</td>
-                                                <td>$kode</td>
-                                                <td>$status</td>
-                                                </tr>
-                                                ";
-                                                    }
-                                                    $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
-                                                    $sql = "select * from mahasiswas m inner join ambil_matakuliahs am on 
-                                                    m.id=am.mahasiswas_id inner join (SELECT mahasiswas_id,tanggal,k.e_code as kodee FROM kehadirans k INNER JOIN matakuliahs a ON k.matakuliahs_id=a.id 
-                                                    INNER JOIN matakuliahs_kp b ON a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN 
-                                                    jadwal_matakuliahs e ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id 
-                                                    WHERE k.e_code='$ekodee' AND k.matakuliahs_id=$idmatakuliah AND k.matakuliahs_buka_id=$kpid ORDER BY k.tanggal ASC) krs 
-                                                    where am.matakuliahs_id=$idmatakuliah and am.matakuliahs_buka_id=$kpid and m.id!=krs.mahasiswas_id";
-                                                    $stmt = $mysqli->prepare($sql);
-                                                    $stmt->execute();
-                                                    $res = $stmt->get_result();
-
-                                                    while ($row = $res->fetch_assoc()) {
-                                                        $nrp = $row['nrp'];
-                                                        $mysqli->select_db('presensi_cloud');
-                                                        $sql1 = "select * from users where id = " . $row['user_id'];
-                                                        $stmt1 = $mysqli->prepare($sql1);
-                                                        $stmt1->execute();
-                                                        $res1 = $stmt1->get_result();
-                                                        $row1 = $res1->fetch_assoc();
-                                                        $nama = $row1['nama'];
-                                                        $kode = $row['kodee'];
-                                                        $status = 'TIDAK HADIR';
+                                                        $status = $row['statuss'];
                                                         echo "
                                                 <tr>
                                                 <td>$nama</td>

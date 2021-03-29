@@ -6,7 +6,7 @@
     $idmatakuliah = $_POST['idmatkul'];
     $kpid = $_POST['idkp'];
     $kode_absen = $_POST['kode'];
-    $datenow = date("Y-m-d H:i:s");
+    $datenow = date("Y-m-d");
     $hadir = "HADIR";
     $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
     $sql = "SELECT jadwals_id from jadwal_matakuliahs WHERE matakuliahs_id=" . $idmatakuliah . " AND matakuliahs_buka_id=" . $kpid;
