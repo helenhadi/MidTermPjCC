@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `ambil_matakuliahs` (
   `mahasiswas_id` INT(11) NOT NULL,
   `matakuliahs_id` INT(11) NOT NULL,
   `matakuliahs_buka_id` INT(11) NOT NULL,
+  `persentase` FLOAT NULL DEFAULT 0,
   PRIMARY KEY (`mahasiswas_id`, `matakuliahs_id`, `matakuliahs_buka_id`),
   INDEX `fk_mahasiswas_has_matakuliahs_has_matakuliahs_buka_matakuli_idx` (`matakuliahs_id` ASC, `matakuliahs_buka_id` ASC),
   INDEX `fk_mahasiswas_has_matakuliahs_has_matakuliahs_buka_mahasisw_idx` (`mahasiswas_id` ASC),

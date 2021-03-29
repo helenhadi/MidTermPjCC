@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 24, 2021 at 04:47 AM
+-- Generation Time: Mar 29, 2021 at 12:16 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -30,17 +30,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `ambil_matakuliahs` (
   `mahasiswas_id` int(11) NOT NULL,
   `matakuliahs_id` int(11) NOT NULL,
-  `matakuliahs_buka_id` int(11) NOT NULL
+  `matakuliahs_buka_id` int(11) NOT NULL,
+  `persentase` float NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ambil_matakuliahs`
 --
 
-INSERT INTO `ambil_matakuliahs` (`mahasiswas_id`, `matakuliahs_id`, `matakuliahs_buka_id`) VALUES
-(1, 1, 1),
-(1, 2, 2),
-(1, 3, 1);
+INSERT INTO `ambil_matakuliahs` (`mahasiswas_id`, `matakuliahs_id`, `matakuliahs_buka_id`, `persentase`) VALUES
+(1, 1, 1, 0),
+(1, 2, 2, 0),
+(1, 3, 1, 0),
+(2, 1, 1, 0),
+(2, 2, 2, 0),
+(2, 3, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -153,7 +157,12 @@ CREATE TABLE `kehadirans` (
 --
 
 INSERT INTO `kehadirans` (`id`, `mahasiswas_id`, `matakuliahs_id`, `matakuliahs_buka_id`, `jadwals_id`, `tanggal`, `status`, `e_code`) VALUES
-(1, 1, 1, 1, 1, '2021-03-23 17:52:55', 'HADIR', 'IPYNB');
+(1, 1, 1, 1, 1, '2021-03-23 17:52:55', 'HADIR', 'IPYNB'),
+(12, 1, 1, 1, 1, '2021-03-27 17:06:02', 'HADIR', 'LS9EU0'),
+(14, 1, 3, 1, 3, '2021-03-27 18:00:53', 'HADIR', 'GrvRqz'),
+(15, 2, 3, 1, 3, '2021-03-27 18:00:53', 'HADIR', 'GrvRqz'),
+(16, 1, 2, 2, 2, '2021-03-29 00:00:00', 'HADIR', 'iGUgcB'),
+(17, 2, 2, 2, 2, '2021-03-29 00:00:00', 'TIDAK HADIR', 'iGUgcB');
 
 -- --------------------------------------------------------
 
@@ -172,7 +181,8 @@ CREATE TABLE `mahasiswas` (
 --
 
 INSERT INTO `mahasiswas` (`id`, `nrp`, `user_id`) VALUES
-(1, '160418025', 3);
+(1, '160418025', 3),
+(2, '160418084', 5);
 
 -- --------------------------------------------------------
 
@@ -352,13 +362,13 @@ ALTER TABLE `karyawans`
 -- AUTO_INCREMENT for table `kehadirans`
 --
 ALTER TABLE `kehadirans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `mahasiswas`
 --
 ALTER TABLE `mahasiswas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `matakuliahs`
