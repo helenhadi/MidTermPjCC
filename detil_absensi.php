@@ -239,8 +239,9 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                             <div class="card bg-default">
                                                 <div class="card-body">
                                                     <?php
+                                                    $dosenid = '';
                                                     $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
-                                                    $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id as id_hari FROM matakuliahs a INNER JOIN matakuliahs_kp b ON 
+                                                    $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id as id_hari, b.dosen_id as id_dosen FROM matakuliahs a INNER JOIN matakuliahs_kp b ON 
           a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
           ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE a.id=" . $idmatakuliah;
                                                     $stmt = $mysqli->prepare($sql);
@@ -255,12 +256,19 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                         $kp = $row['kp'];
                                                         $kpid = $row['id_kp'];
                                                         $kodeun = $row['e_code'];
+                                                        $dosenid = $row['id_dosen'];
                                                         if ($kodeun == '') {
                                                             $kodeun = '-';
                                                         }
                                                     }
+                                                    $mysqli->select_db('presensi_cloud');
+                                                    $sql = "SELECT * FROM users WHERE id=$dosenid";
+                                                    $stmt = $mysqli->prepare($sql);
+                                                    $stmt->execute();
+                                                    $res = $stmt->get_result();
+                                                    $row = $res->fetch_assoc();
                                                     echo "<h3 class='card-title text-white'>" . $nama . ' KP ' . $kp . '</h3>';
-                                                    echo "<p class='text-white'>Dosen : Bambang</p>";
+                                                    echo "<p class='text-white'>Dosen : ".$row['nama']."</p>";
                                                     echo "<p class='text-white'>Tanggal : " . $hari . ", " . $jamm . " - " . $jams . '</p>';
                                                     echo "<p class='font-weight-bold text-white'> Kode Unik : <p class='text-white' id='kunik'>" . $ekodee . "</p></p>";
                                                     ?>
