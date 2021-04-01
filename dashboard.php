@@ -320,15 +320,14 @@ $mysqli = konek('localhost', 'root', '');
                   </a>
                 </div>
                 ";
-        } else if ($_SESSION['jabatan'] != 'mhs' && $_SESSION['jabatan'] != 'admin') {
+        }if ($_SESSION['jabatan'] != 'mhs' && $_SESSION['jabatan'] != 'admin') {
           $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
-          $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id as id_hari FROM matakuliahs a INNER JOIN matakuliahs_kp b ON 
+          $sql = "SELECT *, a.id as id_mk, c.id as id_kp, f.id as id_hari FROM matakuliahs a INNER JOIN matakuliahs_kp b ON 
           a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 
-          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE dosen_id=" . $_SESSION['idd'];
+          ON a.id=e.matakuliahs_id INNER JOIN jadwals f ON e.jadwals_id=f.id WHERE b.dosen_id=" . $_SESSION['idd'];
           $stmt = $mysqli->prepare($sql);
           $stmt->execute();
           $res = $stmt->get_result();
-
           while ($row = $res->fetch_assoc()) {
             echo "<div class='col-4'>
             <a href='detil_matkul.php?mkid=" . $row['id_mk'] . "'>
@@ -342,7 +341,7 @@ $mysqli = konek('localhost', 'root', '');
               </a>
             </div>";
           }
-        } else if ($_SESSION['jabatan'] == 'mhs') {
+        }if ($_SESSION['jabatan'] == 'mhs') {
           $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
           $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id FROM matakuliahs a INNER JOIN matakuliahs_kp b ON a.id=b.matakuliahs_id 
                   INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN ambil_matakuliahs d ON a.id=d.matakuliahs_id 
