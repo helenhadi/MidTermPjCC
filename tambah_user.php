@@ -294,7 +294,7 @@ $mysqli = konek('localhost', 'root', '');
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
                             </div>
-                            <select class="form-control" name="jabatan" data-toggle="select" onchange="toogleJurusan(this.value)">
+                            <select class="form-control" name="jabatan" data-toggle="select">
                               <option value='dekan'>Dekan</option>
                               <option value='wadek'>Wakil Dekan</option>
                               <option value='kajur'>Kepala Jurusan</option>
@@ -334,7 +334,7 @@ $mysqli = konek('localhost', 'root', '');
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="ni ni-paper-diploma"></i></span>
                             </div>
-                            <select disabled="true" id="jurusanlist" class="form-control" name="jurusan" data-toggle="select">
+                            <select id="jurusanlist" class="form-control" name="jurusan" data-toggle="select">
                               <option value='0'>Pilih Jurusan</option>
                             </select>
                           </div>
@@ -387,14 +387,14 @@ $mysqli = konek('localhost', 'root', '');
         );
       }
 
-      function toogleJurusan(jabatan) {
-        var jabatan = jabatan;
-        if (jabatan == 'dekan' || jabatan == 'wadek') {
-          $('#jurusanlist').prop('disabled', true);
-        } else {
-          $('#jurusanlist').prop('disabled', false);
-        }
-      }
+      // function toogleJurusan(jabatan) {
+      //   var jabatan = jabatan;
+      //   if (jabatan == 'dekan' || jabatan == 'wadek') {
+      //     $('#jurusanlist').prop('disabled', true);
+      //   } else {
+      //     $('#jurusanlist').prop('disabled', false);
+      //   }
+      // }
 
       function changeJurusan(idFakultas) {
         var idFakultas = idFakultas;

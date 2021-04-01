@@ -320,7 +320,7 @@ $mysqli = konek('localhost', 'root', '');
                   </a>
                 </div>
                 ";
-        } else if ($_SESSION['jabatan'] == 'dosen') {
+        } else if ($_SESSION['jabatan'] != 'mhs' && $_SESSION['jabatan'] != 'admin') {
           $mysqli->select_db('presensi_cloud_' . $_SESSION['jid']);
           $sql = "SELECT *, a.id as id_mk,c.id as id_kp, f.id as id_hari FROM matakuliahs a INNER JOIN matakuliahs_kp b ON 
           a.id=b.matakuliahs_id INNER JOIN matakuliahs_buka c ON b.matakuliahs_buka_id=c.id INNER JOIN jadwal_matakuliahs e 

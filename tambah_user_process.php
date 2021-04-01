@@ -13,20 +13,20 @@ if (isset($_POST['adduser'])) {
         $fakultas = $_POST['fakultas'];
         $jurusan = $_POST['jurusan'];
 
-        if ($jabatan == 'dekan' || $jabatan == 'wadek') {
-            $jurusan = 0;
-        }
+        // if ($jabatan == 'dekan' || $jabatan == 'wadek') {
+        //     $jurusan = 0;
+        // }
 
-        if ($jurusan == 0) {
-            $sql = "insert into users(nama, username, password, jabatan, fakultass_id) values (?, ?, ?, ?, ?)";
-            $stmt = $mysqli->prepare($sql);
-            $stmt->bind_param("ssssi", $nama, $username, $saltedPwd, $jabatan, $fakultas);
-        }
-        else {
-            $sql = "insert into users(nama, username, password, jabatan, fakultass_id, jurusans_id) values (?, ?, ?, ?, ?, ?)";
-            $stmt = $mysqli->prepare($sql);
-            $stmt->bind_param("ssssii", $nama, $username, $saltedPwd, $jabatan, $fakultas, $jurusan);
-        }
+        // if ($jurusan == 0) {
+        //     $sql = "insert into users(nama, username, password, jabatan, fakultass_id) values (?, ?, ?, ?, ?)";
+        //     $stmt = $mysqli->prepare($sql);
+        //     $stmt->bind_param("ssssi", $nama, $username, $saltedPwd, $jabatan, $fakultas);
+        // }
+        // else {
+        $sql = "insert into users(nama, username, password, jabatan, fakultass_id, jurusans_id) values (?, ?, ?, ?, ?, ?)";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("ssssii", $nama, $username, $saltedPwd, $jabatan, $fakultas, $jurusan);
+        // }
         
         $stmt->execute();
 
