@@ -212,11 +212,11 @@ while ($row = $res->fetch_assoc()) {
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 d-inline-block mb-0">Manage DAC Roles</h6>
+                            <h6 class="h2 d-inline-block mb-0">DAC Qualified Users</h6>
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links">
                                     <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Manage Roles DAC Code: <?php echo $kode; ?></li>
+                                    <li class="breadcrumb-item active" aria-current="page">DAC Code: <?php echo $kode; ?></li>
                                 </ol>
                             </nav>
                         </div>
@@ -261,21 +261,7 @@ while ($row = $res->fetch_assoc()) {
                                     <div class="card-header border-0">
                                         <div class="row">
                                             <div class="col-6">
-                                                <h3 class="mb-0">DAC Holders</h3>
-                                            </div>
-                                            <div class="col-6 text-right">
-                                                <!-- Insert DAC -->
-                                                <?php
-                                                if ($_SESSION['jabatan'] == 'admin' || $_SESSION['jabatan'] == 'dekan' || $_SESSION['jabatan'] == 'wadek') {
-                                                    ?>
-                                                    <a href="tambah_dac_holder.php?roleid=<?php echo $roleid ?>" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Add DAC Role Holder">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah Holder</span>
-                                                    </a>
-                                                    <?php
-                                                }
-                                                ?>
-                                                <!-- Insert DAC -->
+                                                <h3 class="mb-0">Rule: Students that <?php echo "'".$field."' in '".$entity."' ".$opt." ".$value ?></h3>
                                             </div>
                                         </div>
                                     </div>
@@ -296,33 +282,57 @@ while ($row = $res->fetch_assoc()) {
                                                     }
 
                                                     if (in_array("mahasiswas_id", $columns) && $entity!="mahasiswas")
-                                                        $sql = "SELECT * FROM $entity e inner join mahasiswas m on e.mahasiswas_id=m.id where e.$field $opt $value";
+                                                        $sql = "SELECT * FROM $entity e inner join mahasiswas m on e.mahasiswas_id=m.id where e.$field $opt '$value'";
                                                     else
-                                                        $sql = "SELECT * FROM $entity where $field $opt $value";
+                                                        $sql = "SELECT * FROM $entity where $field $opt '$value'";
 
                                                     $stmt = $mysqli->query($sql);
 
                                                     $field_vals = array();
                                                     $user_ids = array();
                                                     $nrps = array();
-                                                    $onerow = array();
+                                                    if (in_array("matakuliahs_id", $columns))
+                                                        $matakuliahs = array();
+                                                    // $onerow = array();
                                                     while ($row = $stmt->fetch_assoc()) {
                                                         array_push($field_vals, $row[$field]);
                                                         array_push($user_ids, $row['user_id']);
                                                         array_push($nrps, $row['nrp']);
-                                                        $onerow = $row;
+                                                        if (in_array("matakuliahs_id", $columns))
+                                                            array_push($matakuliahs, $row['matakuliahs_id']);
+                                                        // $onerow = $row;
                                                     }
 
-                                                    foreach ($onerow as $key => $value) {
-                                                        // echo "<td>".$key."</td>";
-                                                        array_push($columns, $key);
+                                                    // foreach ($onerow as $key => $value) {
+                                                    //     // echo "<td>".$key."</td>";
+                                                    //     array_push($columns, $key);
+                                                    // }
+
+                                                    if (in_array("matakuliahs_id", $columns)) {
+                                                        $mk_names = array();
+
+                                                        $sql = "select nama from matakuliahs where id=?";
+                                                        $stmt = $mysqli->prepare($sql);
+                                                        foreach ($matakuliahs as $mk_id) {
+                                                            $stmt->bind_param("i", $mk_id);
+                                                            $stmt->execute();
+                                                            $res = $stmt->get_result();
+
+                                                            while ($row = $res->fetch_assoc()) {
+                                                                array_push($mk_names, $row['nama']);
+                                                            }
+                                                        }
                                                     }
                                                     
-                                                    // echo "<pre>".print_r($columns)."</pre>";
+                                                    // echo "<pre>".print_r($mk_names)."</pre>";
                                                     ?>
                                                     <td>NRP</td>
                                                     <td>Nama</td>
-                                                    <td><?php echo $field ?></td>
+                                                    <?php
+                                                    if (in_array("matakuliahs_id", $columns)) 
+                                                        echo "<td>Mata Kuliah</td>";
+                                                    ?>
+                                                    <td><?php echo ucfirst($field) ?></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -351,6 +361,8 @@ while ($row = $res->fetch_assoc()) {
                                                         <?php
                                                         echo "<td>".$nrps[$i]."</td>";
                                                         echo "<td>".$names[$i]."</td>";
+                                                        if (in_array("matakuliahs_id", $columns))
+                                                            echo "<td>".$mk_names[$i]."</td>";
                                                         echo "<td>".$field_vals[$i]."</td>";
                                                         ?>
                                                     </tr>
