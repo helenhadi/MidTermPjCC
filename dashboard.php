@@ -231,7 +231,7 @@ $mysqli = konek('localhost', 'root', '');
                     <?php
                     if ($_SESSION['jabatan'] == 'admin') {
                       echo "Administrator";
-                    } else if ($_SESSION['jabatan'] != 'dekan' || $_SESSION['jabatan'] != 'wadek') {
+                    } else if ($_SESSION['jabatan'] != 'dekan' && $_SESSION['jabatan'] != 'wadek') {
                       $sql = "SELECT * FROM jurusans WHERE id=" . $_SESSION['jid'];
                       $stmt = $mysqli->prepare($sql);
                       $stmt->execute();
