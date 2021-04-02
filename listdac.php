@@ -246,10 +246,6 @@ $mysqli = konek('localhost', 'root', '', '');
                                                         <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
                                                         <span class="btn-inner--text">Tambah DAC Fakultas</span>
                                                     </a>
-                                                    <a href="tambah_dac_jurusan.php" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Insert DAC">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah DAC Jurusan</span>
-                                                    </a>
                                                     <?php
                                                 } elseif ($_SESSION['jabatan'] == 'dekan' || $_SESSION['jabatan'] == 'wadek') {
                                                     ?>
