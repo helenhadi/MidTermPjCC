@@ -146,6 +146,12 @@ while ($row = $res->fetch_assoc()) {
                             <span class='nav-link-text'>Manage DAC Rules</span>
                             </a>
                             </li>
+                            <li class='nav-item'>
+                    <a class='nav-link' href='dacusers.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                      <i class='ni ni-bulb-61 text-primary'></i>
+                      <span class='nav-link-text'>Manage DAC Users</span>
+                    </a>
+                  </li>
                             ";
                             }
                             ?>

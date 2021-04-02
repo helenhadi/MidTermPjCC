@@ -98,6 +98,12 @@ $mysqli = konek('localhost', 'root', '');
                       <span class='nav-link-text'>My DAC Roles</span>
                     </a>
                   </li>
+                  <li class='nav-item'>
+                    <a class='nav-link' href='dacusers.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                      <i class='ni ni-bulb-61 text-primary'></i>
+                      <span class='nav-link-text'>Manage DAC Users</span>
+                    </a>
+                  </li>
                 ";
               }
               ?>
@@ -313,6 +319,21 @@ $mysqli = konek('localhost', 'root', '');
                         <div class='col-12'>
                           <h5 class='card-title text-uppercase text-muted mb-0 text-white'>My </h5>
                           <span class='h2 font-weight-bold mb-0 text-white'>DAC Roles</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </a>
+                </div>
+                <div class='col-4'>
+                <a href='dacusers.php'>
+                  <div class='card bg-gradient-warning border-0 btn text-left'>
+                    <!-- Card body -->
+                    <div class='card-body'>
+                      <div class='row'>
+                        <div class='col-12'>
+                          <h5 class='card-title text-uppercase text-muted mb-0 text-white'>Manage </h5>
+                          <span class='h2 font-weight-bold mb-0 text-white'>DAC Users</span>
                         </div>
                       </div>
                     </div>

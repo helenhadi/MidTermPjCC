@@ -40,67 +40,44 @@ if (isset($_SESSION['error'])) {
     echo "setTimeout(function () {swal('Failed!', '" . $status . "', 'error');";
     echo '}, 1);</script>';
 }
-if (!(isset($_GET['ruleid'])))
-    header("location: mydacroles.php");
-else
-    $roleid = $_GET['ruleid'];
 include('connectdb.php');
 $mysqli = konek('localhost', 'root', '', '');
-
-$mysqli->select_db('presensi_cloud');
-$sql = "SELECT * FROM dac_rules where id = ? limit 1";
-$stmt = $mysqli->prepare($sql);
-$stmt->bind_param("i", $roleid);
-$stmt->execute();
-$res = $stmt->get_result();
-
-while ($row = $res->fetch_assoc()) {
-    $kode = $row['kode'];
-    $nama = $row['nama'];
-    $entity = $row['entity'];
-    $field = $row['field'];
-    $opt = $row['operator'];
-    $value = $row['value'];
-}
 ?>
 
 <body>
     <!-- Sidenav -->
-    <?php
-    if ($_SESSION['jabatan'] == 'admin') {
-    ?>
-        <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
-            <div class="scrollbar-inner">
-                <!-- Brand -->
-                <div class="sidenav-header d-flex align-items-center">
-                    <a class="navbar-brand" href="dashboard.php">
-                        <img src="./assets/img/brand/blue.jpg" class="navbar-brand-img" alt="...">
-                    </a>
-                    <div class="ml-auto">
-                        <!-- Sidenav toggler -->
-                        <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin" data-target="#sidenav-main">
-                            <div class="sidenav-toggler-inner">
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                            </div>
+    <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+        <div class="scrollbar-inner">
+            <!-- Brand -->
+            <div class="sidenav-header d-flex align-items-center">
+                <a class="navbar-brand" href="dashboard.php">
+                    <img src="./assets/img/brand/blue.jpg" class="navbar-brand-img" alt="...">
+                </a>
+                <div class="ml-auto">
+                    <!-- Sidenav toggler -->
+                    <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin" data-target="#sidenav-main">
+                        <div class="sidenav-toggler-inner">
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
                         </div>
                     </div>
                 </div>
-                <div class="navbar-inner">
-                    <!-- Collapse -->
-                    <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-                        <!-- Nav items -->
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="dashboard.php" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
-                                    <i class="ni ni-shop text-primary"></i>
-                                    <span class="nav-link-text">Dashboard</span>
-                                </a>
-                            </li>
-                            <?php
-                            if ($_SESSION['jabatan'] == 'admin') {
-                                echo "
+            </div>
+            <div class="navbar-inner">
+                <!-- Collapse -->
+                <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                    <!-- Nav items -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="dashboard.php" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+                                <i class="ni ni-shop text-primary"></i>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <?php
+                        if ($_SESSION['jabatan'] == 'admin') {
+                            echo "
                             <li class='nav-item'>
                             <a class='nav-link' href='manage_jurusans.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                             <i class='ni ni-badge text-primary'></i>
@@ -114,39 +91,36 @@ while ($row = $res->fetch_assoc()) {
                             </a>
                             </li>
                             <li class='nav-item'>
-                            <a class='nav-link active' href='listdac.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                            <a class='nav-link' href='listdac.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                             <i class='ni ni-bulb-61 text-primary'></i>
                             <span class='nav-link-text'>Manage DAC Rules</span>
                             </a>
                             </li>
                             <li class='nav-item'>
-                            <a class='nav-link active' href='mydacroles.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                            <a class='nav-link' href='mydacroles.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                             <i class='ni ni-bulb-61 text-primary'></i>
                             <span class='nav-link-text'>My DAC Roles</span>
                             </a>
                             </li>
                             <li class='nav-item'>
-                    <a class='nav-link' href='dacusers.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
+                    <a class='nav-link active' href='dacusers.php' role='button' aria-expanded='true' aria-controls='navbar-dashboards'>
                       <i class='ni ni-bulb-61 text-primary'></i>
                       <span class='nav-link-text'>Manage DAC Users</span>
                     </a>
                   </li>
                             ";
-                            }
-                            ?>
-                        </ul>
-                        <!-- Divider -->
-                        <hr class="my-3">
-                        <!-- Heading -->
-                        <!-- <h6 class="navbar-heading p-0 text-muted">Documentation</h6> -->
-                        <!-- Navigation -->
-                    </div>
+                        }
+                        ?>
+                    </ul>
+                    <!-- Divider -->
+                    <hr class="my-3">
+                    <!-- Heading -->
+                    <!-- <h6 class="navbar-heading p-0 text-muted">Documentation</h6> -->
+                    <!-- Navigation -->
                 </div>
             </div>
-        </nav>
-    <?php
-    }
-    ?>
+        </div>
+    </nav>
     <!-- Main content -->
     <div class="main-content" id="panel">
         <!-- Topnav -->
@@ -218,11 +192,11 @@ while ($row = $res->fetch_assoc()) {
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 d-inline-block mb-0">Manage DAC Roles</h6>
+                            <h6 class="h2 d-inline-block mb-0">Manage DAC Users</h6>
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links">
                                     <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Manage Roles DAC Code: <?php echo $kode; ?></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Manage DAC Users</li>
                                 </ol>
                             </nav>
                         </div>
@@ -267,21 +241,7 @@ while ($row = $res->fetch_assoc()) {
                                     <div class="card-header border-0">
                                         <div class="row">
                                             <div class="col-6">
-                                                <h3 class="mb-0">DAC Holders</h3>
-                                            </div>
-                                            <div class="col-6 text-right">
-                                                <!-- Insert DAC -->
-                                                <?php
-                                                if ($_SESSION['jabatan'] == 'admin' || $_SESSION['jabatan'] == 'dekan' || $_SESSION['jabatan'] == 'wadek') {
-                                                ?>
-                                                    <a href="tambah_dac_holder.php?roleid=<?php echo $roleid ?>" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Add DAC Role Holder">
-                                                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
-                                                        <span class="btn-inner--text">Tambah Holder</span>
-                                                    </a>
-                                                <?php
-                                                }
-                                                ?>
-                                                <!-- Insert DAC -->
+                                                <h3 class="mb-0">Users DAC</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -289,47 +249,16 @@ while ($row = $res->fetch_assoc()) {
                                         <table class="table table-flush" id="datatable-basic">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th>No.</th>
+                                                    <th>NRP/NPK</th>
                                                     <th>Nama</th>
-                                                    <th>Jabatan</th>
-                                                    <th>Fakultas</th>
                                                     <th>Jurusan</th>
+                                                    <th>Fakultas</th>
+                                                    <th>DAC Code</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Isi List DAC -->
-                                                <?php
-                                                $mysqli->select_db('presensi_cloud');
-                                                $sql = "SELECT *, dr.id as id from dac_roles as dr inner join users as u on dr.user_id=u.id where dr.dac_rule_id = ? ORDER BY u.nama ASC";
-                                                $stmt = $mysqli->prepare($sql);
-                                                $stmt->bind_param("i", $roleid);
-                                                $stmt->execute();
-                                                $res = $stmt->get_result();
-
-                                                $count = 0;
-                                                while ($row = $res->fetch_assoc()) {
-                                                    $count++;
-                                                    $dac_roles_id = $row['id'];
-                                                ?>
-                                                    <tr>
-                                                        <td><?php echo $count; ?></td>
-                                                        <td><?php echo $row['nama']; ?></td>
-                                                        <td><?php echo $row['jabatan']; ?></td>
-                                                        <td><?php echo $row['fakultass_id']; ?></td>
-                                                        <td><?php echo $row['jurusans_id']; ?></td>
-                                                        <!-- Edit Delete -->
-                                                        <td class="table-actions">
-                                                            <a href="dacroles_process.php?delid=<?php echo $dac_roles_id; ?>&roleid=<?php echo $roleid; ?>" class="table-action table-action-delete" name="delete-dac-<?php echo $id; ?>" data-toggle="tooltip" data-original-title="Delete DAC Holder">
-                                                                <i class="fas fa-trash"></i>
-                                                            </a>
-                                                        </td>
-                                                        <!-- Edit Delete -->
-                                                    </tr>
-                                                <?php
-                                                }
-                                                ?>
-                                                <!-- Isi List DAC -->
+                                                <!-- List User Dengan DAC nya, bisa tambah rule per user, ubah, hapus -->
                                             </tbody>
                                         </table>
                                     </div>
