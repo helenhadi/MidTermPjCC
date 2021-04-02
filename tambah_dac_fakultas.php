@@ -247,7 +247,8 @@ $mysqli = konek('localhost', 'root', '');
                         <div class="form-group">
                           <label class="form-control-label">Jurusan</label>
                           <div class="input-group input-group-merge">
-                            <select class="form-control" name="jurusan" data-toggle="select">
+                            <select class="form-control" name="jurusan" data-toggle="select" onchange="changeJurusan(this.value)">
+                              <option value="0">Pilih Jurusan</option>
                               <?php
                               $mysqli->select_db('presensi_cloud');
 
@@ -274,13 +275,8 @@ $mysqli = konek('localhost', 'root', '');
                         <div class="form-group">
                           <label class="form-control-label">Entity</label>
                           <div class="input-group input-group-merge">
-                            <select class='form-control' name="entity">
-                              <option value="jadwals">Jadwal</option>
-                              <option value="kehadirans">Kehadiran</option>
-                              <option value="mahasiswas">Mahasiswa</option>
-                              <option value="matakuliahs">Mata Kuliah</option>
-                              <option value="matakuliahs_buka">Mata Kuliah yang Buka</option>
-                              <option value="matakuliahs_kp">Kelas Pararel Mata Kuliah</option>
+                            <select id="lentiti" class='form-control' name="entity">
+                              <option value="0">Pilih Entity</option>
                             </select>
                           </div>
                         </div>
@@ -367,6 +363,30 @@ $mysqli = konek('localhost', 'root', '');
           msg2,
           'success'
         );
+      }
+
+      function changeJurusan(idd) {
+        var iddd = idd;
+        $("#lentiti").html("");
+        $("#lentiti").append("<option value='0'>Pilih Entity</option>");
+        $.ajax({
+          type: "POST",
+          url: "loadentitiess.php",
+          data: {
+            id: iddd
+          },
+          success: function(data) {
+            var obj = JSON.parse(data);
+            $("#lentiti").html("");
+            $("#lentiti").append("<option value='0'>Pilih Entity</option>");
+            if (obj['status']) {
+              var dataa = obj['data'];
+              for (var i = 0; i < dataa.length; i++) {
+                $("#lentiti").append("<option value='" + dataa[i]['TABLE_NAME'] + "' > " + dataa[i]['TABLE_NAME'] + " </option>");
+              }
+            }
+          }
+        });
       }
     </script>
 </body>
