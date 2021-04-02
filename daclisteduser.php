@@ -295,39 +295,63 @@ while ($row = $res->fetch_assoc()) {
                                                         array_push($columns, $column['COLUMN_NAME']);
                                                     }
 
-                                                    foreach ($columns as $key) {
-                                                        echo "<td>".$key."</td>";
+                                                    if (in_array("mahasiswas_id", $columns))
+                                                        $sql = "SELECT * FROM $entity e inner join mahasiswas m on e.mahasiswas_id=m.id where e.$field $opt $value";
+                                                    else
+                                                        $sql = "SELECT * FROM $entity where $field $opt $value";
+
+                                                    $stmt = $mysqli->query($sql);
+
+                                                    $field_vals = array();
+                                                    $user_ids = array();
+                                                    $nrps = array();
+                                                    $onerow = array();
+                                                    while ($row = $stmt->fetch_assoc()) {
+                                                        array_push($field_vals, $row[$field]);
+                                                        array_push($user_ids, $row['user_id']);
+                                                        array_push($nrps, $row['nrp']);
+                                                        $onerow = $row;
                                                     }
+
+                                                    foreach ($onerow as $key => $value) {
+                                                        // echo "<td>".$key."</td>";
+                                                        array_push($columns, $key);
+                                                    }
+                                                    
+                                                    // echo "<pre>".print_r($columns)."</pre>";
                                                     ?>
+                                                    <td>NRP</td>
+                                                    <td>Nama</td>
+                                                    <td><?php echo $field ?></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <!-- Isi List DAC -->
                                                 <?php
-                                                if (in_array("mahasiswas_id", $columns))
-                                                    $sql = "SELECT * FROM $entity e inner join mahasiswas m on e.mahasiswas_id=m.id where e.$field $opt $value";
-                                                else
-                                                    $sql = "SELECT * FROM $entity where $field $opt $value";
+                                                // echo "<pre>".print_r($field_vals)."</pre>";
+
+                                                $names = array();
+                                                $mysqli->select_db('presensi_cloud');
+                                                $sql = "select nama from users where id=?";
+                                                $stmt = $mysqli->prepare($sql);
+                                                foreach ($user_ids as $user_id) {
+                                                    $stmt->bind_param("i", $user_id);
+                                                    $stmt->execute();
+                                                    $res = $stmt->get_result();
+
+                                                    while ($row = $res->fetch_assoc()) {
+                                                        array_push($names, $row['nama']);
+                                                    }
+                                                }
                                                 
-                                                echo $sql;
-                                                $stmt = $mysqli->query($sql);
-
-                                                // echo mysql_fetch_field($sql);
-                                                // while ($column = $stmt->fetch_assoc()) {
-                                                //     echo "<pre>".print_r($column)."</pre>";
-                                                //     // array_push($columns, $column);
-                                                // }
-
-                                                $count = 0;
-                                                while ($row = $stmt->fetch_assoc()) {
-                                                    $count++;
+                                                for ($i=0; $i <=count($names)-1 ; $i++) { 
                                                     ?>
                                                     <tr>
-                                                        <td><?php echo $count; ?></td>
+                                                        <td><?php echo $i+1; ?></td>
                                                         <?php
-                                                        foreach ($row as $key => $value) {
-                                                            echo "<td>".$value."</td>";
-                                                        }
+                                                        echo "<td>".$nrps[$i]."</td>";
+                                                        echo "<td>".$names[$i]."</td>";
+                                                        echo "<td>".$field_vals[$i]."</td>";
                                                         ?>
                                                     </tr>
                                                     <?php
