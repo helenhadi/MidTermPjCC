@@ -295,7 +295,7 @@ while ($row = $res->fetch_assoc()) {
                                                         array_push($columns, $column['COLUMN_NAME']);
                                                     }
 
-                                                    if (in_array("mahasiswas_id", $columns))
+                                                    if (in_array("mahasiswas_id", $columns) && $entity!="mahasiswas")
                                                         $sql = "SELECT * FROM $entity e inner join mahasiswas m on e.mahasiswas_id=m.id where e.$field $opt $value";
                                                     else
                                                         $sql = "SELECT * FROM $entity where $field $opt $value";
