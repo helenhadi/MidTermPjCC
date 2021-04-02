@@ -365,6 +365,23 @@ $mysqli = konek('localhost', 'root', '');
             </div>";
           }
         }
+        if($_SESSION['isdac']){
+          echo "<div class='col-12'>
+                    <a href='mydacroles.php'>
+                        <div class='card bg-gradient-default border-0 btn text-left'>
+                            <!-- Card body -->
+                            <div class='card-body'>
+                            <div class='row'>
+                                <div class='col-12'>
+                                <h5 class='card-title text-uppercase text-muted mb-0 text-white'>Lihat </h5>
+                                <span class='h2 font-weight-bold mb-0 text-white'>Lainnya</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>";
+        }
         ?>
         <!-- Field Admin -->
       </div>

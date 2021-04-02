@@ -20,6 +20,15 @@ if (isset($_POST['btnsignin'])) {
         $_SESSION['username'] = $uid;
         $_SESSION['nama'] = $row['nama'];
         $_SESSION['idd'] = $row['id'];
+        $sql1 = "SELECT * FROM dac_roles WHERE user_id=". $row['id'];
+        $stmt1 = $mysqli->prepare($sql1);
+        $stmt1->execute();
+        $res1 = $stmt1->get_result();
+        if($res1->num_rows > 0){
+            $_SESSION['isdac'] = true;
+        }else{
+            $_SESSION['isdac'] = false;
+        }
         $_SESSION['jabatan'] = $row['jabatan'];
         $_SESSION['fid'] = $row['fakultass_id'];
         $_SESSION['jid'] = $row['jurusans_id'];
