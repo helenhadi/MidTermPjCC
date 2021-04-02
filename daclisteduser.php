@@ -61,6 +61,19 @@ while ($row = $res->fetch_assoc()) {
     $field = $row['field'];
     $opt = $row['operator'];
     $value = $row['value'];
+
+    if ($opt == '=')
+        $operator = "equal as";
+    elseif ($opt == '!=')
+        $operator = "not equal as";
+    elseif ($opt == '<')
+        $operator = "lower than";
+    elseif ($opt == '>')
+        $operator = "grater than";
+    elseif ($opt == '<=')
+        $operator = "lower than or equal as";
+    else
+        $operator = "grater than or equal as";
 }
 ?>
 
@@ -261,7 +274,7 @@ while ($row = $res->fetch_assoc()) {
                                     <div class="card-header border-0">
                                         <div class="row">
                                             <div class="col-6">
-                                                <h3 class="mb-0">Rule: Students that <?php echo "'".$field."' in '".$entity."' ".$opt." ".$value ?></h3>
+                                                <h3 class="mb-0">Rule: Students that <?php echo "'".$field."' in '".$entity."' ".$operator." '".$value."'" ?></h3>
                                             </div>
                                         </div>
                                     </div>
