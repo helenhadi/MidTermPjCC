@@ -184,43 +184,6 @@ CREATE TABLE IF NOT EXISTS `karyawans` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `dac_rules`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dac_rules` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `kode` VARCHAR(45) NULL,
-  `entity` VARCHAR(45) NULL,
-  `field` VARCHAR(45) NULL,
-  `operator` ENUM('=', '!=', '<', '>', '<=', '>=') NULL,
-  `value` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `dac_roles`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dac_roles` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `karyawan_id` INT NOT NULL,
-  `dac_rule_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_dac_roles_dac_rules1_idx` (`dac_rule_id` ASC),
-  INDEX `fk_dac_roles_karyawan1_idx` (`karyawan_id` ASC),
-  CONSTRAINT `fk_dac_roles_dac_rules1`
-    FOREIGN KEY (`dac_rule_id`)
-    REFERENCES `dac_rules` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_dac_roles_karyawan1`
-    FOREIGN KEY (`karyawan_id`)
-    REFERENCES `karyawans` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
