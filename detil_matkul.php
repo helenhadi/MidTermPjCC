@@ -321,7 +321,6 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                     <th>Tanggal</th>
                                                     <th>Jam Kelas</th>
                                                     <th>Pin</th>
-                                                    <th>Status Terakhir</th>
                                                     <th>Detil</th>
                                                 </tr>
                                             </thead>
@@ -351,7 +350,6 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                                                 <td>$tanggal</td>
                                                 <td>$hari, $jamm - $jams</td>
                                                 <td>$kode</td>
-                                                <td>$status</td>
                                                 <td><a href='detil_absensi.php?ekode=$kode&mkid=$idmatakuliah&kpid=$kpid&tgl=$tanggal'>Lihat</a></td>
                                                 </tr>
                                                 ";

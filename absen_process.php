@@ -35,6 +35,27 @@
             $stmt = $mysqli->prepare($sql);
             $stmt->execute();
             if($stmt->affected_rows > 0){
+                // Persentase
+                $sql = "SELECT COUNT(id) as jumlah_hadir FROM `kehadirans` WHERE mahasiswas_id = " . $_SESSION['mid'] . " 
+                        AND matakuliahs_id = " . $idmatakuliah . " AND matakuliahs_buka_id = " . $kpid . " AND status='HADIR'";
+                $stmt = $mysqli->prepare($sql);
+                $stmt->execute();
+                $res = $stmt->get_result();
+                $row = $res->fetch_assoc();
+                $jumlah_kehadirans = $row['jumlah_hadir'];
+                $sql = "SELECT count(DISTINCT e_code) as total_sesi from kehadirans where matakuliahs_id = " . $idmatakuliah . " 
+                        AND matakuliahs_buka_id = " . $kpid;
+                $stmt = $mysqli->prepare($sql);
+                $stmt->execute();
+                $res = $stmt->get_result();
+                $row = $res->fetch_assoc();
+                $jumlah_sesi = $row['total_sesi'];
+                $persentase = (100 * $jumlah_kehadirans) / $jumlah_sesi;
+                $sql = "UPDATE ambil_matakuliahs SET persentase = ". $persentase . " WHERE mahasiswas_id = " . $_SESSION['mid'] . " 
+                        AND matakuliahs_id = " . $idmatakuliah . " AND matakuliahs_buka_id = " . $kpid;
+                $stmt = $mysqli->prepare($sql);
+                $stmt->execute();
+                // Persentase
                 echo json_encode([
                     "status" => true,
                     "data" => 'Kamu berhasil absen!'

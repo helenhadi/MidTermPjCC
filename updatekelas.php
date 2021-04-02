@@ -38,6 +38,26 @@
             VALUES (". $mid. "," . $idmatakuliah . "," . $kpid . "," . $jid .",'" . $datenow . "','" . $tdkhdir . "','" . $kunik . "')";
             $stmt1 = $mysqli->prepare($sql1);
             $stmt1->execute();
+
+            $sql1 = "SELECT COUNT(id) as jumlah_hadir FROM `kehadirans` WHERE mahasiswas_id = " . $mid . " 
+                            AND matakuliahs_id = " . $idmatakuliah . " AND matakuliahs_buka_id = " . $kpid . " AND status='HADIR'";
+            $stmt1 = $mysqli->prepare($sql1);
+            $stmt1->execute();
+            $res1 = $stmt1->get_result();
+            $row1 = $res1->fetch_assoc();
+            $jumlah_kehadirans = $row1['jumlah_hadir'];
+            $sql1 = "SELECT count(DISTINCT e_code) as total_sesi from kehadirans where matakuliahs_id = " . $idmatakuliah . " 
+                            AND matakuliahs_buka_id = " . $kpid;
+            $stmt1 = $mysqli->prepare($sql1);
+            $stmt1->execute();
+            $res1 = $stmt1->get_result();
+            $row1 = $res1->fetch_assoc();
+            $jumlah_sesi = $row1['total_sesi'];
+            $persentase = (100 * $jumlah_kehadirans) / $jumlah_sesi;
+            $sql1 = "UPDATE ambil_matakuliahs SET persentase = " . $persentase . " WHERE mahasiswas_id = " . $mid . " 
+                            AND matakuliahs_id = " . $idmatakuliah . " AND matakuliahs_buka_id = " . $kpid;
+            $stmt1 = $mysqli->prepare($sql1);
+            $stmt1->execute();
         }
         $sql = "update matakuliahs_kp set e_code=NULL where matakuliahs_id=? AND matakuliahs_buka_id=?";
         $stmt = $mysqli->prepare($sql);
