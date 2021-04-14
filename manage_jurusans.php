@@ -319,7 +319,7 @@ $mysqli = konek('localhost', 'root', '', 'presensi_cloud');
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="form-control-label">Tipe Entity</label>
+                          <label class="form-control-label">Tipe Field</label>
                           <div class="input-group input-group-merge">
                             <select class='form-control' name="typee_en[]" selected="Varchar / String Text">
                               <option value="varchar(45)">Text</option>
